@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Episode Otomatis - Web Streaming Anime & Donghua</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #252525;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent-color: #ff6b6b;
+            --accent-hover: #ff5252;
+            --border-color: #333;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --danger-color: #f44336;
+            --font-primary: 'Inter', sans-serif;
+            --font-heading: 'Poppins', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .generator-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .form-section, .preview-section {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .form-label .required {
+            color: var(--danger-color);
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            color: var(--text-primary);
+            font-family: var(--font-primary);
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .episode-range {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .range-separator {
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .server-config {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .server-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .server-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .quality-options {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .quality-badge {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quality-badge:hover, .quality-badge.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-tertiary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-item:hover {
+            border-color: var(--accent-color);
+        }
+
+        .checkbox-item input {
+            margin: 0;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .preview-content {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .episode-preview {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .episode-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .episode-title {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .episode-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-ongoing {
+            background: rgba(76, 175, 80, 0.2);
+            color: var(--success-color);
+            border: 1px solid var(--success-color);
+        }
+
+        .status-completed {
+            background: rgba(255, 152, 0, 0.2);
+            color: var(--warning-color);
+            border: 1px solid var(--warning-color);
+        }
+
+        .episode-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .detail-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .detail-value {
+            font-weight: 500;
+        }
+
+        .server-list {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .server-badge {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid var(--border-color);
+        }
+
+        .quality-tags {
+            display: flex;
+            gap: 0.3rem;
+            margin-left: 0.5rem;
+        }
+
+        .quality-tag {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            height: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--accent-color), var(--warning-color));
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-success {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid var(--success-color);
+            color: var(--success-color);
+        }
+
+        .alert-error {
+            background: rgba(244, 67, 54, 0.1);
+            border: 1px solid var(--danger-color);
+            color: var(--danger-color);
+        }
+
+        .alert-warning {
+            background: rgba(255, 152, 0, 0.1);
+            border: 1px solid var(--warning-color);
+            color: var(--warning-color);
+        }
+
+        .batch-info {
+            background: linear-gradient(45deg, var(--bg-tertiary), var(--bg-secondary));
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .batch-title {
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .batch-stats {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .generator-container {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row, .episode-range {
+                grid-template-columns: 1fr;
+            }
+
+            .range-separator {
+                text-align: center;
+                margin: 0.5rem 0;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .server-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .batch-stats {
+                justify-content: space-around;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-play-circle"></i> Generator Episode Otomatis</h1>
+            <p>Buat postingan episode anime/donghua secara otomatis dengan berbagai pilihan server dan kualitas</p>
+        </div>
+
+        <div class="generator-container">
+            <!-- Form Section -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fas fa-cog"></i> Form Input Episode
+                </h2>
+
+                <!-- Series Information -->
+                <div class="form-group">
+                    <label class="form-label">Judul Series <span class="required">*</span></label>
+                    <input type="text" class="form-input" id="series-title" placeholder="Contoh: Solo Leveling Season 2" onkeyup="updatePreview()">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Tipe <span class="required">*</span></label>
+                        <select class="form-select" id="series-type" onchange="updatePreview()">
+                            <option value="">Pilih Tipe</option>
+                            <option value="anime">Anime</option>
+                            <option value="donghua">Donghua</option>
+                            <option value="ova">OVA</option>
+                            <option value="movie">Movie</option>
+                            <option value="special">Special</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <select class="form-select" id="series-status" onchange="updatePreview()">
+                            <option value="ongoing">Ongoing</option>
+                            <option value="completed">Completed</option>
+                            <option value="upcoming">Upcoming</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Episode Range -->
+                <div class="form-group">
+                    <label class="form-label">Range Episode <span class="required">*</span></label>
+                    <div class="episode-range">
+                        <input type="number" class="form-input" id="episode-start" placeholder="1" min="1" onkeyup="updatePreview()">
+                        <span class="range-separator">sampai</span>
+                        <input type="number" class="form-input" id="episode-end" placeholder="12" min="1" onkeyup="updatePreview()">
+                    </div>
+                </div>
+
+                <!-- Server Configuration -->
+                <div class="form-group">
+                    <label class="form-label">Server Streaming <span class="required">*</span></label>
+                    <div class="server-config">
+                        <div class="server-title">
+                            <i class="fas fa-server"></i> Server Utama
+                        </div>
+                        <div class="server-grid">
+                            <div class="form-group">
+                                <label class="form-label">Server 1</label>
+                                <input type="url" class="form-input" id="server1" placeholder="https://server1.com/embed/" onkeyup="updatePreview()">
+                                <div class="quality-options">
+                                    <span class="quality-badge active" data-quality="360p">360p</span>
+                                    <span class="quality-badge active" data-quality="480p">480p</span>
+                                    <span class="quality-badge active" data-quality="720p">720p</span>
+                                    <span class="quality-badge active" data-quality="1080p">1080p</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Server 2</label>
+                                <input type="url" class="form-input" id="server2" placeholder="https://server2.com/embed/" onkeyup="updatePreview()">
+                                <div class="quality-options">
+                                    <span class="quality-badge" data-quality="360p">360p</span>
+                                    <span class="quality-badge" data-quality="480p">480p</span>
+                                    <span class="quality-badge" data-quality="720p">720p</span>
+                                    <span class="quality-badge" data-quality="1080p">1080p</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Server 3</label>
+                                <input type="url" class="form-input" id="server3" placeholder="https://server3.com/embed/" onkeyup="updatePreview()">
+                                <div class="quality-options">
+                                    <span class="quality-badge" data-quality="360p">360p</span>
+                                    <span class="quality-badge" data-quality="480p">480p</span>
+                                    <span class="quality-badge" data-quality="720p">720p</span>
+                                    <span class="quality-badge" data-quality="1080p">1080p</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Download Links -->
+                <div class="form-group">
+                    <label class="form-label">Link Download</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="enable-download" onchange="updatePreview()" checked>
+                            <label for="enable-download">Tampilkan link download</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="safelink-download" onchange="updatePreview()" checked>
+                            <label for="safelink-download">Gunakan safelink untuk download</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Options -->
+                <div class="form-group">
+                    <label class="form-label">Opsi Tambahan</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="enable-comments" onchange="updatePreview()" checked>
+                            <label for="enable-comments">Aktifkan komentar Disqus</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="show-nav" onchange="updatePreview()" checked>
+                            <label for="show-nav">Tampilkan navigasi episode</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="auto-next" onchange="updatePreview()" checked>
+                            <label for="auto-next">Auto next episode</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="watermark" onchange="updatePreview()" checked>
+                            <label for="watermark">Tambahkan watermark</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom Message -->
+                <div class="form-group">
+                    <label class="form-label">Pesan Khusus</label>
+                    <textarea class="form-textarea" id="custom-message" placeholder="Pesan khusus untuk episode ini (opsional)..." onkeyup="updatePreview()"></textarea>
+                </div>
+
+                <!-- Buttons -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary" onclick="generateEpisodes()">
+                        <i class="fas fa-magic"></i> Generate Episode
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                        <i class="fas fa-redo"></i> Reset Form
+                    </button>
+                    <button type="button" class="btn btn-success" onclick="saveTemplate()">
+                        <i class="fas fa-save"></i> Simpan Template
+                    </button>
+                </div>
+            </div>
+
+            <!-- Preview Section -->
+            <div class="preview-section">
+                <h2 class="section-title">
+                    <i class="fas fa-eye"></i> Preview Episode
+                </h2>
+
+                <!-- Progress Bar -->
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+
+                <!-- Alerts -->
+                <div class="alert alert-success" id="success-alert">
+                    <i class="fas fa-check-circle"></i>
+                    <span id="success-message">Episode berhasil dibuat!</span>
+                </div>
+
+                <div class="alert alert-error" id="error-alert">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span id="error-message">Terjadi kesalahan!</span>
+                </div>
+
+                <div class="alert alert-warning" id="warning-alert">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span id="warning-message">Peringatan: Semua bidang wajib diisi!</span>
+                </div>
+
+                <!-- Batch Information -->
+                <div class="batch-info" id="batch-info" style="display: none;">
+                    <div class="batch-title">
+                        <i class="fas fa-info-circle"></i> Informasi Batch
+                    </div>
+                    <div class="batch-stats">
+                        <div class="stat-item">
+                            <div class="stat-value" id="total-episodes">0</div>
+                            <div class="stat-label">Total Episode</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="active-servers">0</div>
+                            <div class="stat-label">Server Aktif</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="quality-options">0</div>
+                            <div class="stat-label">Opsi Kualitas</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview Content -->
+                <div class="preview-content" id="preview-content">
+                    <div style="text-align: center; color: var(--text-secondary); padding: 2rem;">
+                        <i class="fas fa-play-circle" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <p>Isi form di sebelah kiri untuk melihat preview episode di sini...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let episodeData = [];
+        let serverConfigs = {
+            server1: { url: '', quality: ['360p', '480p', '720p', '1080p'] },
+            server2: { url: '', quality: [] },
+            server3: { url: '', quality: [] }
+        };
+
+        // Quality badge click handlers
+        document.querySelectorAll('.quality-badge').forEach(badge => {
+            badge.addEventListener('click', function() {
+                const server = this.closest('.form-group').querySelector('input').id;
+                const quality = this.dataset.quality;
+                
+                this.classList.toggle('active');
+                updateServerConfig(server);
+                updatePreview();
+            });
+        });
+
+        // Update server configuration
+        function updateServerConfig(serverId) {
+            const qualityBadges = document.querySelector(`#${serverId}`).closest('.form-group').querySelectorAll('.quality-badge');
+            const qualities = [];
+            
+            qualityBadges.forEach(badge => {
+                if (badge.classList.contains('active')) {
+                    qualities.push(badge.dataset.quality);
+                }
+            });
+            
+            serverConfigs[serverId].quality = qualities;
+        }
+
+        // Update preview
+        function updatePreview() {
+            const seriesTitle = document.getElementById('series-title').value;
+            const seriesType = document.getElementById('series-type').value;
+            const seriesStatus = document.getElementById('series-status').value;
+            const episodeStart = document.getElementById('episode-start').value;
+            const episodeEnd = document.getElementById('episode-end').value;
+            const enableDownload = document.getElementById('enable-download').checked;
+            const enableComments = document.getElementById('enable-comments').checked;
+            const showNav = document.getElementById('show-nav').checked;
+            const autoNext = document.getElementById('auto-next').checked;
+            const watermark = document.getElementById('watermark').checked;
+            const customMessage = document.getElementById('custom-message').value;
+
+            // Update server URLs
+            serverConfigs.server1.url = document.getElementById('server1').value;
+            serverConfigs.server2.url = document.getElementById('server2').value;
+            serverConfigs.server3.url = document.getElementById('server3').value;
+
+            // Update progress
+            updateProgress();
+
+            // Generate preview
+            generateEpisodePreview(seriesTitle, seriesType, seriesStatus, episodeStart, episodeEnd, customMessage);
+
+            // Update batch info
+            updateBatchInfo(episodeStart, episodeEnd);
+        }
+
+        function generateEpisodePreview(seriesTitle, seriesType, seriesStatus, episodeStart, episodeEnd, customMessage) {
+            if (!seriesTitle || !episodeStart || !episodeEnd) {
+                document.getElementById('preview-content').innerHTML = `
+                    <div style="text-align: center; color: var(--text-secondary); padding: 2rem;">
+                        <i class="fas fa-play-circle" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <p>Isi form di sebelah kiri untuk melihat preview episode di sini...</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            const start = parseInt(episodeStart);
+            const end = parseInt(episodeEnd);
+
+            for (let i = start; i <= end; i++) {
+                html += generateSingleEpisodePreview(seriesTitle, seriesType, seriesStatus, i, customMessage);
+            }
+
+            document.getElementById('preview-content').innerHTML = html;
+        }
+
+        function generateSingleEpisodePreview(seriesTitle, seriesType, seriesStatus, episodeNumber, customMessage) {
+            const enableComments = document.getElementById('enable-comments').checked;
+            const showNav = document.getElementById('show-nav').checked;
+            const autoNext = document.getElementById('auto-next').checked;
+            const watermark = document.getElementById('watermark').checked;
+            const enableDownload = document.getElementById('enable-download').checked;
+
+            let html = `
+                <div class="episode-preview">
+                    <div class="episode-header">
+                        <div class="episode-title">
+                            ${seriesTitle} - Episode ${episodeNumber}
+                        </div>
+                        <div class="episode-status ${seriesStatus}">
+                            ${seriesStatus === 'ongoing' ? 'Ongoing' : seriesStatus === 'completed' ? 'Completed' : 'Upcoming'}
+                        </div>
+                    </div>
+                    
+                    <div class="episode-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Judul:</span>
+                            <span class="detail-value">${seriesTitle}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Episode:</span>
+                            <span class="detail-value">Episode ${episodeNumber}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Tipe:</span>
+                            <span class="detail-value">${seriesType ? seriesType.toUpperCase() : 'N/A'}</span>
+                        </div>
+            `;
+
+            if (watermark) {
+                html += `
+                    <div class="detail-item">
+                        <span class="detail-label">Watermark:</span>
+                        <span class="detail-value" style="color: var(--accent-color);">Aktif</span>
+                    </div>
+                `;
+            }
+
+            if (autoNext) {
+                html += `
+                    <div class="detail-item">
+                        <span class="detail-label">Auto Next:</span>
+                        <span class="detail-value" style="color: var(--success-color);">Aktif</span>
+                    </div>
+                `;
+            }
+
+            html += `
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Server Streaming:</span>
+                        <div class="server-list">
+            `;
+
+            // Add server badges
+            if (serverConfigs.server1.url) {
+                html += `<span class="server-badge">Server 1<span class="quality-tags">`;
+                serverConfigs.server1.quality.forEach(quality => {
+                    html += `<span class="quality-tag">${quality}</span>`;
+                });
+                html += `</span></span>`;
+            }
+
+            if (serverConfigs.server2.url) {
+                html += `<span class="server-badge">Server 2<span class="quality-tags">`;
+                serverConfigs.server2.quality.forEach(quality => {
+                    html += `<span class="quality-tag">${quality}</span>`;
+                });
+                html += `</span></span>`;
+            }
+
+            if (serverConfigs.server3.url) {
+                html += `<span class="server-badge">Server 3<span class="quality-tags">`;
+                serverConfigs.server3.quality.forEach(quality => {
+                    html += `<span class="quality-tag">${quality}</span>`;
+                });
+                html += `</span></span>`;
+            }
+
+            html += `
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Fitur:</span>
+                        <div class="server-list">
+                            ${enableComments ? '<span class="server-badge">Komentar</span>' : ''}
+                            ${showNav ? '<span class="server-badge">Navigasi</span>' : ''}
+                            ${enableDownload ? '<span class="server-badge">Download</span>' : ''}
+                        </div>
+                    </div>
+            `;
+
+            if (customMessage) {
+                html += `
+                    <div class="detail-item" style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: 1rem;">
+                        <span class="detail-label">Pesan Khusus:</span>
+                        <div class="detail-value" style="color: var(--accent-color); font-style: italic;">${customMessage}</div>
+                    </div>
+                `;
+            }
+
+            html += `
+                </div>
+            `;
+
+            return html;
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const fields = ['series-title', 'series-type', 'episode-start', 'episode-end'];
+            let filled = 0;
+            
+            fields.forEach(field => {
+                if (document.getElementById(field).value.trim() !== '') {
+                    filled++;
+                }
+            });
+            
+            const progress = (filled / fields.length) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        // Update batch info
+        function updateBatchInfo(episodeStart, episodeEnd) {
+            const batchInfo = document.getElementById('batch-info');
+            
+            if (episodeStart && episodeEnd) {
+                const start = parseInt(episodeStart);
+                const end = parseInt(episodeEnd);
+                const totalEpisodes = end - start + 1;
+                
+                let activeServers = 0;
+                if (serverConfigs.server1.url) activeServers++;
+                if (serverConfigs.server2.url) activeServers++;
+                if (serverConfigs.server3.url) activeServers++;
+                
+                let qualityOptions = 0;
+                if (serverConfigs.server1.url) qualityOptions += serverConfigs.server1.quality.length;
+                if (serverConfigs.server2.url) qualityOptions += serverConfigs.server2.quality.length;
+                if (serverConfigs.server3.url) qualityOptions += serverConfigs.server3.quality.length;
+                
+                document.getElementById('total-episodes').textContent = totalEpisodes;
+                document.getElementById('active-servers').textContent = activeServers;
+                document.getElementById('quality-options').textContent = qualityOptions;
+                
+                batchInfo.style.display = 'block';
+            } else {
+                batchInfo.style.display = 'none';
+            }
+        }
+
+        // Generate episodes
+        function generateEpisodes() {
+            const seriesTitle = document.getElementById('series-title').value.trim();
+            const seriesType = document.getElementById('series-type').value;
+            const episodeStart = document.getElementById('episode-start').value;
+            const episodeEnd = document.getElementById('episode-end').value;
+            
+            if (!seriesTitle || !seriesType || !episodeStart || !episodeEnd) {
+                showAlert('warning', 'Judul series, tipe, dan range episode wajib diisi!');
+                return;
+            }
+
+            if (parseInt(episodeEnd) < parseInt(episodeStart)) {
+                showAlert('warning', 'Episode akhir tidak boleh lebih kecil dari episode awal!');
+                return;
+            }
+
+            const episodes = [];
+            const start = parseInt(episodeStart);
+            const end = parseInt(episodeEnd);
+
+            for (let i = start; i <= end; i++) {
+                episodes.push(generateEpisodeContent(i));
+            }
+
+            // Show success message
+            showAlert('success', `${episodes.length} episode berhasil dibuat! Silakan salin kontennya.`);
+            
+            // Copy to clipboard
+            const allContent = episodes.join('\n\n---\n\n');
+            navigator.clipboard.writeText(allContent).then(() => {
+                console.log('Episode content copied to clipboard');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+
+        function generateEpisodeContent(episodeNumber) {
+            const seriesTitle = document.getElementById('series-title').value;
+            const seriesType = document.getElementById('series-type').value;
+            const seriesStatus = document.getElementById('series-status').value;
+            const enableDownload = document.getElementById('enable-download').checked;
+            const enableComments = document.getElementById('enable-comments').checked;
+            const showNav = document.getElementById('show-nav').checked;
+            const autoNext = document.getElementById('auto-next').checked;
+            const watermark = document.getElementById('watermark').checked;
+            const customMessage = document.getElementById('custom-message').value;
+            const safelinkDownload = document.getElementById('safelink-download').checked;
+
+            const labels = [seriesType, seriesStatus, `Episode ${episodeNumber}`];
+
+            let html = `<div class="episode-post">`;
+
+            // Watermark
+            if (watermark) {
+                html += `<div style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; padding: 0.5rem 1rem; border-radius: 5px; font-size: 0.9rem; z-index: 10;">NamaWebStreaming</div>`;
+            }
+
+            // Video Player Container
+            html += `
+                <div style="position: relative; background: #000; border-radius: 8px; overflow: hidden; margin-bottom: 1rem;">
+                    <div id="player-${episodeNumber}" style="width: 100%; height: 400px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
+                        <i class="fas fa-play-circle" style="font-size: 3rem; margin-right: 1rem;"></i>
+                        Video Player - Episode ${episodeNumber}
+                    </div>
+                </div>
+            `;
+
+            // Server Selection
+            html += `
+                <div style="margin-bottom: 1rem;">
+                    <h4 style="color: #ff6b6b; margin-bottom: 0.5rem;">Pilih Server:</h4>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            `;
+
+            if (serverConfigs.server1.url) {
+                html += `<button class="server-btn" onclick="changeServer('${episodeNumber}', 'server1')" style="background: #333; color: white; border: 1px solid #555; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer;">Server 1</button>`;
+            }
+            if (serverConfigs.server2.url) {
+                html += `<button class="server-btn" onclick="changeServer('${episodeNumber}', 'server2')" style="background: #333; color: white; border: 1px solid #555; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer;">Server 2</button>`;
+            }
+            if (serverConfigs.server3.url) {
+                html += `<button class="server-btn" onclick="changeServer('${episodeNumber}', 'server3')" style="background: #333; color: white; border: 1px solid #555; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer;">Server 3</button>`;
+            }
+
+            html += `
+                    </div>
+                </div>
+            `;
+
+            // Navigation
+            if (showNav) {
+                html += `
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                        <a href="/search/label/Episode ${episodeNumber - 1}" style="background: #333; color: white; padding: 0.5rem 1rem; border-radius: 20px; text-decoration: none;">
+                            <i class="fas fa-chevron-left"></i> Episode Sebelumnya
+                        </a>
+                        <a href="/search/label/Episode ${episodeNumber + 1}" style="background: #333; color: white; padding: 0.5rem 1rem; border-radius: 20px; text-decoration: none;">
+                            Episode Selanjutnya <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </div>
+                `;
+            }
+
+            // Custom Message
+            if (customMessage) {
+                html += `
+                    <div style="background: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                        <h5 style="color: #ff6b6b; margin-bottom: 0.5rem;">Pesan Khusus:</h5>
+                        <p style="color: #ccc; font-style: italic;">${customMessage}</p>
+                    </div>
+                `;
+            }
+
+            // Download Links
+            if (enableDownload) {
+                html += `
+                    <div style="margin-bottom: 1rem;">
+                        <h4 style="color: #ff6b6b; margin-bottom: 0.5rem;">Download:</h4>
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                `;
+
+                const downloadLinks = safelinkDownload ? 
+                    ['/safelink/360p', '/safelink/480p', '/safelink/720p', '/safelink/1080p'] :
+                    ['#360p', '#480p', '#720p', '#1080p'];
+                
+                const qualities = ['360p', '480p', '720p', '1080p'];
+                
+                qualities.forEach((quality, index) => {
+                    html += `<a href="${downloadLinks[index]}" style="background: #333; color: white; padding: 0.5rem 1rem; border-radius: 20px; text-decoration: none;">${quality}</a>`;
+                });
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Comments
+            if (enableComments) {
+                html += `
+                    <div style="margin-top: 2rem;">
+                        <h4 style="color: #ff6b6b; margin-bottom: 1rem;">Komentar:</h4>
+                        <div id="disqus_thread"></div>
+                        <script>
+                            var disqus_config = function () {
+                                this.page.url = window.location.href;
+                                this.page.identifier = '${seriesTitle.replace(/\s+/g, '-').toLowerCase()}-episode-${episodeNumber}';
+                            };
+                            (function() {
+                                var d = document, s = d.createElement('script');
+                                s.src = 'https://YOUR-DISQUS-SHORTNAME.disqus.com/embed.js';
+                                s.setAttribute('data-timestamp', +new Date());
+                                (d.head || d.body).appendChild(s);
+                            })();
+                        <\/script>
+                    </div>
+                `;
+            }
+
+            html += `</div>`;
+
+            // Labels
+            html += `<!-- Labels: ${labels.join(', ')} -->`;
+
+            return html;
+        }
+
+        // Show alert
+        function showAlert(type, message) {
+            const alerts = {
+                success: document.getElementById('success-alert'),
+                error: document.getElementById('error-alert'),
+                warning: document.getElementById('warning-alert')
+            };
+
+            // Hide all alerts first
+            Object.values(alerts).forEach(alert => alert.classList.remove('show'));
+
+            // Show the appropriate alert
+            if (alerts[type]) {
+                alerts[type].querySelector('span').textContent = message;
+                alerts[type].classList.add('show');
+                
+                // Auto hide after 5 seconds
+                setTimeout(() => {
+                    alerts[type].classList.remove('show');
+                }, 5000);
+            }
+        }
+
+        // Reset form
+        function resetForm() {
+            document.querySelectorAll('input, select, textarea').forEach(element => {
+                if (element.type === 'checkbox') {
+                    element.checked = element.id === 'enable-comments' || element.id === 'show-nav' || element.id === 'auto-next' || element.id === 'watermark' || element.id === 'enable-download' || element.id === 'safelink-download';
+                } else if (element.id === 'series-status') {
+                    element.value = 'ongoing';
+                } else {
+                    element.value = '';
+                }
+            });
+            
+            // Reset quality badges
+            document.querySelectorAll('.quality-badge').forEach(badge => {
+                badge.classList.remove('active');
+            });
+            document.querySelectorAll('.server-config .quality-badge').forEach(badge => {
+                badge.classList.add('active');
+            });
+            
+            updatePreview();
+            showAlert('success', 'Form berhasil direset!');
+        }
+
+        // Save template
+        function saveTemplate() {
+            const formData = {};
+            document.querySelectorAll('input, select, textarea').forEach(element => {
+                if (element.type === 'checkbox') {
+                    formData[element.id] = element.checked;
+                } else {
+                    formData[element.id] = element.value;
+                }
+            });
+            
+            localStorage.setItem('episodeTemplate', JSON.stringify(formData));
+            showAlert('success', 'Template berhasil disimpan!');
+        }
+
+        // Load saved template
+        function loadTemplate() {
+            const saved = localStorage.getItem('episodeTemplate');
+            if (saved) {
+                const formData = JSON.parse(saved);
+                Object.keys(formData).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        if (element.type === 'checkbox') {
+                            element.checked = formData[key];
+                        } else {
+                            element.value = formData[key];
+                        }
+                    }
+                });
+                updatePreview();
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTemplate();
+            updatePreview();
+        });
+    </script>
+</body>
+</html>

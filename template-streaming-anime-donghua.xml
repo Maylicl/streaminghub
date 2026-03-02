@@ -1,0 +1,1605 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html version='XHTML+RDFa 1.0' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+    <meta charset='utf-8'/>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'/>
+    <meta content='IE=edge' http-equiv='X-UA-Compatible'/>
+    <b:include data='blog' name='all-head-content'/>
+    
+    <!-- SEO & Meta Tags -->
+    <meta expr:content='data:blog.metaDescription' name='description'/>
+    <meta expr:content='data:blog.pageTitle' name='keywords'/>
+    <meta content='index,follow' name='robots'/>
+    <meta content='id' name='language'/>
+    <meta content='Indonesia' name='geo.country'/>
+    
+    <!-- Open Graph & Social Media -->
+    <meta expr:content='data:blog.pageTitle' property='og:title'/>
+    <meta expr:content='data:blog.url' property='og:url'/>
+    <meta expr:content='data:blog.metaDescription' property='og:description'/>
+    <meta content='website' property='og:type'/>
+    <meta expr:content='data:blog.blogspotFaviconUrl' property='og:image'/>
+    
+    <!-- Schema.org Markup -->
+    <script type='application/ld+json'>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "<data:blog.title/>",
+      "url": "<data:blog.homepageUrl/>",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "<data:blog.homepageUrl/>search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    
+    <title><data:blog.pageTitle/></title>
+    
+    <!-- Favicon -->
+    <link expr:href='data:blog.blogspotFaviconUrl' rel='shortcut icon' type='image/x-icon'/>
+    
+    <!-- CSS Framework & Custom Styles -->
+    <style type='text/css'>
+    /* Reset & Base Styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    :root {
+        --primary-color: #e74c3c;
+        --secondary-color: #3498db;
+        --accent-color: #f39c12;
+        --dark-bg: #0a0a0a;
+        --dark-card: #1a1a1a;
+        --dark-border: #333;
+        --text-light: #ffffff;
+        --text-muted: #b3b3b3;
+        --text-secondary: #888;
+        --success-color: #27ae60;
+        --warning-color: #e67e22;
+        --error-color: #e74c3c;
+        --gradient-primary: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        --gradient-secondary: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        --shadow-light: 0 2px 10px rgba(0,0,0,0.1);
+        --shadow-heavy: 0 10px 30px rgba(0,0,0,0.3);
+        --border-radius: 8px;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: var(--dark-bg);
+        color: var(--text-light);
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+    
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: 600;
+        line-height: 1.3;
+        margin-bottom: 1rem;
+    }
+    
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; }
+    h3 { font-size: 1.5rem; }
+    h4 { font-size: 1.25rem; }
+    
+    p {
+        margin-bottom: 1rem;
+        color: var(--text-muted);
+    }
+    
+    a {
+        color: var(--primary-color);
+        text-decoration: none;
+        transition: var(--transition);
+    }
+    
+    a:hover {
+        color: var(--accent-color);
+    }
+    
+    /* Layout Components */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    
+    .container-fluid {
+        width: 100%;
+        padding: 0 1rem;
+    }
+    
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -0.5rem;
+    }
+    
+    .col {
+        flex: 1;
+        padding: 0 0.5rem;
+    }
+    
+    .col-12 { width: 100%; }
+    .col-6 { width: 50%; }
+    .col-4 { width: 33.333%; }
+    .col-3 { width: 25%; }
+    .col-8 { width: 66.666%; }
+    .col-9 { width: 75%; }
+    
+    /* Header & Navigation */
+    .header {
+        background: rgba(26, 26, 26, 0.95);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--dark-border);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        transition: var(--transition);
+    }
+    
+    .header.scrolled {
+        background: rgba(10, 10, 10, 0.98);
+        box-shadow: var(--shadow-heavy);
+    }
+    
+    .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 0;
+    }
+    
+    .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+    }
+    
+    .logo::before {
+        content: "🎌";
+        margin-right: 0.5rem;
+        font-size: 1.8rem;
+    }
+    
+    .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+        align-items: center;
+    }
+    
+    .nav-link {
+        color: var(--text-light);
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: var(--border-radius);
+        transition: var(--transition);
+        position: relative;
+    }
+    
+    .nav-link:hover {
+        color: var(--primary-color);
+        background: rgba(231, 76, 60, 0.1);
+    }
+    
+    .nav-link.dropdown::after {
+        content: "▼";
+        margin-left: 0.3rem;
+        font-size: 0.7rem;
+    }
+    
+    .search-container {
+        position: relative;
+        margin: 0 1rem;
+    }
+    
+    .search-input {
+        background: var(--dark-card);
+        border: 2px solid var(--dark-border);
+        border-radius: 25px;
+        padding: 0.7rem 1.5rem;
+        color: var(--text-light);
+        width: 250px;
+        transition: var(--transition);
+        font-size: 0.9rem;
+    }
+    
+    .search-input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+        width: 300px;
+    }
+    
+    .search-results {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--dark-card);
+        border: 1px solid var(--dark-border);
+        border-radius: var(--border-radius);
+        max-height: 400px;
+        overflow-y: auto;
+        z-index: 1001;
+        display: none;
+        box-shadow: var(--shadow-heavy);
+    }
+    
+    .search-result-item {
+        padding: 1rem;
+        border-bottom: 1px solid var(--dark-border);
+        cursor: pointer;
+        transition: var(--transition);
+    }
+    
+    .search-result-item:hover {
+        background: rgba(231, 76, 60, 0.1);
+    }
+    
+    .search-result-title {
+        font-weight: 600;
+        color: var(--text-light);
+        margin-bottom: 0.3rem;
+    }
+    
+    .search-result-meta {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+    }
+    
+    /* Hero Section */
+    .hero {
+        background: var(--gradient-primary);
+        padding: 4rem 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grain)"/></svg>');
+        opacity: 0.3;
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 1;
+    }
+    
+    .hero-title {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+    }
+    
+    .hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        margin-top: 2rem;
+    }
+    
+    .stat-item {
+        text-align: center;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        display: block;
+    }
+    
+    .stat-label {
+        font-size: 0.9rem;
+        opacity: 0.8;
+    }
+    
+    /* Card Components */
+    .card {
+        background: var(--dark-card);
+        border: 1px solid var(--dark-border);
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        transition: var(--transition);
+        box-shadow: var(--shadow-light);
+    }
+    
+    .card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-heavy);
+        border-color: var(--primary-color);
+    }
+    
+    .card-image {
+        position: relative;
+        overflow: hidden;
+        aspect-ratio: 16/9;
+    }
+    
+    .card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+    }
+    
+    .card:hover .card-image img {
+        transform: scale(1.05);
+    }
+    
+    .card-badge {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background: var(--primary-color);
+        color: white;
+        padding: 0.3rem 0.7rem;
+        border-radius: 15px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    
+    .card-badge.ongoing {
+        background: var(--success-color);
+    }
+    
+    .card-badge.completed {
+        background: var(--secondary-color);
+    }
+    
+    .card-badge.nsfw {
+        background: var(--error-color);
+    }
+    
+    .card-content {
+        padding: 1.5rem;
+    }
+    
+    .card-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        line-height: 1.4;
+    }
+    
+    .card-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1rem;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+    }
+    
+    .card-rating {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+    
+    .star {
+        color: var(--accent-color);
+    }
+    
+    /* Grid Layouts */
+    .anime-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
+    
+    .episode-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+        margin: 1.5rem 0;
+    }
+    
+    /* Section Components */
+    .section {
+        padding: 3rem 0;
+    }
+    
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text-light);
+        position: relative;
+    }
+    
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -0.5rem;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: var(--primary-color);
+        border-radius: 2px;
+    }
+    
+    .section-link {
+        color: var(--primary-color);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    /* Buttons */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: var(--border-radius);
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        transition: var(--transition);
+        gap: 0.5rem;
+    }
+    
+    .btn-primary {
+        background: var(--gradient-primary);
+        color: white;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+    }
+    
+    .btn-secondary {
+        background: var(--gradient-secondary);
+        color: white;
+    }
+    
+    .btn-outline {
+        background: transparent;
+        border: 2px solid var(--primary-color);
+        color: var(--primary-color);
+    }
+    
+    .btn-outline:hover {
+        background: var(--primary-color);
+        color: white;
+    }
+    
+    .btn-sm {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+    
+    /* Video Player */
+    .video-container {
+        position: relative;
+        background: #000;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        margin: 2rem 0;
+    }
+    
+    .video-player {
+        width: 100%;
+        aspect-ratio: 16/9;
+        background: #000;
+    }
+    
+    .video-watermark {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: rgba(0,0,0,0.7);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: var(--border-radius);
+        font-size: 0.8rem;
+        z-index: 10;
+        opacity: 0.8;
+    }
+    
+    .video-controls {
+        background: var(--dark-card);
+        padding: 1rem;
+        border-top: 1px solid var(--dark-border);
+    }
+    
+    .server-selector {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+    }
+    
+    .server-btn {
+        padding: 0.5rem 1rem;
+        background: var(--dark-bg);
+        border: 1px solid var(--dark-border);
+        color: var(--text-light);
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        transition: var(--transition);
+        font-size: 0.9rem;
+    }
+    
+    .server-btn:hover,
+    .server-btn.active {
+        background: var(--primary-color);
+        border-color: var(--primary-color);
+        color: white;
+    }
+    
+    /* NSFW Warning Modal */
+    .nsfw-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        backdrop-filter: blur(5px);
+    }
+    
+    .nsfw-content {
+        background: var(--dark-card);
+        padding: 2rem;
+        border-radius: var(--border-radius);
+        max-width: 500px;
+        text-align: center;
+        border: 2px solid var(--error-color);
+        box-shadow: var(--shadow-heavy);
+    }
+    
+    .nsfw-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: var(--error-color);
+    }
+    
+    .nsfw-title {
+        color: var(--error-color);
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+    }
+    
+    .nsfw-description {
+        margin-bottom: 2rem;
+        color: var(--text-muted);
+    }
+    
+    .nsfw-tags {
+        background: rgba(231, 76, 60, 0.2);
+        padding: 1rem;
+        border-radius: var(--border-radius);
+        margin: 1rem 0;
+        border-left: 4px solid var(--error-color);
+    }
+    
+    .nsfw-tags h4 {
+        color: var(--error-color);
+        margin-bottom: 0.5rem;
+    }
+    
+    /* Schedule Table */
+    .schedule-table {
+        background: var(--dark-card);
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        margin: 2rem 0;
+    }
+    
+    .schedule-header {
+        background: var(--gradient-primary);
+        padding: 1rem;
+        text-align: center;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+    
+    .schedule-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1px;
+        background: var(--dark-border);
+    }
+    
+    .schedule-day {
+        background: var(--dark-card);
+        padding: 1.5rem;
+    }
+    
+    .day-header {
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--primary-color);
+        text-transform: uppercase;
+        font-size: 0.9rem;
+    }
+    
+    .schedule-item {
+        padding: 0.7rem 0;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        font-size: 0.9rem;
+    }
+    
+    .schedule-item:last-child {
+        border-bottom: none;
+    }
+    
+    .schedule-time {
+        color: var(--accent-color);
+        font-weight: 500;
+        margin-right: 0.5rem;
+    }
+    
+    /* Intro Landing */
+    .intro-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--dark-bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        transition: opacity 0.5s ease-out;
+    }
+    
+    .intro-overlay.hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+    
+    .intro-content {
+        text-align: center;
+        max-width: 600px;
+        padding: 2rem;
+    }
+    
+    .intro-logo {
+        font-size: 4rem;
+        margin-bottom: 2rem;
+        animation: pulse 2s infinite;
+    }
+    
+    .intro-title {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .intro-description {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+        margin-bottom: 2rem;
+        line-height: 1.8;
+    }
+    
+    .intro-features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin: 2rem 0;
+    }
+    
+    .intro-feature {
+        background: var(--dark-card);
+        padding: 1.5rem;
+        border-radius: var(--border-radius);
+        border: 1px solid var(--dark-border);
+    }
+    
+    .feature-icon {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+    }
+    
+    .feature-title {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+    
+    .feature-description {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+    }
+    
+    /* Footer */
+    .footer {
+        background: var(--dark-card);
+        border-top: 1px solid var(--dark-border);
+        padding: 3rem 0 1rem;
+        margin-top: 4rem;
+    }
+    
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .footer-section h3 {
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+    }
+    
+    .footer-links {
+        list-style: none;
+    }
+    
+    .footer-links li {
+        margin-bottom: 0.5rem;
+    }
+    
+    .footer-links a {
+        color: var(--text-muted);
+        transition: var(--transition);
+    }
+    
+    .footer-links a:hover {
+        color: var(--primary-color);
+    }
+    
+    .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid var(--dark-border);
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .nav-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--dark-card);
+            flex-direction: column;
+            padding: 1rem;
+            gap: 1rem;
+            border-top: 1px solid var(--dark-border);
+        }
+        
+        .nav-menu.active {
+            display: flex;
+        }
+        
+        .search-input {
+            width: 200px;
+        }
+        
+        .search-input:focus {
+            width: 250px;
+        }
+        
+        .hero-title {
+            font-size: 2rem;
+        }
+        
+        .hero-stats {
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .anime-grid {
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        
+        .section-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .intro-title {
+            font-size: 2rem;
+        }
+        
+        .intro-features {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .container {
+            padding: 0 0.5rem;
+        }
+        
+        .hero {
+            padding: 2rem 0;
+        }
+        
+        .hero-title {
+            font-size: 1.5rem;
+        }
+        
+        .anime-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+        }
+        
+        .card-content {
+            padding: 1rem;
+        }
+        
+        .card-title {
+            font-size: 0.9rem;
+        }
+        
+        .intro-logo {
+            font-size: 3rem;
+        }
+        
+        .intro-title {
+            font-size: 1.5rem;
+        }
+    }
+    
+    /* Animations */
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    .animate-fadeInUp {
+        animation: fadeInUp 0.6s ease-out;
+    }
+    
+    .animate-slideInLeft {
+        animation: slideInLeft 0.6s ease-out;
+    }
+    
+    /* Loading States */
+    .loading {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(255,255,255,.3);
+        border-radius: 50%;
+        border-top-color: #fff;
+        animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+    
+    /* Utility Classes */
+    .text-center { text-align: center; }
+    .text-left { text-align: left; }
+    .text-right { text-align: right; }
+    .d-none { display: none; }
+    .d-block { display: block; }
+    .d-flex { display: flex; }
+    .d-grid { display: grid; }
+    .justify-content-center { justify-content: center; }
+    .align-items-center { align-items: center; }
+    .flex-wrap { flex-wrap: wrap; }
+    .gap-1 { gap: 0.5rem; }
+    .gap-2 { gap: 1rem; }
+    .gap-3 { gap: 1.5rem; }
+    .mt-1 { margin-top: 0.5rem; }
+    .mt-2 { margin-top: 1rem; }
+    .mt-3 { margin-top: 1.5rem; }
+    .mb-1 { margin-bottom: 0.5rem; }
+    .mb-2 { margin-bottom: 1rem; }
+    .mb-3 { margin-bottom: 1.5rem; }
+    .p-1 { padding: 0.5rem; }
+    .p-2 { padding: 1rem; }
+    .p-3 { padding: 1.5rem; }
+    
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: var(--dark-bg);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--accent-color);
+    }
+    
+    /* Selection */
+    ::selection {
+        background: var(--primary-color);
+        color: white;
+    }
+    
+    /* Print Styles */
+    @media print {
+        .header, .footer, .video-controls, .nsfw-modal {
+            display: none;
+        }
+        
+        body {
+            background: white;
+            color: black;
+        }
+        
+        .card {
+            break-inside: avoid;
+        }
+    }
+    </style>
+    
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap' rel='stylesheet'/>
+    
+    <!-- Font Awesome -->
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css' rel='stylesheet'/>
+    
+    <!-- Disqus Comments -->
+    <script type='text/javascript'>
+        var disqus_config = function () {
+            this.page.url = '<data:blog.url/>';
+            this.page.identifier = '<data:blog.pageId/>';
+        };
+    </script>
+    
+    <!-- Analytics -->
+    <b:if cond='data:blog.pageType == &quot;item&quot;'>
+        <meta expr:content='data:blog.pageName' property='og:title'/>
+        <meta expr:content='data:blog.canonicalUrl' property='og:url'/>
+        <meta expr:content='data:blog.metaDescription' property='og:description'/>
+    </b:if>
+    
+    <!-- Custom Variables -->
+    <script type='text/javascript'>
+        // Global variables
+        var blogUrl = '<data:blog.homepageUrl/>';
+        var blogId = '<data:blog.blogId/>';
+        var currentUrl = '<data:blog.url/>';
+        var pageType = '<data:blog.pageType/>';
+        
+        // NSFW content tags
+        var nsfwTags = ['yaoi', 'yuri', 'bl', 'gl', 'hentai', 'ecchi', 'bara', 'shotacon', 'lolicon'];
+        
+        // Anti-bot protection
+        var antiBotEnabled = true;
+        var watermarkEnabled = true;
+    </script>
+</head>
+
+<body expr:class='&quot;loading&quot; + data:blog.pageType'>
+    <!-- Intro Landing Page -->
+    <div class='intro-overlay' id='introOverlay'>
+        <div class='intro-content'>
+            <div class='intro-logo'>🎌</div>
+            <h1 class='intro-title'>ANIME STREAMING</h1>
+            <p class='intro-description'>
+                Selamat datang di platform streaming anime dan donghua terlengkap! 
+                Nikmati koleksi ribuan anime subtitle Indonesia dengan kualitas tinggi.
+            </p>
+            
+            <div class='intro-features'>
+                <div class='intro-feature'>
+                    <div class='feature-icon'>📺</div>
+                    <div class='feature-title'>Streaming HD</div>
+                    <div class='feature-description'>Kualitas video HD hingga 1080p untuk pengalaman menonton terbaik</div>
+                </div>
+                <div class='intro-feature'>
+                    <div class='feature-icon'>⚡</div>
+                    <div class='feature-title'>Update Cepat</div>
+                    <div class='feature-description'>Episode terbaru update setiap hari sesuai jadwal rilis Jepang</div>
+                </div>
+                <div class='intro-feature'>
+                    <div class='feature-icon'>🌟</div>
+                    <div class='feature-title'>Sub Indo</div>
+                    <div class='feature-description'>Semua anime dilengkapi subtitle Indonesia berkualitas</div>
+                </div>
+                <div class='intro-feature'>
+                    <div class='feature-icon'>📱</div>
+                    <div class='feature-title'>Mobile Friendly</div>
+                    <div class='feature-description'>Tampilan responsive untuk semua perangkat smartphone dan tablet</div>
+                </div>
+            </div>
+            
+            <div class='intro-buttons'>
+                <button class='btn btn-primary' onclick='hideIntro()'>
+                    <i class='fas fa-play'></i> Mulai Streaming
+                </button>
+                <button class='btn btn-outline' onclick='showTutorial()'>
+                    <i class='fas fa-info-circle'></i> Cara Penggunaan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NSFW Warning Modal -->
+    <div class='nsfw-modal' id='nsfwModal' style='display:none;'>
+        <div class='nsfw-content'>
+            <div class='nsfw-icon'>⚠️</div>
+            <h3 class='nsfw-title'>Konten Dewasa</h3>
+            <p class='nsfw-description'>
+                Episode ini mengandung konten yang tidak cocok untuk semua umur.
+                Pastikan Anda sudah cukup umur untuk menonton konten ini.
+            </p>
+            <div class='nsfw-tags'>
+                <h4>Tag yang Terkait:</h4>
+                <p id='nsfwTagList'></p>
+            </div>
+            <div style='display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;'>
+                <button class='btn btn-primary' onclick='proceedToContent()'>
+                    <i class='fas fa-check'></i> Saya Sudah Dewasa
+                </button>
+                <button class='btn btn-outline' onclick='goBack()'>
+                    <i class='fas fa-times'></i> Kembali
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class='header' id='header'>
+        <div class='container'>
+            <nav class='navbar'>
+                <a class='logo' expr:href='data:blog.homepageUrl'>
+                    <data:blog.title/>
+                </a>
+                
+                <ul class='nav-menu' id='navMenu'>
+                    <li><a class='nav-link' expr:href='data:blog.homepageUrl'>Beranda</a></li>
+                    <li><a class='nav-link' href='/p/anime-list.html'>Anime List</a></li>
+                    <li><a class='nav-link' href='/p/donghua-list.html'>Donghua List</a></li>
+                    <li><a class='nav-link' href='/p/jadwal-rilis.html'>Jadwal Rilis</a></li>
+                    <li><a class='nav-link' href='/p/genre.html'>Genre</a></li>
+                    <li class='dropdown'>
+                        <a class='nav-link dropdown' href='#'>Lainnya</a>
+                        <div class='dropdown-menu'>
+                            <a class='dropdown-item' href='/p/pengumuman.html'>Pengumuman</a>
+                            <a class='dropdown-item' href='/p/disclaimer.html'>Disclaimer</a>
+                            <a class='dropdown-item' href='/p/dmca.html'>DMCA</a>
+                            <a class='dropdown-item' href='/p/tentang-kami.html'>Tentang Kami</a>
+                        </div>
+                    </li>
+                </ul>
+                
+                <div class='search-container'>
+                    <input class='search-input' id='searchInput' placeholder='Cari anime...' type='text'/>
+                    <div class='search-results' id='searchResults'></div>
+                </div>
+                
+                <div class='mobile-menu-toggle' id='mobileMenuToggle'>
+                    <i class='fas fa-bars'></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class='main-content'>
+        <!-- Hero Section (Homepage Only) -->
+        <b:if cond='data:blog.url == data:blog.homepageUrl'>
+            <section class='hero'>
+                <div class='container'>
+                    <div class='hero-content'>
+                        <h1 class='hero-title'>Streaming Anime & Donghua Subtitle Indonesia</h1>
+                        <p class='hero-subtitle'>Koleksi lengkap anime terbaru dan donghua berkualitas HD</p>
+                        
+                        <div class='hero-stats'>
+                            <div class='stat-item'>
+                                <span class='stat-number'>1000+</span>
+                                <span class='stat-label'>Anime</span>
+                            </div>
+                            <div class='stat-item'>
+                                <span class='stat-number'>500+</span>
+                                <span class='stat-label'>Donghua</span>
+                            </div>
+                            <div class='stat-item'>
+                                <span class='stat-number'>50k+</span>
+                                <span class='stat-label'>Episode</span>
+                            </div>
+                            <div class='stat-item'>
+                                <span class='stat-number'>1jt+</span>
+                                <span class='stat-label'>Pengguna</span>
+                            </div>
+                        </div>
+                        
+                        <div style='margin-top: 2rem;'>
+                            <a class='btn btn-primary' href='#trending'>
+                                <i class='fas fa-fire'></i> Lihat Anime Terpopuler
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </b:if>
+
+        <!-- Blog Posts -->
+        <div class='container'>
+            <b:section class='main-section' id='main' showaddelement='yes'>
+                <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog'>
+                    <b:includable id='main' var='top'>
+                        <b:include name='all'/>
+                    </b:includable>
+                    
+                    <b:includable id='post' var='post'>
+                        <div class='blog-post'>
+                            <article class='card'>
+                                <b:if cond='data:post.featuredImage'>
+                                    <div class='card-image'>
+                                        <img expr:alt='data:post.title' expr:src='data:post.featuredImage'/>
+                                        <b:if cond='data:post.labels any (l => l.name == &quot;Ongoing&quot;)'>
+                                            <span class='card-badge ongoing'>Ongoing</span>
+                                        </b:if>
+                                        <b:if cond='data:post.labels any (l => l.name == &quot;Completed&quot;)'>
+                                            <span class='card-badge completed'>Completed</span>
+                                        </b:if>
+                                        <b:if cond='data:post.labels any (l => l.name in {&quot;yaoi&quot;, &quot;yuri&quot;, &quot;hentai&quot;, &quot;ecchi&quot;})'>
+                                            <span class='card-badge nsfw'>18+</span>
+                                        </b:if>
+                                    </div>
+                                </b:if>
+                                
+                                <div class='card-content'>
+                                    <h2 class='card-title'>
+                                        <a expr:href='data:post.url'>
+                                            <data:post.title/>
+                                        </a>
+                                    </h2>
+                                    
+                                    <p class='card-description'>
+                                        <b:eval expr='data:post.snippet' />
+                                    </p>
+                                    
+                                    <div class='card-meta'>
+                                        <div class='card-date'>
+                                            <i class='far fa-calendar'></i>
+                                            <data:post.date format='dd MMMM yyyy'/>
+                                        </div>
+                                        <div class='card-rating'>
+                                            <i class='fas fa-star star'></i>
+                                            <span>4.8</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </b:includable>
+                </b:widget>
+            </b:section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class='footer'>
+        <div class='container'>
+            <div class='footer-content'>
+                <div class='footer-section'>
+                    <h3>Tentang Kami</h3>
+                    <p>
+                        Platform streaming anime dan donghua terlengkap dengan subtitle Indonesia. 
+                        Kami menyediakan konten berkualitas tinggi dengan update tercepat.
+                    </p>
+                    <div style='margin-top: 1rem;'>
+                        <a class='btn btn-outline btn-sm' href='/p/tentang-kami.html'>
+                            Selengkapnya
+                        </a>
+                    </div>
+                </div>
+                
+                <div class='footer-section'>
+                    <h3>Quick Links</h3>
+                    <ul class='footer-links'>
+                        <li><a href='/p/anime-list.html'>Anime List</a></li>
+                        <li><a href='/p/donghua-list.html'>Donghua List</a></li>
+                        <li><a href='/p/jadwal-rilis.html'>Jadwal Rilis</a></li>
+                        <li><a href='/p/genre.html'>Genre</a></li>
+                        <li><a href='/p/pengumuman.html'>Pengumuman</a></li>
+                    </ul>
+                </div>
+                
+                <div class='footer-section'>
+                    <h3>Legal</h3>
+                    <ul class='footer-links'>
+                        <li><a href='/p/disclaimer.html'>Disclaimer</a></li>
+                        <li><a href='/p/dmca.html'>DMCA Policy</a></li>
+                        <li><a href='/p/privacy-policy.html'>Privacy Policy</a></li>
+                        <li><a href='/p/terms-of-service.html'>Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class='footer-section'>
+                    <h3>Ikuti Kami</h3>
+                    <p>Dapatkan update terbaru melalui media sosial kami</p>
+                    <div style='margin-top: 1rem;'>
+                        <a class='btn btn-outline btn-sm' href='#' style='margin-right: 0.5rem;'>
+                            <i class='fab fa-facebook'></i>
+                        </a>
+                        <a class='btn btn-outline btn-sm' href='#' style='margin-right: 0.5rem;'>
+                            <i class='fab fa-twitter'></i>
+                        </a>
+                        <a class='btn btn-outline btn-sm' href='#'>
+                            <i class='fab fa-instagram'></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class='footer-bottom'>
+                <p>&copy; 2024 <data:blog.title/>. All rights reserved. | 
+                Powered by <a href='https://www.blogger.com' target='_blank'>Blogger</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script type='text/javascript'>
+    // Main JavaScript Functions
+    
+    // Intro Functions
+    function hideIntro() {
+        document.getElementById('introOverlay').classList.add('hidden');
+        setTimeout(() => {
+            document.getElementById('introOverlay').style.display = 'none';
+        }, 500);
+        localStorage.setItem('introShown', 'true');
+    }
+    
+    function showTutorial() {
+        alert('Tutorial akan ditampilkan di sini...');
+    }
+    
+    // Check if intro has been shown
+    window.addEventListener('load', function() {
+        if (localStorage.getItem('introShown')) {
+            document.getElementById('introOverlay').style.display = 'none';
+        }
+    });
+    
+    // NSFW Warning Functions
+    function checkNSFWContent(labels) {
+        return labels.some(label => nsfwTags.includes(label.toLowerCase()));
+    }
+    
+    function showNSFWWarning(postTitle, labels) {
+        const nsfwTagsFound = labels.filter(label => nsfwTags.includes(label.toLowerCase()));
+        document.getElementById('nsfwTagList').textContent = nsfwTagsFound.join(', ');
+        document.getElementById('nsfwModal').style.display = 'flex';
+        
+        // Store current post info
+        window.currentPost = { title: postTitle, labels: labels };
+    }
+    
+    function proceedToContent() {
+        document.getElementById('nsfwModal').style.display = 'none';
+        // Proceed to content
+        console.log('Proceeding to NSFW content:', window.currentPost);
+    }
+    
+    function goBack() {
+        document.getElementById('nsfwModal').style.display = 'none';
+        window.history.back();
+    }
+    
+    // Search Functions
+    document.getElementById('searchInput').addEventListener('input', function(e) {
+        const query = e.target.value.toLowerCase();
+        if (query.length > 2) {
+            performSearch(query);
+        } else {
+            document.getElementById('searchResults').style.display = 'none';
+        }
+    });
+    
+    function performSearch(query) {
+        // Simulate search results
+        const results = [
+            { title: 'Solo Leveling Season 2', type: 'Anime', episode: 'Episode 12' },
+            { title: 'Mo Dao Zu Shi', type: 'Donghua', episode: 'Season 3' },
+            { title: 'Attack on Titan', type: 'Anime', episode: 'Final Season' }
+        ];
+        
+        const resultsContainer = document.getElementById('searchResults');
+        resultsContainer.innerHTML = '';
+        
+        results.forEach(result => {
+            const resultItem = document.createElement('div');
+            resultItem.className = 'search-result-item';
+            resultItem.innerHTML = `
+                <div class='search-result-title'>${result.title}</div>
+                <div class='search-result-meta'>${result.type} • ${result.episode}</div>
+            `;
+            resultsContainer.appendChild(resultItem);
+        });
+        
+        resultsContainer.style.display = 'block';
+    }
+    
+    // Hide search results when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.search-container')) {
+            document.getElementById('searchResults').style.display = 'none';
+        }
+    });
+    
+    // Mobile Menu Toggle
+    document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+        document.getElementById('navMenu').classList.toggle('active');
+    });
+    
+    // Header Scroll Effect
+    window.addEventListener('scroll', function() {
+        const header = document.getElementById('header');
+        if (window.scrollY > 100) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+    
+    // Video Player Functions
+    function switchServer(serverId) {
+        // Remove active class from all server buttons
+        document.querySelectorAll('.server-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        // Add active class to clicked button
+        event.target.classList.add('active');
+        
+        // Switch video source
+        console.log('Switching to server:', serverId);
+        // Implement video source switching logic here
+    }
+    
+    // Bookmark Function
+    function toggleBookmark(animeId, title) {
+        let bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+        const index = bookmarks.findIndex(item => item.id === animeId);
+        
+        if (index > -1) {
+            bookmarks.splice(index, 1);
+            alert('Dihapus dari bookmark');
+        } else {
+            bookmarks.push({ id: animeId, title: title, date: new Date().toISOString() });
+            alert('Ditambahkan ke bookmark');
+        }
+        
+        localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+    }
+    
+    // Watch History
+    function addToHistory(animeId, title, episode) {
+        let history = JSON.parse(localStorage.getItem('watchHistory') || '[]');
+        const newEntry = { 
+            id: animeId, 
+            title: title, 
+            episode: episode, 
+            date: new Date().toISOString(),
+            timestamp: Date.now()
+        };
+        
+        // Remove existing entry if any
+        history = history.filter(item => !(item.id === animeId && item.episode === episode));
+        
+        // Add new entry at the beginning
+        history.unshift(newEntry);
+        
+        // Keep only last 50 entries
+        history = history.slice(0, 50);
+        
+        localStorage.setItem('watchHistory', JSON.stringify(history));
+    }
+    
+    // Anti-bot Protection
+    function checkBotBehavior() {
+        if (!antiBotEnabled) return;
+        
+        // Check for suspicious behavior
+        const clickCount = parseInt(sessionStorage.getItem('clickCount') || '0');
+        const startTime = parseInt(sessionStorage.getItem('sessionStart') || Date.now().toString());
+        const currentTime = Date.now();
+        const sessionDuration = currentTime - startTime;
+        
+        // If too many clicks in short time, likely a bot
+        if (clickCount > 50 && sessionDuration < 30000) {
+            alert('Aktivitas mencurigakan terdeteksi. Silahkan refresh halaman.');
+            window.location.reload();
+        }
+        
+        sessionStorage.setItem('clickCount', (clickCount + 1).toString());
+    }
+    
+    // Track user clicks
+    document.addEventListener('click', checkBotBehavior);
+    
+    // Initialize session
+    if (!sessionStorage.getItem('sessionStart')) {
+        sessionStorage.setItem('sessionStart', Date.now().toString());
+        sessionStorage.setItem('clickCount', '0');
+    }
+    
+    // Lazy Loading for Images
+    function lazyLoadImages() {
+        const images = document.querySelectorAll('img[data-src]');
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.classList.remove('lazy');
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+        
+        images.forEach(img => imageObserver.observe(img));
+    }
+    
+    // Initialize lazy loading
+    document.addEventListener('DOMContentLoaded', lazyLoadImages);
+    
+    // Smooth Scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+    
+    // Back to Top Button
+    const backToTopButton = document.createElement('button');
+    backToTopButton.innerHTML = '<i class="fas fa-arrow-up"></i>';
+    backToTopButton.className = 'btn btn-primary';
+    backToTopButton.style.cssText = `
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 999;
+        display: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        padding: 0;
+    `;
+    
+    document.body.appendChild(backToTopButton);
+    
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            backToTopButton.style.display = 'block';
+        } else {
+            backToTopButton.style.display = 'none';
+        }
+    });
+    
+    backToTopButton.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+    
+    // Console Warning
+    console.log('%cSTOP!', 'color: red; font-size: 50px; font-weight: bold;');
+    console.log('%cThis is a browser feature intended for developers. Please don\'t paste any code here that you don\'t understand.', 'color: white; font-size: 16px;');
+    console.log('%cPaste any malicious code here could lead to your account being compromised!', 'color: red; font-size: 16px;');
+    </script>
+    
+    <!-- Disqus Thread -->
+    <b:if cond='data:blog.pageType == &quot;item&quot;'>
+        <div class='container'>
+            <div class='comments-section' style='margin: 3rem 0;'>
+                <div id='disqus_thread'></div>
+                <script type='text/javascript'>
+                var disqus_loaded = false;
+                function load_disqus() {
+                    if (!disqus_loaded) {
+                        disqus_loaded = true;
+                        var d = document, s = d.createElement('script');
+                        s.src = 'https://your-disqus-shortname.disqus.com/embed.js';
+                        s.setAttribute('data-timestamp', +new Date());
+                        (d.head || d.body).appendChild(s);
+                    }
+                }
+                
+                // Load disqus when comments section is visible
+                var commentsSection = document.querySelector('.comments-section');
+                if (commentsSection) {
+                    var disqusObserver = new IntersectionObserver(function(entries) {
+                        entries.forEach(function(entry) {
+                            if (entry.isIntersecting) {
+                                load_disqus();
+                                disqusObserver.unobserve(commentsSection);
+                            }
+                        });
+                    });
+                    disqusObserver.observe(commentsSection);
+                }
+                </script>
+            </div>
+        </div>
+    </b:if>
+</body>
+</html>

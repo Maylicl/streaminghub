@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Series & Episode - Web Streaming Anime & Donghua</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #252525;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent-color: #ff6b6b;
+            --accent-hover: #ff5252;
+            --border-color: #333;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --danger-color: #f44336;
+            --font-primary: 'Inter', sans-serif;
+            --font-heading: 'Poppins', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .sidebar, .main-content {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent-color);
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .quick-actions {
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #d32f2f;
+            transform: translateY(-2px);
+        }
+
+        .btn-small {
+            padding: 0.5rem 0.8rem;
+            font-size: 0.85rem;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            padding: 1rem 1.5rem;
+            color: var(--text-primary);
+            font-family: var(--font-primary);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            color: var(--text-primary);
+            min-width: 150px;
+        }
+
+        .content-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .content-item {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .content-item:hover {
+            border-color: var(--accent-color);
+            transform: translateX(5px);
+        }
+
+        .item-info h4 {
+            color: var(--accent-color);
+            margin-bottom: 0.3rem;
+        }
+
+        .item-meta {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-ongoing {
+            background: rgba(76, 175, 80, 0.2);
+            color: var(--success-color);
+            border: 1px solid var(--success-color);
+        }
+
+        .status-completed {
+            background: rgba(255, 152, 0, 0.2);
+            color: var(--warning-color);
+            border: 1px solid var(--warning-color);
+        }
+
+        .status-upcoming {
+            background: rgba(33, 150, 243, 0.2);
+            color: #2196f3;
+            border: 1px solid #2196f3;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-title {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            color: var(--accent-color);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            color: var(--text-primary);
+            font-family: var(--font-primary);
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .progress-bar {
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            height: 6px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--accent-color), var(--warning-color));
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-success {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid var(--success-color);
+            color: var(--success-color);
+        }
+
+        .alert-error {
+            background: rgba(244, 67, 54, 0.1);
+            border: 1px solid var(--danger-color);
+            color: var(--danger-color);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-group {
+                flex-direction: column;
+            }
+
+            .content-item {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+            }
+
+            .item-actions {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-tasks"></i> Kelola Series & Episode</h1>
+            <p>Panel administrasi untuk mengelola konten anime dan donghua</p>
+        </div>
+
+        <div class="dashboard">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <h2 class="section-title">
+                    <i class="fas fa-chart-line"></i> Dashboard
+                </h2>
+
+                <!-- Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-tv"></i>
+                        </div>
+                        <div class="stat-value" id="total-series">0</div>
+                        <div class="stat-label">Total Series</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="stat-value" id="total-episodes">0</div>
+                        <div class="stat-label">Total Episode</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="stat-value" id="total-views">0</div>
+                        <div class="stat-label">Total Views</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-value" id="total-users">0</div>
+                        <div class="stat-label">Pengunjung Aktif</div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Aksi Cepat</h3>
+                <div class="quick-actions">
+                    <button class="btn btn-primary" onclick="showAddSeriesModal()">
+                        <i class="fas fa-plus"></i> Tambah Series
+                    </button>
+                    <button class="btn btn-secondary" onclick="showAddEpisodeModal()">
+                        <i class="fas fa-plus"></i> Tambah Episode
+                    </button>
+                    <button class="btn btn-success" onclick="exportData()">
+                        <i class="fas fa-download"></i> Export Data
+                    </button>
+                    <button class="btn btn-danger" onclick="clearCache()">
+                        <i class="fas fa-broom"></i> Bersihkan Cache
+                    </button>
+                </div>
+
+                <!-- Progress Bar -->
+                <div style="margin-top: 2rem;">
+                    <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">Kapasitas Storage</h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="storage-progress" style="width: 65%;"></div>
+                    </div>
+                    <small style="color: var(--text-secondary);">65% dari 10GB digunakan</small>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <h2 class="section-title">
+                    <i class="fas fa-list"></i> Daftar Series
+                </h2>
+
+                <!-- Search and Filter -->
+                <div class="search-box">
+                    <input type="text" class="search-input" id="search-input" placeholder="Cari series..." onkeyup="filterSeries()">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+
+                <div class="filter-group">
+                    <select class="filter-select" id="type-filter" onchange="filterSeries()">
+                        <option value="">Semua Tipe</option>
+                        <option value="anime">Anime</option>
+                        <option value="donghua">Donghua</option>
+                        <option value="ova">OVA</option>
+                        <option value="movie">Movie</option>
+                    </select>
+                    <select class="filter-select" id="status-filter" onchange="filterSeries()">
+                        <option value="">Semua Status</option>
+                        <option value="ongoing">Ongoing</option>
+                        <option value="completed">Completed</option>
+                        <option value="upcoming">Upcoming</option>
+                        <option value="hiatus">Hiatus</option>
+                    </select>
+                    <select class="filter-select" id="sort-filter" onchange="sortSeries()">
+                        <option value="title">Urutkan: Judul</option>
+                        <option value="date">Urutkan: Tanggal Update</option>
+                        <option value="views">Urutkan: Views</option>
+                        <option value="episodes">Urutkan: Jumlah Episode</option>
+                    </select>
+                </div>
+
+                <!-- Series List -->
+                <div class="content-grid" id="series-list">
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <h3>Belum ada series</h3>
+                        <p>Silakan tambahkan series baru untuk memulai.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Series Modal -->
+    <div class="modal" id="add-series-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Tambah Series Baru</h3>
+                <button class="close-btn" onclick="closeModal('add-series-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form id="add-series-form" onsubmit="addSeries(event)">
+                <div class="form-group">
+                    <label class="form-label">Judul Series *</label>
+                    <input type="text" class="form-input" id="series-title" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Tipe *</label>
+                        <select class="form-select" id="series-type" required>
+                            <option value="">Pilih Tipe</option>
+                            <option value="anime">Anime</option>
+                            <option value="donghua">Donghua</option>
+                            <option value="ova">OVA</option>
+                            <option value="movie">Movie</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <select class="form-select" id="series-status">
+                            <option value="ongoing">Ongoing</option>
+                            <option value="completed">Completed</option>
+                            <option value="upcoming">Upcoming</option>
+                            <option value="hiatus">Hiatus</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Studio</label>
+                        <input type="text" class="form-input" id="series-studio" placeholder="Contoh: A-1 Pictures">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Tahun Rilis</label>
+                        <input type="number" class="form-input" id="series-year" placeholder="2026">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Total Episode</label>
+                        <input type="number" class="form-input" id="series-episodes" placeholder="12">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Skor MyAnimeList</label>
+                        <input type="number" class="form-input" id="series-score" placeholder="8.5" step="0.1" min="0" max="10">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Genre</label>
+                    <input type="text" class="form-input" id="series-genres" placeholder="Action, Adventure, Fantasy (pisahkan dengan koma)">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Sinopsis</label>
+                    <textarea class="form-textarea" id="series-synopsis" placeholder="Tulis sinopsis series ini..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">URL Cover Image</label>
+                    <input type="url" class="form-input" id="series-cover" placeholder="https://example.com/cover.jpg">
+                </div>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Simpan Series
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('add-series-modal')">
+                        <i class="fas fa-times"></i> Batal
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Episode Modal -->
+    <div class="modal" id="add-episode-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Tambah Episode Baru</h3>
+                <button class="close-btn" onclick="closeModal('add-episode-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form id="add-episode-form" onsubmit="addEpisode(event)">
+                <div class="form-group">
+                    <label class="form-label">Judul Series *</label>
+                    <select class="form-select" id="episode-series" required>
+                        <option value="">Pilih Series</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Episode *</label>
+                        <input type="number" class="form-input" id="episode-number" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Judul Episode</label>
+                        <input type="text" class="form-input" id="episode-title" placeholder="Opsional">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Server 1 URL *</label>
+                    <input type="url" class="form-input" id="episode-server1" placeholder="https://server1.com/embed/..." required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Server 2 URL</label>
+                    <input type="url" class="form-input" id="episode-server2" placeholder="https://server2.com/embed/...">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Server 3 URL</label>
+                    <input type="url" class="form-input" id="episode-server3" placeholder="https://server3.com/embed/...">
+                </div>
+
+                <div class="checkbox-group">
+                    <label style="display: flex; align-items: center; gap: 0.5rem;">
+                        <input type="checkbox" id="episode-nsfw">
+                        <span>Konten NSFW (18+)</span>
+                    </label>
+                </div>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i> Simpan Episode
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('add-episode-modal')">
+                        <i class="fas fa-times"></i> Batal
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Sample data
+        let seriesData = [
+            {
+                id: 1,
+                title: "Solo Leveling Season 2",
+                type: "anime",
+                status: "ongoing",
+                studio: "A-1 Pictures",
+                year: 2026,
+                episodes: 12,
+                score: 8.7,
+                genres: "Action, Adventure, Fantasy",
+                synopsis: "Cerita tentang pemburu bayaran terkuat...",
+                cover: "https://example.com/cover1.jpg",
+                views: 15420,
+                lastUpdated: "2026-03-02"
+            },
+            {
+                id: 2,
+                title: "Perfect World",
+                type: "donghua",
+                status: "ongoing",
+                studio: "Shanghai Foch",
+                year: 2026,
+                episodes: 156,
+                score: 8.2,
+                genres: "Action, Cultivation, Fantasy",
+                synopsis: "Dunia sempurna di mana kultivasi menjadi kunci...",
+                cover: "https://example.com/cover2.jpg",
+                views: 8930,
+                lastUpdated: "2026-03-01"
+            }
+        ];
+
+        let episodeData = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStats();
+            renderSeriesList();
+            populateEpisodeSeriesSelect();
+        });
+
+        // Update statistics
+        function updateStats() {
+            document.getElementById('total-series').textContent = seriesData.length;
+            document.getElementById('total-episodes').textContent = episodeData.length;
+            document.getElementById('total-views').textContent = seriesData.reduce((sum, series) => sum + series.views, 0).toLocaleString();
+            document.getElementById('total-users').textContent = Math.floor(Math.random() * 1000) + 500;
+        }
+
+        // Render series list
+        function renderSeriesList(filteredData = null) {
+            const data = filteredData || seriesData;
+            const container = document.getElementById('series-list');
+
+            if (data.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <h3>Tidak ada series yang sesuai</h3>
+                        <p>Coba ubah filter pencarian Anda.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = data.map(series => `
+                <div class="content-item">
+                    <div class="item-info">
+                        <h4>${series.title}</h4>
+                        <div class="item-meta">
+                            <span>${series.type.toUpperCase()}</span> • 
+                            <span>${series.studio}</span> • 
+                            <span>${series.year}</span> • 
+                            <span>${series.episodes} Episode</span> • 
+                            <span>⭐ ${series.score}</span>
+                        </div>
+                        <div style="margin-top: 0.5rem;">
+                            <span class="status-badge status-${series.status}">${series.status}</span>
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn btn-primary btn-small" onclick="viewSeries(${series.id})">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-secondary btn-small" onclick="editSeries(${series.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger btn-small" onclick="deleteSeries(${series.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter series
+        function filterSeries() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const typeFilter = document.getElementById('type-filter').value;
+            const statusFilter = document.getElementById('status-filter').value;
+
+            const filtered = seriesData.filter(series => {
+                const matchesSearch = series.title.toLowerCase().includes(searchTerm);
+                const matchesType = !typeFilter || series.type === typeFilter;
+                const matchesStatus = !statusFilter || series.status === statusFilter;
+
+                return matchesSearch && matchesType && matchesStatus;
+            });
+
+            renderSeriesList(filtered);
+        }
+
+        // Sort series
+        function sortSeries() {
+            const sortBy = document.getElementById('sort-filter').value;
+            
+            seriesData.sort((a, b) => {
+                switch(sortBy) {
+                    case 'title':
+                        return a.title.localeCompare(b.title);
+                    case 'date':
+                        return new Date(b.lastUpdated) - new Date(a.lastUpdated);
+                    case 'views':
+                        return b.views - a.views;
+                    case 'episodes':
+                        return b.episodes - a.episodes;
+                    default:
+                        return 0;
+                }
+            });
+
+            renderSeriesList();
+        }
+
+        // Modal functions
+        function showAddSeriesModal() {
+            document.getElementById('add-series-modal').classList.add('show');
+        }
+
+        function showAddEpisodeModal() {
+            document.getElementById('add-episode-modal').classList.add('show');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('show');
+        }
+
+        // Add series
+        function addSeries(event) {
+            event.preventDefault();
+            
+            const newSeries = {
+                id: Date.now(),
+                title: document.getElementById('series-title').value,
+                type: document.getElementById('series-type').value,
+                status: document.getElementById('series-status').value,
+                studio: document.getElementById('series-studio').value,
+                year: parseInt(document.getElementById('series-year').value),
+                episodes: parseInt(document.getElementById('series-episodes').value),
+                score: parseFloat(document.getElementById('series-score').value),
+                genres: document.getElementById('series-genres').value,
+                synopsis: document.getElementById('series-synopsis').value,
+                cover: document.getElementById('series-cover').value,
+                views: 0,
+                lastUpdated: new Date().toISOString().split('T')[0]
+            };
+
+            seriesData.push(newSeries);
+            updateStats();
+            renderSeriesList();
+            closeModal('add-series-modal');
+            document.getElementById('add-series-form').reset();
+            
+            alert('Series berhasil ditambahkan!');
+        }
+
+        // Add episode
+        function addEpisode(event) {
+            event.preventDefault();
+            
+            const newEpisode = {
+                id: Date.now(),
+                seriesId: parseInt(document.getElementById('episode-series').value),
+                episodeNumber: parseInt(document.getElementById('episode-number').value),
+                title: document.getElementById('episode-title').value,
+                server1: document.getElementById('episode-server1').value,
+                server2: document.getElementById('episode-server2').value,
+                server3: document.getElementById('episode-server3').value,
+                nsfw: document.getElementById('episode-nsfw').checked,
+                uploadDate: new Date().toISOString().split('T')[0]
+            };
+
+            episodeData.push(newEpisode);
+            updateStats();
+            closeModal('add-episode-modal');
+            document.getElementById('add-episode-form').reset();
+            
+            alert('Episode berhasil ditambahkan!');
+        }
+
+        // Populate episode series select
+        function populateEpisodeSeriesSelect() {
+            const select = document.getElementById('episode-series');
+            select.innerHTML = '<option value="">Pilih Series</option>';
+            
+            seriesData.forEach(series => {
+                const option = document.createElement('option');
+                option.value = series.id;
+                option.textContent = series.title;
+                select.appendChild(option);
+            });
+        }
+
+        // Other functions
+        function viewSeries(id) {
+            const series = seriesData.find(s => s.id === id);
+            if (series) {
+                alert(`Detail Series: ${series.title}\n\nStudio: ${series.studio}\nEpisode: ${series.episodes}\nSkor: ${series.score}\nViews: ${series.views.toLocaleString()}`);
+            }
+        }
+
+        function editSeries(id) {
+            const series = seriesData.find(s => s.id === id);
+            if (series) {
+                alert(`Fitur edit untuk series "${series.title}" akan segera tersedia.`);
+            }
+        }
+
+        function deleteSeries(id) {
+            if (confirm('Apakah Anda yakin ingin menghapus series ini?')) {
+                seriesData = seriesData.filter(s => s.id !== id);
+                episodeData = episodeData.filter(e => e.seriesId !== id);
+                updateStats();
+                renderSeriesList();
+                alert('Series berhasil dihapus!');
+            }
+        }
+
+        function exportData() {
+            const data = {
+                series: seriesData,
+                episodes: episodeData,
+                exportDate: new Date().toISOString()
+            };
+            
+            const jsonData = JSON.stringify(data, null, 2);
+            const blob = new Blob([jsonData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `streaming-data-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('Data berhasil diekspor!');
+        }
+
+        function clearCache() {
+            if (confirm('Apakah Anda yakin ingin membersihkan cache?')) {
+                // Clear localStorage
+                localStorage.clear();
+                
+                // Clear session data
+                sessionStorage.clear();
+                
+                alert('Cache berhasil dibersihkan!');
+            }
+        }
+
+        // Close modal on outside click
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>

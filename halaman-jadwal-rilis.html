@@ -1,0 +1,952 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html version='XHTML+RDFa 1.0' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+    <meta charset='utf-8'/>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'/>
+    <meta content='IE=edge' http-equiv='X-UA-Compatible'/>
+    <b:include data='blog' name='all-head-content'/>
+    
+    <title>Jadwal Rilis Anime & Donghua - <data:blog.title/></title>
+    <meta content='Jadwal rilis anime dan donghua terbaru setiap hari. Update cepat episode terbaru subtitle Indonesia.' name='description'/>
+    <meta content='jadwal rilis anime, jadwal anime, anime terbaru, donghua terbaru, anime sub indo' name='keywords'/>
+    
+    <!-- Schema.org -->
+    <script type='application/ld+json'>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Jadwal Rilis Anime & Donghua",
+      "description": "Jadwal rilis anime dan donghua terbaru setiap hari",
+      "url": "<data:blog.url/>"
+    }
+    </script>
+    
+    <style type='text/css'>
+    /* Import CSS dari template utama */
+    :root {
+        --primary-color: #e74c3c;
+        --secondary-color: #3498db;
+        --accent-color: #f39c12;
+        --dark-bg: #0a0a0a;
+        --dark-card: #1a1a1a;
+        --dark-border: #333;
+        --text-light: #ffffff;
+        --text-muted: #b3b3b3;
+        --text-secondary: #888;
+        --success-color: #27ae60;
+        --warning-color: #e67e22;
+        --error-color: #e74c3c;
+        --gradient-primary: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        --gradient-secondary: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        --border-radius: 8px;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: var(--dark-bg);
+        color: var(--text-light);
+        line-height: 1.6;
+    }
+    
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    
+    /* Jadwal Rilis Styles */
+    .jadwal-section {
+        padding: 4rem 0;
+        min-height: 80vh;
+    }
+    
+    .jadwal-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .jadwal-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .jadwal-subtitle {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+        margin-bottom: 2rem;
+    }
+    
+    /* Filter Controls */
+    .filter-controls {
+        background: var(--dark-card);
+        padding: 2rem;
+        border-radius: var(--border-radius);
+        border: 1px solid var(--dark-border);
+        margin-bottom: 2rem;
+    }
+    
+    .filter-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .filter-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--text-light);
+    }
+    
+    .filter-select, .filter-input {
+        width: 100%;
+        padding: 0.8rem;
+        background: var(--dark-bg);
+        border: 2px solid var(--dark-border);
+        border-radius: var(--border-radius);
+        color: var(--text-light);
+        transition: var(--transition);
+    }
+    
+    .filter-select:focus, .filter-input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+    }
+    
+    /* Jadwal Grid */
+    .jadwal-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+    
+    .jadwal-day {
+        background: var(--dark-card);
+        border: 1px solid var(--dark-border);
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        transition: var(--transition);
+    }
+    
+    .jadwal-day:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        border-color: var(--primary-color);
+    }
+    
+    .day-header {
+        background: var(--gradient-primary);
+        padding: 1.5rem;
+        text-align: center;
+        position: relative;
+    }
+    
+    .day-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grain)"/></svg>');
+        opacity: 0.3;
+    }
+    
+    .day-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .day-date {
+        font-size: 0.9rem;
+        opacity: 0.9;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .day-icon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        position: relative;
+        z-index: 1;
+    }
+    
+    /* Anime Items */
+    .anime-items {
+        padding: 1.5rem;
+    }
+    
+    .anime-item {
+        display: flex;
+        align-items: center;
+        padding: 1rem 0;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        transition: var(--transition);
+    }
+    
+    .anime-item:last-child {
+        border-bottom: none;
+    }
+    
+    .anime-item:hover {
+        background: rgba(231, 76, 60, 0.05);
+        margin: 0 -1.5rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+    
+    .anime-thumbnail {
+        width: 60px;
+        height: 80px;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        margin-right: 1rem;
+        flex-shrink: 0;
+    }
+    
+    .anime-thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .anime-info {
+        flex: 1;
+    }
+    
+    .anime-title {
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+        color: var(--text-light);
+        font-size: 0.95rem;
+    }
+    
+    .anime-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        flex-wrap: wrap;
+    }
+    
+    .anime-type {
+        background: var(--secondary-color);
+        color: white;
+        padding: 0.2rem 0.5rem;
+        border-radius: 12px;
+        font-size: 0.7rem;
+        font-weight: 500;
+    }
+    
+    .anime-type.donghua {
+        background: var(--accent-color);
+    }
+    
+    .anime-episode {
+        color: var(--accent-color);
+        font-weight: 500;
+    }
+    
+    .anime-status {
+        padding: 0.2rem 0.5rem;
+        border-radius: 12px;
+        font-size: 0.7rem;
+        font-weight: 500;
+    }
+    
+    .anime-status.ongoing {
+        background: var(--success-color);
+        color: white;
+    }
+    
+    .anime-status.completed {
+        background: var(--text-secondary);
+        color: white;
+    }
+    
+    .anime-status.new {
+        background: var(--primary-color);
+        color: white;
+        animation: pulse 2s infinite;
+    }
+    
+    /* Time Badge */
+    .time-badge {
+        background: var(--dark-bg);
+        border: 1px solid var(--dark-border);
+        color: var(--accent-color);
+        padding: 0.3rem 0.7rem;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        margin-left: auto;
+        flex-shrink: 0;
+    }
+    
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: var(--text-secondary);
+    }
+    
+    .empty-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+    }
+    
+    .empty-title {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        color: var(--text-muted);
+    }
+    
+    .empty-description {
+        font-size: 0.9rem;
+    }
+    
+    /* Legend */
+    .legend {
+        background: var(--dark-card);
+        padding: 1.5rem;
+        border-radius: var(--border-radius);
+        border: 1px solid var(--dark-border);
+        margin-bottom: 2rem;
+    }
+    
+    .legend-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--text-light);
+    }
+    
+    .legend-items {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .legend-color {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+    }
+    
+    .legend-color.ongoing { background: var(--success-color); }
+    .legend-color.completed { background: var(--text-secondary); }
+    .legend-color.new { background: var(--primary-color); }
+    .legend-color.donghua { background: var(--accent-color); }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .jadwal-title {
+            font-size: 2rem;
+        }
+        
+        .filter-row {
+            grid-template-columns: 1fr;
+        }
+        
+        .jadwal-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .anime-item {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .anime-thumbnail {
+            margin-right: 0;
+            margin-bottom: 1rem;
+        }
+        
+        .time-badge {
+            margin-left: 0;
+            margin-top: 0.5rem;
+        }
+    }
+    
+    /* Animations */
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .animate-fadeInUp {
+        animation: fadeInUp 0.6s ease-out;
+    }
+    </style>
+    
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap' rel='stylesheet'/>
+    
+    <!-- Font Awesome -->
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css' rel='stylesheet'/>
+</head>
+
+<body>
+    <!-- Back to Top Button -->
+    <button class='back-to-top' id='backToTop'>
+        <i class='fas fa-arrow-up'></i>
+    </button>
+
+    <div class='container'>
+        <div class='jadwal-section'>
+            <div class='jadwal-header animate-fadeInUp'>
+                <h1 class='jadwal-title'>
+                    <i class='fas fa-calendar-alt'></i> Jadwal Rilis Anime & Donghua
+                </h1>
+                <p class='jadwal-subtitle'>
+                    Jadwal update anime dan donghua terbaru setiap hari. Semua waktu dalam WIB (UTC+7).
+                </p>
+            </div>
+
+            <!-- Filter Controls -->
+            <div class='filter-controls animate-fadeInUp' style='animation-delay: 0.1s;'>
+                <div class='filter-row'>
+                    <div class='filter-group'>
+                        <label for='filterTipe'>Tipe Konten</label>
+                        <select class='filter-select' id='filterTipe'>
+                            <option value=''>Semua Tipe</option>
+                            <option value='anime'>Anime</option>
+                            <option value='donghua'>Donghua</option>
+                        </select>
+                    </div>
+                    <div class='filter-group'>
+                        <label for='filterStatus'>Status</label>
+                        <select class='filter-select' id='filterStatus'>
+                            <option value=''>Semua Status</option>
+                            <option value='ongoing'>Ongoing</option>
+                            <option value='completed'>Completed</option>
+                            <option value='new'>Baru Rilis</option>
+                        </select>
+                    </div>
+                    <div class='filter-group'>
+                        <label for='filterGenre'>Genre</label>
+                        <select class='filter-select' id='filterGenre'>
+                            <option value=''>Semua Genre</option>
+                            <option value='action'>Action</option>
+                            <option value='adventure'>Adventure</option>
+                            <option value='comedy'>Comedy</option>
+                            <option value='drama'>Drama</option>
+                            <option value='fantasy'>Fantasy</option>
+                            <option value='romance'>Romance</option>
+                            <option value='school'>School</option>
+                            <option value='isekai'>Isekai</option>
+                            <option value='cultivation'>Cultivation</option>
+                        </select>
+                    </div>
+                    <div class='filter-group'>
+                        <label for='filterCari'>Cari Anime</label>
+                        <input class='filter-input' id='filterCari' placeholder='Nama anime...' type='text'/>
+                    </div>
+                </div>
+                <div style='text-align: center;'>
+                    <button class='btn btn-primary' onclick='filterJadwal()'>
+                        <i class='fas fa-filter'></i> Terapkan Filter
+                    </button>
+                    <button class='btn btn-outline' onclick='resetFilter()'>
+                        <i class='fas fa-undo'></i> Reset
+                    </button>
+                </div>
+            </div>
+
+            <!-- Legend -->
+            <div class='legend animate-fadeInUp' style='animation-delay: 0.2s;'>
+                <div class='legend-title'>Keterangan Status:</div>
+                <div class='legend-items'>
+                    <div class='legend-item'>
+                        <div class='legend-color ongoing'></div>
+                        <span>Ongoing - Masih Tayang</span>
+                    </div>
+                    <div class='legend-item'>
+                        <div class='legend-color completed'></div>
+                        <span>Completed - Sudah Tamat</span>
+                    </div>
+                    <div class='legend-item'>
+                        <div class='legend-color new'></div>
+                        <span>Baru Rilis - Episode Baru</span>
+                    </div>
+                    <div class='legend-item'>
+                        <div class='legend-color donghua'></div>
+                        <span>Donghua - Anime China</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jadwal Grid -->
+            <div class='jadwal-grid' id='jadwalGrid'>
+                <!-- Senin -->
+                <div class='jadwal-day animate-fadeInUp' style='animation-delay: 0.3s;'>
+                    <div class='day-header'>
+                        <div class='day-icon'>📅</div>
+                        <div class='day-title'>Senin</div>
+                        <div class='day-date' id='dateSenin'>-</div>
+                    </div>
+                    <div class='anime-items' id='itemsSenin'>
+                        <div class='empty-state'>
+                            <div class='empty-icon'>⏳</div>
+                            <div class='empty-title'>Belum Ada Jadwal</div>
+                            <div class='empty-description'>Jadwal akan muncul di sini</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Selasa -->
+                <div class='jadwal-day animate-fadeInUp' style='animation-delay: 0.4s;'>
+                    <div class='day-header'>
+                        <div class='day-icon'>📅</div>
+                        <div class='day-title'>Selasa</div>
+                        <div class='day-date' id='dateSelasa'>-</div>
+                    </div>
+                    <div class='anime-items' id='itemsSelasa'>
+                        <div class='empty-state'>
+                            <div class='empty-icon'>⏳</div>
+                            <div class='empty-title'>Belum Ada Jadwal</div>
+                            <div class='empty-description'>Jadwal akan muncul di sini</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rabu -->
+                <div class='jadwal-day animate-fadeInUp' style='animation-delay: 0.5s;'>
+                    <div class='day-header'>
+                        <div class='day-icon'>📅</div>
+                        <div class='day-title'>Rabu</div>
+                        <div class='day-date' id='dateRabu'>-</div>
+                    </div>
+                    <div class='anime-items' id='itemsRabu'>
+                        <div class='empty-state'>
+                            <div class='empty-icon'>⏳</div>
+                            <div class='empty-title'>Belum Ada Jadwal</div>
+                            <div class='empty-description'>Jadwal akan muncul di sini</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kamis -->
+                <div class='jadwal-day animate-fadeInUp' style='animation-delay: 0.6s;'>
+                    <div class='day-header'>
+                        <div class='day-icon'>📅</div>
+                        <div class='day-title'>Kamis</div>
+                        <div class='day-date' id='dateKamis'>-</div>
+                    </div>
+                    <div class='anime-items' id='itemsKamis'>
+                        <div class='empty-state'>
+                            <div class='empty-icon'>⏳</div>
+                            <div class='empty-title'>Belum Ada Jadwal</div>
+                            <div class='empty-description'>Jadwal akan muncul di sini</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Jumat -->
+                <div class='jadwal-day animate-fadeInUp' style='animation-delay: 0.7s;'>
+                    <div class='day-header'>
+                        <div class='day-icon'>📅</div>
+                        <div class='day-title'>Jumat</div>
+                        <div class='day-date' id='dateJumat'>-</div>
+                    </div>
+                    <div class='anime-items' id='itemsJumat'>
+                        <div class='empty-state'>
+                            <div class='empty-icon'>⏳</div>
+                            <div class='empty-title'>Belum Ada Jadwal</div>
+                            <div class='empty-description'>Jadwal akan muncul di sini</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sabtu -->
+                <div class='jadwal-day animate-fadeInUp' style='animation-delay: 0.8s;'>
+                    <div class='day-header'>
+                        <div class='day-icon'>📅</div>
+                        <div class='day-title'>Sabtu</div>
+                        <div class='day-date' id='dateSabtu'>-</div>
+                    </div>
+                    <div class='anime-items' id='itemsSabtu'>
+                        <div class='empty-state'>
+                            <div class='empty-icon'>⏳</div>
+                            <div class='empty-title'>Belum Ada Jadwal</div>
+                            <div class='empty-description'>Jadwal akan muncul di sini</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Minggu -->
+                <div class='jadwal-day animate-fadeInUp' style='animation-delay: 0.9s;'>
+                    <div class='day-header'>
+                        <div class='day-icon'>📅</div>
+                        <div class='day-title'>Minggu</div>
+                        <div class='day-date' id='dateMinggu'>-</div>
+                    </div>
+                    <div class='anime-items' id='itemsMinggu'>
+                        <div class='empty-state'>
+                            <div class='empty-icon'>⏳</div>
+                            <div class='empty-title'>Belum Ada Jadwal</div>
+                            <div class='empty-description'>Jadwal akan muncul di sini</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Update Info -->
+            <div class='legend animate-fadeInUp' style='animation-delay: 1s;'>
+                <div class='legend-title'>
+                    <i class='fas fa-info-circle'></i> Informasi Penting
+                </div>
+                <p style='color: var(--text-muted); margin-bottom: 1rem;'>
+                    Jadwal di atas diupdate otomatis setiap hari. Waktu rilis dapat berubah sewaktu-waktu tergantung dari pihak fansub.
+                </p>
+                <div style='display: flex; flex-wrap: wrap; gap: 1rem;'>
+                    <div style='background: var(--dark-bg); padding: 1rem; border-radius: var(--border-radius); border: 1px solid var(--dark-border);'>
+                        <div style='color: var(--accent-color); font-weight: 600; margin-bottom: 0.5rem;'>⏰ Waktu Rilis</div>
+                        <div style='font-size: 0.9rem; color: var(--text-muted);'>Semua waktu dalam WIB (UTC+7)</div>
+                    </div>
+                    <div style='background: var(--dark-bg); padding: 1rem; border-radius: var(--border-radius); border: 1px solid var(--dark-border);'>
+                        <div style='color: var(--success-color); font-weight: 600; margin-bottom: 0.5rem;'>🔄 Update</div>
+                        <div style='font-size: 0.9rem; color: var(--text-muted);'>Update otomatis setiap jam</div>
+                    </div>
+                    <div style='background: var(--dark-bg); padding: 1rem; border-radius: var(--border-radius); border: 1px solid var(--dark-border);'>
+                        <div style='color: var(--primary-color); font-weight: 600; margin-bottom: 0.5rem;'>📢 Notifikasi</div>
+                        <div style='font-size: 0.9rem; color: var(--text-muted);'>Gunakan fitur bookmark untuk notifikasi</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script type='text/javascript'>
+    // Jadwal Data - Contoh data, nantinya akan diambil dari Blogger API atau JSON
+    const jadwalData = {
+        "senin": [
+            {
+                title: "Solo Leveling Season 2",
+                thumbnail: "https://via.placeholder.com/60x80/e74c3c/ffffff?text=SL",
+                type: "anime",
+                episode: "Episode 12",
+                time: "22:00",
+                status: "new",
+                genre: ["action", "fantasy"]
+            },
+            {
+                title: "Mo Dao Zu Shi Season 3",
+                thumbnail: "https://via.placeholder.com/60x80/f39c12/ffffff?text=MDZS",
+                type: "donghua",
+                episode: "Episode 8",
+                time: "20:00",
+                status: "ongoing",
+                genre: ["adventure", "drama"]
+            }
+        ],
+        "selasa": [
+            {
+                title: "Attack on Titan Final Season",
+                thumbnail: "https://via.placeholder.com/60x80/3498db/ffffff?text=AOT",
+                type: "anime",
+                episode: "Episode 87",
+                time: "23:00",
+                status: "ongoing",
+                genre: ["action", "drama"]
+            }
+        ],
+        "rabu": [
+            {
+                title: "Jujutsu Kaisen Season 2",
+                thumbnail: "https://via.placeholder.com/60x80/e74c3c/ffffff?text=JK",
+                type: "anime",
+                episode: "Episode 23",
+                time: "23:00",
+                status: "ongoing",
+                genre: ["action", "supernatural"]
+            }
+        ],
+        "kamis": [
+            {
+                title: "Demon Slayer Season 4",
+                thumbnail: "https://via.placeholder.com/60x80/27ae60/ffffff?text=DS",
+                type: "anime",
+                episode: "Episode 12",
+                time: "23:15",
+                status: "ongoing",
+                genre: ["action", "adventure"]
+            }
+        ],
+        "jumat": [
+            {
+                title: "One Piece",
+                thumbnail: "https://via.placeholder.com/60x80/e67e22/ffffff?text=OP",
+                type: "anime",
+                episode: "Episode 1089",
+                time: "21:30",
+                status: "ongoing",
+                genre: ["action", "adventure"]
+            }
+        ],
+        "sabtu": [
+            {
+                title: "My Hero Academia Season 7",
+                thumbnail: "https://via.placeholder.com/60x80/9b59b6/ffffff?text=MHA",
+                type: "anime",
+                episode: "Episode 15",
+                time: "17:30",
+                status: "ongoing",
+                genre: ["action", "school"]
+            }
+        ],
+        "minggu": [
+            {
+                title: "Chainsaw Man Season 2",
+                thumbnail: "https://via.placeholder.com/60x80/e74c3c/ffffff?text=CSM",
+                type: "anime",
+                episode: "Episode 1",
+                time: "22:00",
+                status: "new",
+                genre: ["action", "supernatural"]
+            }
+        ]
+    };
+
+    // Initialize dates
+    function initializeDates() {
+        const today = new Date();
+        const days = ['minggu', 'senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu'];
+        
+        for (let i = 0; i < 7; i++) {
+            const date = new Date(today);
+            date.setDate(today.getDate() - today.getDay() + i);
+            const dayName = days[i];
+            const dateElement = document.getElementById(`date${dayName.charAt(0).toUpperCase() + dayName.slice(1)}`);
+            if (dateElement) {
+                dateElement.textContent = date.toLocaleDateString('id-ID', { 
+                    day: 'numeric', 
+                    month: 'long', 
+                    year: 'numeric' 
+                });
+            }
+        }
+    }
+
+    // Render anime items
+    function renderAnimeItems(dayName, items) {
+        const container = document.getElementById(`items${dayName.charAt(0).toUpperCase() + dayName.slice(1)}`);
+        
+        if (items.length === 0) {
+            container.innerHTML = `
+                <div class='empty-state'>
+                    <div class='empty-icon'>⏳</div>
+                    <div class='empty-title'>Belum Ada Jadwal</div>
+                    <div class='empty-description'>Jadwal akan muncul di sini</div>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = items.map(item => `
+            <div class='anime-item' data-type='${item.type}' data-status='${item.status}' data-genre='${item.genre.join(",")}'>
+                <div class='anime-thumbnail'>
+                    <img src='${item.thumbnail}' alt='${item.title}' loading='lazy'/>
+                </div>
+                <div class='anime-info'>
+                    <div class='anime-title'>${item.title}</div>
+                    <div class='anime-meta'>
+                        <span class='anime-type ${item.type}'>${item.type.toUpperCase()}</span>
+                        <span class='anime-episode'>${item.episode}</span>
+                        <span class='anime-status ${item.status}'>${item.status.toUpperCase()}</span>
+                    </div>
+                </div>
+                <div class='time-badge'>${item.time}</div>
+            </div>
+        `).join('');
+    }
+
+    // Initialize jadwal
+    function initializeJadwal() {
+        Object.keys(jadwalData).forEach(day => {
+            renderAnimeItems(day, jadwalData[day]);
+        });
+    }
+
+    // Filter function
+    function filterJadwal() {
+        const filterTipe = document.getElementById('filterTipe').value;
+        const filterStatus = document.getElementById('filterStatus').value;
+        const filterGenre = document.getElementById('filterGenre').value;
+        const filterCari = document.getElementById('filterCari').value.toLowerCase();
+
+        Object.keys(jadwalData).forEach(day => {
+            let filteredItems = jadwalData[day];
+
+            if (filterTipe) {
+                filteredItems = filteredItems.filter(item => item.type === filterTipe);
+            }
+
+            if (filterStatus) {
+                filteredItems = filteredItems.filter(item => item.status === filterStatus);
+            }
+
+            if (filterGenre) {
+                filteredItems = filteredItems.filter(item => item.genre.includes(filterGenre));
+            }
+
+            if (filterCari) {
+                filteredItems = filteredItems.filter(item => 
+                    item.title.toLowerCase().includes(filterCari)
+                );
+            }
+
+            renderAnimeItems(day, filteredItems);
+        });
+    }
+
+    // Reset filter
+    function resetFilter() {
+        document.getElementById('filterTipe').value = '';
+        document.getElementById('filterStatus').value = '';
+        document.getElementById('filterGenre').value = '';
+        document.getElementById('filterCari').value = '';
+        initializeJadwal();
+    }
+
+    // Back to top
+    document.getElementById('backToTop').addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Show/hide back to top button
+    window.addEventListener('scroll', function() {
+        const backToTop = document.getElementById('backToTop');
+        if (window.pageYOffset > 300) {
+            backToTop.style.display = 'block';
+        } else {
+            backToTop.style.display = 'none';
+        }
+    });
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeDates();
+        initializeJadwal();
+        
+        // Auto refresh every 30 minutes
+        setInterval(function() {
+            location.reload();
+        }, 30 * 60 * 1000);
+    });
+
+    // Real-time search
+    document.getElementById('filterCari').addEventListener('input', function() {
+        setTimeout(filterJadwal, 300);
+    });
+
+    // Auto update dates every minute
+    setInterval(initializeDates, 60000);
+    </script>
+    
+    <style type='text/css'>
+    /* Back to Top Button */
+    .back-to-top {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 50px;
+        height: 50px;
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        transition: var(--transition);
+        z-index: 999;
+    }
+    
+    .back-to-top:hover {
+        background: var(--accent-color);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
+    }
+    
+    /* Button Styles */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: var(--border-radius);
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        transition: var(--transition);
+        gap: 0.5rem;
+    }
+    
+    .btn-primary {
+        background: var(--gradient-primary);
+        color: white;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+    }
+    
+    .btn-outline {
+        background: transparent;
+        border: 2px solid var(--primary-color);
+        color: var(--primary-color);
+    }
+    
+    .btn-outline:hover {
+        background: var(--primary-color);
+        color: white;
+    }
+    </style>
+</body>
+</html>

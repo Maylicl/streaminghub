@@ -1,0 +1,941 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html version='XHTML+RDFa 1.0' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+  <head>
+    <meta charset='utf-8'/>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'/>
+    <b:include data='blog' name='all-head-content'/>
+    
+    <!-- SEO Meta Tags -->
+    <meta expr:content='data:blog.pageTitle' name='title'/>
+    <meta expr:content='data:blog.metaDescription' name='description'/>
+    <meta expr:content='data:blog.pageTitle + &quot;, anime, donghua, streaming anime, nonton anime&quot;' name='keywords'/>
+    
+    <!-- Open Graph -->
+    <meta expr:content='data:blog.pageTitle' property='og:title'/>
+    <meta expr:content='data:blog.canonicalUrl' property='og:url'/>
+    <meta content='website' property='og:type'/>
+    <meta expr:content='data:blog.metaDescription' property='og:description'/>
+    
+    <!-- Schema.org Markup -->
+    <script type='application/ld+json'>
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "<data:blog.title/>",
+      "url": "<data:blog.homepageUrl/>",
+      "description": "<data:blog.description/>",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "<data:blog.homepageUrl/>search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css' rel='stylesheet'/>
+    
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Poppins:wght@400;500;600;700&amp;display=swap' rel='stylesheet'/>
+    
+    <!-- Custom CSS -->
+    <b:skin><![CDATA[
+      /* Anime Streaming Template CSS */
+      :root {
+        --bg-primary: #0f0f0f;
+        --bg-secondary: #1a1a1a;
+        --bg-tertiary: #252525;
+        --text-primary: #ffffff;
+        --text-secondary: #b3b3b3;
+        --accent-color: #ff6b6b;
+        --accent-hover: #ff5252;
+        --border-color: #333;
+        --success-color: #4caf50;
+        --warning-color: #ff9800;
+        --danger-color: #f44336;
+        --font-primary: 'Inter', sans-serif;
+        --font-heading: 'Poppins', sans-serif;
+      }
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: var(--font-primary);
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+      
+      /* Loading Screen */
+      #loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--bg-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease;
+      }
+      
+      .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 3px solid var(--border-color);
+        border-top: 3px solid var(--accent-color);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      /* Header */
+      .header {
+        background: rgba(15, 15, 15, 0.95);
+        backdrop-filter: blur(10px);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        border-bottom: 1px solid var(--border-color);
+      }
+      
+      .header-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      
+      .logo {
+        font-family: var(--font-heading);
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--accent-color);
+        text-decoration: none;
+      }
+      
+      .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+      
+      .nav-menu a {
+        color: var(--text-primary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        position: relative;
+      }
+      
+      .nav-menu a:hover {
+        color: var(--accent-color);
+      }
+      
+      .nav-menu a::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--accent-color);
+        transition: width 0.3s ease;
+      }
+      
+      .nav-menu a:hover::after {
+        width: 100%;
+      }
+      
+      /* Search Bar */
+      .search-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+      
+      .search-input {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: 25px;
+        padding: 0.7rem 1.2rem;
+        color: var(--text-primary);
+        width: 250px;
+        transition: all 0.3s ease;
+      }
+      
+      .search-input:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        width: 300px;
+      }
+      
+      .search-btn {
+        position: absolute;
+        right: 10px;
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        font-size: 1.1rem;
+      }
+      
+      /* Mobile Menu Toggle */
+      .mobile-toggle {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+      }
+      
+      .mobile-toggle span {
+        width: 25px;
+        height: 3px;
+        background: var(--text-primary);
+        margin: 3px 0;
+        transition: 0.3s;
+      }
+      
+      /* Main Content */
+      .main-content {
+        margin-top: 80px;
+        min-height: calc(100vh - 80px);
+      }
+      
+      /* Hero Section */
+      .hero-section {
+        position: relative;
+        height: 500px;
+        background: linear-gradient(45deg, var(--bg-secondary), var(--bg-tertiary));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      
+      .hero-content {
+        text-align: center;
+        z-index: 2;
+      }
+      
+      .hero-title {
+        font-family: var(--font-heading);
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        background: linear-gradient(45deg, var(--accent-color), #ff8e8e);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+      }
+      
+      .cta-button {
+        background: var(--accent-color);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+      }
+      
+      .cta-button:hover {
+        background: var(--accent-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+      }
+      
+      /* Content Grid */
+      .content-section {
+        padding: 3rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+      
+      .section-title {
+        font-family: var(--font-heading);
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+      
+      .view-all {
+        color: var(--accent-color);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+      }
+      
+      .view-all:hover {
+        color: var(--accent-hover);
+      }
+      
+      /* Anime Grid */
+      .anime-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1.5rem;
+      }
+      
+      .anime-card {
+        background: var(--bg-secondary);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+      }
+      
+      .anime-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+      }
+      
+      .anime-thumbnail {
+        position: relative;
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+      }
+      
+      .anime-thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+      
+      .anime-card:hover .anime-thumbnail img {
+        transform: scale(1.1);
+      }
+      
+      .episode-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: var(--accent-color);
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+      
+      .status-badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: var(--success-color);
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+      
+      .status-badge.ongoing {
+        background: var(--warning-color);
+      }
+      
+      .anime-info {
+        padding: 1rem;
+      }
+      
+      .anime-title {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        line-height: 1.3;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      
+      .anime-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+      }
+      
+      .anime-type {
+        background: var(--bg-tertiary);
+        padding: 0.2rem 0.6rem;
+        border-radius: 15px;
+        font-size: 0.75rem;
+      }
+      
+      /* Footer */
+      .footer {
+        background: var(--bg-secondary);
+        border-top: 1px solid var(--border-color);
+        padding: 3rem 2rem 1rem;
+        margin-top: 4rem;
+      }
+      
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+      
+      .footer-section h3 {
+        color: var(--accent-color);
+        margin-bottom: 1rem;
+        font-family: var(--font-heading);
+      }
+      
+      .footer-links {
+        list-style: none;
+      }
+      
+      .footer-links li {
+        margin-bottom: 0.5rem;
+      }
+      
+      .footer-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      
+      .footer-links a:hover {
+        color: var(--accent-color);
+      }
+      
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border-color);
+        margin-top: 2rem;
+        color: var(--text-secondary);
+      }
+      
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .header-container {
+          padding: 1rem;
+        }
+        
+        .nav-menu {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: var(--bg-secondary);
+          flex-direction: column;
+          padding: 1rem;
+          border-top: 1px solid var(--border-color);
+        }
+        
+        .nav-menu.active {
+          display: flex;
+        }
+        
+        .mobile-toggle {
+          display: flex;
+        }
+        
+        .search-input {
+          width: 150px;
+        }
+        
+        .search-input:focus {
+          width: 180px;
+        }
+        
+        .hero-title {
+          font-size: 2.5rem;
+        }
+        
+        .anime-grid {
+          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+          gap: 1rem;
+        }
+        
+        .content-section {
+          padding: 2rem 1rem;
+        }
+      }
+      
+      /* NSFW Warning Modal */
+      .nsfw-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+      }
+      
+      .nsfw-modal.active {
+        display: flex;
+      }
+      
+      .nsfw-content {
+        background: var(--bg-secondary);
+        padding: 2rem;
+        border-radius: 15px;
+        max-width: 500px;
+        text-align: center;
+        border: 2px solid var(--accent-color);
+      }
+      
+      .nsfw-warning {
+        color: var(--warning-color);
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+      }
+      
+      .nsfw-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 1.5rem;
+      }
+      
+      .btn-nsfw {
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 25px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      
+      .btn-nsfw.proceed {
+        background: var(--danger-color);
+        color: white;
+      }
+      
+      .btn-nsfw.cancel {
+        background: var(--bg-tertiary);
+        color: var(--text-primary);
+      }
+      
+      .btn-nsfw:hover {
+        transform: translateY(-2px);
+      }
+      
+      /* Watermark */
+      .watermark-player {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        z-index: 10;
+      }
+      
+      /* Anti Copy */
+      .no-copy {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      
+      /* Scrollbar Custom */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      
+      ::-webkit-scrollbar-track {
+        background: var(--bg-primary);
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background: var(--accent-color);
+        border-radius: 4px;
+      }
+      
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--accent-hover);
+      }
+    ]]></b:skin>
+    
+    <!-- Custom Scripts -->
+    <script type='text/javascript'>
+      // Global Variables
+      const SITE_CONFIG = {
+        name: &#39;<data:blog.title/>&#39;,
+        url: &#39;<data:blog.homepageUrl/>&#39;,
+        apiUrl: &#39;/feeds/posts/default&#39;,
+        nsfwKeywords: [&#39;yaoi&#39;, &#39;bl&#39;, &#39;gl&#39;, &#39;bxb&#39;, &#39;gxg&#39;, &#39;hentai&#39;],
+        antiCopy: true,
+        watermark: true
+      };
+      
+      // Loading Screen
+      window.addEventListener(&#39;load&#39;, function() {
+        setTimeout(function() {
+          document.getElementById(&#39;loading-screen&#39;).style.opacity = &#39;0&#39;;
+          setTimeout(function() {
+            document.getElementById(&#39;loading-screen&#39;).style.display = &#39;none&#39;;
+          }, 500);
+        }, 1000);
+      });
+      
+      // Mobile Menu Toggle
+      function toggleMobileMenu() {
+        const navMenu = document.querySelector(&#39;.nav-menu&#39;);
+        navMenu.classList.toggle(&#39;active&#39;);
+      }
+      
+      // Search Function
+      function performSearch(query) {
+        if (query.trim() === &#39;&#39;) return;
+        window.location.href = &#39;/search?q=&#39; + encodeURIComponent(query);
+      }
+      
+      // NSFW Warning
+      function checkNSFWContent(title) {
+        const lowerTitle = title.toLowerCase();
+        return SITE_CONFIG.nsfwKeywords.some(keyword => lowerTitle.includes(keyword));
+      }
+      
+      function showNSFWWarning(title, callback) {
+        const modal = document.getElementById(&#39;nsfw-modal&#39;);
+        const titleElement = document.getElementById(&#39;nsfw-title&#39;);
+        
+        titleElement.textContent = title;
+        modal.classList.add(&#39;active&#39;);
+        
+        window.nsfwCallback = callback;
+      }
+      
+      function proceedNSFW() {
+        document.getElementById(&#39;nsfw-modal&#39;).classList.remove(&#39;active&#39;);
+        if (window.nsfwCallback) {
+          window.nsfwCallback();
+        }
+      }
+      
+      function cancelNSFW() {
+        document.getElementById(&#39;nsfw-modal&#39;).classList.remove(&#39;active&#39;);
+      }
+      
+      // Anti Copy Protection
+      if (SITE_CONFIG.antiCopy) {
+        document.addEventListener(&#39;contextmenu&#39;, function(e) {
+          e.preventDefault();
+        });
+        
+        document.addEventListener(&#39;selectstart&#39;, function(e) {
+          e.preventDefault();
+        });
+        
+        document.addEventListener(&#39;copy&#39;, function(e) {
+          e.preventDefault();
+        });
+      }
+      
+      // Watermark Function
+      function addWatermark(containerId) {
+        if (!SITE_CONFIG.watermark) return;
+        
+        const container = document.getElementById(containerId);
+        if (container) {
+          const watermark = document.createElement(&#39;div&#39;);
+          watermark.className = &#39;watermark-player&#39;;
+          watermark.textContent = SITE_CONFIG.name;
+          container.appendChild(watermark);
+        }
+      }
+      
+      // Lazy Loading for Images
+      function lazyLoadImages() {
+        const images = document.querySelectorAll(&#39;img[data-src]&#39;);
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              img.src = img.dataset.src;
+              img.classList.remove(&#39;lazy&#39;);
+              imageObserver.unobserve(img);
+            }
+          });
+        });
+        
+        images.forEach(img => imageObserver.observe(img));
+      }
+      
+      // Initialize Functions
+      document.addEventListener(&#39;DOMContentLoaded&#39;, function() {
+        lazyLoadImages();
+      });
+    </script>
+  </head>
+  
+  <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+      <div class="loading-spinner"></div>
+    </div>
+    
+    <!-- NSFW Warning Modal -->
+    <div class="nsfw-modal" id="nsfw-modal">
+      <div class="nsfw-content">
+        <div class="nsfw-warning">
+          <i class="fas fa-exclamation-triangle"></i>
+          <h3>Konten Dewasa Terdeteksi</h3>
+        </div>
+        <p>
+          Konten "<span id="nsfw-title"></span>" mengandung materi yang tidak cocok untuk semua umur.
+          Pastikan Anda berusia di atas 18 tahun sebelum melanjutkan.
+        </p>
+        <div class="nsfw-buttons">
+          <button class="btn-nsfw cancel" onclick="cancelNSFW()">Kembali</button>
+          <button class="btn-nsfw proceed" onclick="proceedNSFW()">Lanjutkan</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Header -->
+    <header class="header">
+      <div class="header-container">
+        <a class="logo" expr:href="data:blog.homepageUrl">
+          <i class="fas fa-play-circle"></i> <data:blog.title/>
+        </a>
+        
+        <nav>
+          <ul class="nav-menu">
+            <li><a expr:href="data:blog.homepageUrl"><i class="fas fa-home"></i> Beranda</a></li>
+            <li><a href="/p/jadwal-rilis.html"><i class="fas fa-calendar-alt"></i> Jadwal</a></li>
+            <li><a href="/p/anime-list.html"><i class="fas fa-list"></i> Anime List</a></li>
+            <li><a href="/p/donghua-list.html"><i class="fas fa-dragon"></i> Donghua</a></li>
+            <li><a href="/p/pengumuman.html"><i class="fas fa-bullhorn"></i> Pengumuman</a></li>
+          </ul>
+        </nav>
+        
+        <div class="search-container">
+          <input class="search-input" id="search-input" placeholder="Cari anime/donghua..." type="text"/>
+          <button class="search-btn" onclick="performSearch(document.getElementById('search-input').value)">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+        
+        <div class="mobile-toggle" onclick="toggleMobileMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <div class="hero-content">
+          <h1 class="hero-title">Streaming Anime & Donghua</h1>
+          <p class="hero-subtitle">Tonton anime dan donghua favoritmu dengan subtitle Indonesia</p>
+          <a class="cta-button" href="#trending">Jelajahi Sekarang</a>
+        </div>
+      </section>
+      
+      <!-- Trending Section -->
+      <section class="content-section" id="trending">
+        <div class="section-header">
+          <h2 class="section-title">Sedang Tren</h2>
+          <a class="view-all" href="#">Lihat Semua</a>
+        </div>
+        <div class="anime-grid">
+          <!-- Anime items will be populated by Blogger -->
+          <b:section class='trending&#39; id='trending&#39; preferred='yes'>
+            <b:widget id='Blog1&#39; locked='true' title='Postingan Blog' type='Blog'>
+              <b:includable id='post' var='post'>
+                <div class="anime-card">
+                  <div class="anime-thumbnail">
+                    <img expr:alt='data:post.title' expr:data-src='data:post.firstImageUrl' expr:src='data:post.firstImageUrl' src='data:post.firstImageUrl'/>
+                    <span class="episode-badge">Episode Baru</span>
+                    <span class="status-badge ongoing">Ongoing</span>
+                  </div>
+                  <div class="anime-info">
+                    <h3 class="anime-title">
+                      <a expr:href='data:post.url' expr:title='data:post.title'>
+                        <data:post.title/>
+                      </a>
+                    </h3>
+                    <div class="anime-meta">
+                      <span class="anime-type">TV</span>
+                      <span class="anime-rating">⭐ 8.5</span>
+                    </div>
+                  </div>
+                </div>
+              </b:includable>
+            </b:widget>
+          </b:section>
+        </div>
+      </section>
+      
+      <!-- Latest Updates -->
+      <section class="content-section">
+        <div class="section-header">
+          <h2 class="section-title">Update Terbaru</h2>
+          <a class="view-all" href="#">Lihat Semua</a>
+        </div>
+        <div class="anime-grid">
+          <!-- Latest updates content -->
+        </div>
+      </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Tentang Kami</h3>
+          <p>
+            Website streaming anime dan donghua terlengkap dengan subtitle Indonesia. 
+            Tonton koleksi terbaru dari berbagai genre favoritmu.
+          </p>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="/p/dmca-policy.html">DMCA Policy</a></li>
+            <li><a href="/p/disclaimer.html">Disclaimer</a></li>
+            <li><a href="/p/tos.html">Terms of Service</a></li>
+            <li><a href="/p/privacy-policy.html">Privacy Policy</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Kategori</h3>
+          <ul class="footer-links">
+            <li><a href="/search/label/Anime">Anime</a></li>
+            <li><a href="/search/label/Donghua">Donghua</a></li>
+            <li><a href="/search/label/Movie">Movie</a></li>
+            <li><a href="/search/label/OVA">OVA</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Ikuti Kami</h3>
+          <div class="social-links">
+            <a href="#" style="color: #1877f2;"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" style="color: #1da1f2;"><i class="fab fa-twitter"></i></a>
+            <a href="#" style="color: #ff0000;"><i class="fab fa-youtube"></i></a>
+            <a href="#" style="color: #7289da;"><i class="fab fa-discord"></i></a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; <data:blog.title/>. All rights reserved. | <data:blog.datetime/></p>
+      </div>
+    </footer>
+    
+    <!-- Back to Top -->
+    <button class="back-to-top" id="back-to-top" onclick="scrollToTop()">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <script type='text/javascript'>
+      // Back to Top Button
+      window.onscroll = function() {
+        const backToTop = document.getElementById(&#39;back-to-top&#39;);
+        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+          backToTop.style.display = &#39;block&#39;;
+        } else {
+          backToTop.style.display = &#39;none&#39;;
+        }
+      };
+      
+      function scrollToTop() {
+        window.scrollTo({
+          top: 0,
+          behavior: &#39;smooth&#39;
+        });
+      }
+      
+      // Search functionality
+      document.getElementById(&#39;search-input&#39;).addEventListener(&#39;keypress&#39;, function(e) {
+        if (e.key === &#39;Enter&#39;) {
+          performSearch(this.value);
+        }
+      });
+    </script>
+    
+    <style>
+      .back-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: var(--accent-color);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        z-index: 999;
+      }
+      
+      .back-to-top:hover {
+        background: var(--accent-hover);
+        transform: translateY(-3px);
+      }
+      
+      .social-links a {
+        font-size: 1.5rem;
+        margin-right: 1rem;
+        transition: transform 0.3s ease;
+      }
+      
+      .social-links a:hover {
+        transform: scale(1.2);
+      }
+    </style>
+  </body>
+</html>

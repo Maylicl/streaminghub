@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadwal Rilis Anime & Donghua - Minggu Ini</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #252525;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent-color: #ff6b6b;
+            --accent-hover: #ff5252;
+            --border-color: #333;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --danger-color: #f44336;
+            --font-primary: 'Inter', sans-serif;
+            --font-heading: 'Poppins', sans-serif;
+            --monday: #e74c3c;
+            --tuesday: #3498db;
+            --wednesday: #9b59b6;
+            --thursday: #e67e22;
+            --friday: #27ae60;
+            --saturday: #f39c12;
+            --sunday: #e74c3c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .current-week {
+            background: linear-gradient(45deg, var(--accent-color), var(--warning-color));
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            display: inline-block;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .filter-btn {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 0.7rem 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-input {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            padding: 0.8rem 1.5rem;
+            color: var(--text-primary);
+            width: 250px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            width: 300px;
+        }
+
+        .schedule-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .day-card {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .day-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .day-name {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .day-date {
+            background: var(--bg-tertiary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .day-monday .day-name { color: var(--monday); }
+        .day-tuesday .day-name { color: var(--tuesday); }
+        .day-wednesday .day-name { color: var(--wednesday); }
+        .day-thursday .day-name { color: var(--thursday); }
+        .day-friday .day-name { color: var(--friday); }
+        .day-saturday .day-name { color: var(--saturday); }
+        .day-sunday .day-name { color: var(--sunday); }
+
+        .anime-item {
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .anime-item:hover {
+            border-color: var(--accent-color);
+            transform: translateX(5px);
+        }
+
+        .anime-info {
+            flex: 1;
+        }
+
+        .anime-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            font-size: 1rem;
+        }
+
+        .anime-details {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .anime-type {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .anime-time {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .status-dot.ongoing {
+            background: var(--success-color);
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.completed {
+            background: var(--text-secondary);
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .legend {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .legend h3 {
+            font-family: var(--font-heading);
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .btn-calendar {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-calendar:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .no-schedule {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 2rem;
+            font-style: italic;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-color);
+            border-top: 2px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 0.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-group {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .search-input {
+                width: 100%;
+            }
+
+            .search-input:focus {
+                width: 100%;
+            }
+
+            .schedule-container {
+                grid-template-columns: 1fr;
+            }
+
+            .day-card {
+                padding: 1rem;
+            }
+
+            .anime-item {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+            }
+
+            .anime-time {
+                align-self: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-calendar-alt"></i> Jadwal Rilis Anime & Donghua</h1>
+            <p>Jadwal update episode terbaru setiap harinya</p>
+            <div class="current-week">
+                <i class="fas fa-calendar-week"></i> Minggu ke-1 Maret 2026
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="filter-group">
+                <button class="filter-btn active" onclick="filterSchedule('all')">
+                    <i class="fas fa-globe"></i> Semua
+                </button>
+                <button class="filter-btn" onclick="filterSchedule('anime')">
+                    <i class="fas fa-tv"></i> Anime
+                </button>
+                <button class="filter-btn" onclick="filterSchedule('donghua')">
+                    <i class="fas fa-dragon"></i> Donghua
+                </button>
+                <button class="filter-btn" onclick="filterSchedule('ongoing')">
+                    <i class="fas fa-play-circle"></i> Ongoing
+                </button>
+            </div>
+            
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Cari judul anime/donghua..." onkeyup="searchSchedule(this.value)">
+            </div>
+        </div>
+
+        <div class="schedule-container" id="schedule-container">
+            <!-- Senin -->
+            <div class="day-card day-monday">
+                <div class="day-header">
+                    <div class="day-name">
+                        <i class="fas fa-calendar-day"></i> Senin
+                    </div>
+                    <div class="day-date">3 Maret 2025</div>
+                </div>
+                <div class="anime-list">
+                    <div class="anime-item" data-type="anime" data-status="ongoing">
+                        <div class="anime-info">
+                            <div class="anime-title">
+                                Solo Leveling Season 2
+                                <span class="status-indicator">
+                                    <span class="status-dot ongoing"></span>
+                                    <span>Ongoing</span>
+                                </span>
+                            </div>
+                            <div class="anime-details">
+                                <span>Episode 7</span>
+                                <span>Studio: A-1 Pictures</span>
+                                <span class="anime-type">Anime</span>
+                            </div>
+                        </div>
+                        <div class="anime-time">22:00 WIB</div>
+                    </div>
+                    <div class="anime-item" data-type="donghua" data-status="ongoing">
+                        <div class="anime-info">
+                            <div class="anime-title">
+                                Perfect World
+                                <span class="status-indicator">
+                                    <span class="status-dot ongoing"></span>
+                                    <span>Ongoing</span>
+                                </span>
+                            </div>
+                            <div class="anime-details">
+                                <span>Episode 156</span>
+                                <span>Studio: Shanghai Foch</span>
+                                <span class="anime-type">Donghua</span>
+                            </div>
+                        </div>
+                        <div class="anime-time">19:00 WIB</div>
+                    </div>
+                    <div class="anime-item" data-type="anime" data-status="completed">
+                        <div class="anime-info">
+                            <div class="anime-title">
+                                One Piece
+                                <span class="status-indicator">
+                                    <span class="status-dot completed"></span>
+                                    <span>Long Running</span>
+                                </span>
+                            </div>
+                            <div class="anime-details">
+                                <span>Episode 1107</span>
+                                <span>Studio: Toei Animation</span>
+                                <span class="anime-type">Anime</span>
+                            </div>
+                        </div>
+                        <div class="anime-time">18:30 WIB</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Selasa -->
+            <div class="day-card day-tuesday">
+                <div class="day-header">
+                    <div class="day-name">
+                        <i class="fas fa-calendar-day"></i> Selasa
+                    </div>
+                    <div class="day-date">4 Maret 2025</div>
+                </div>
+                <div class="anime-list">
+                    <div class="anime-item" data-type="anime" data-status="ongoing">
+                        <div class="anime-info">
+                            <div class="anime-title">
+                                Demon Slayer: Kimetsu no Yaiba
+                                <span class="status-indicator">
+                                    <span class="status-dot ongoing"></span>
+                                    <span>Ongoing</span>
+                                </span>
+                            </div>
+                            <div class="anime-details">
+                                <span>Episode 12</span>
+                                <span>Studio: Ufotable</span>
+                                <span class="anime-type">Anime</span>
+                            </div>
+                        </div>
+                        <div class="anime-time">23:15 WIB</div>
+                    </div>
+                    <div class="anime-item" data-type="donghua" data-status="ongoing">
+                        <div class="anime-info">
+                            <div class="anime-title">
+                                Battle Through The Heavens Season 6
+                                <span class="status-indicator">
+                                    <span class="status-dot ongoing"></span>
+                                    <span>Ongoing</span>
+                                </span>
+                            </div>
+                            <div class="anime-details">
+                                <span>Episode 8</span>
+                                <span>Studio: Shanghai Motion Magic</span>
+                                <span class="anime-type">Donghua</span>
+                            </div>
+                        </div>
+                        <div class="anime-time">20:00 WIB</div>
+                    </div>
+                    <div class="anime-item" data-type="anime" data-status="ongoing">
+                        <div class="anime-info">
+                            <div class="anime-title">
+                                My Hero Academia Season 7
+                                <span class="status-indicator">
+                                    <span class="status-dot ongoing"></span>
+                                    <span>Ongoing</span>
+                                </span>
+                            </div>
+                            <div class="anime-details">
+                                <span>Episode 9</span>
+                                <span>Studio: Bones</span>
+                                <span class="anime-type">Anime</span>
+                            </div>
+                        </div>
+                        <div class="anime-time">17:30 WIB</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rabu -->
+            <div class="day-card day-wednesday">
+                <div class="day-header">
+                    <div class="day-name">
+                        <i class="fas fa-calendar-day"></i> Rabu
+                    </div>
+                    <div class="day-date">5 Maret 2025</div>
+                </div>
+                <div class="anime-list">
+                    <div class="anime-item" data-type="anime" data-status="ongoing">
+                        <div class="anime-info">
+                            <div class="anime-title">
+                                Jujutsu Kaisen Season 3
+                                <span class="status-indicator">
+                                    <span class="status-dot ongoing"></span>
+                                    <span>Ongoing</span>
+                                </span>
+                            </div>
+                            <div class="anime-details">
+                                <span>Episode 15</span>
+                                <span>Studio: MAPPA</span>
+                                <span class="anime-type">Anime</span>
+                            </div>
+                        </div>
+                        <div class="anime-time">24:00 WIB</div>
+                    </div>
+                    <div class="anime-item" data-type="donghua" data-status="ongoing">
+                        <div class="anime-info">
+                            <div class="anime-title">
+                                Soul Land 2: The Unrivaled Tang Sect
+                                <span class="status-indicator">
+                                    <span class="status-dot ongoing"></span>
+                                    <span>Ongoing</span>
+                                </span>
+                            </div>
+                            <div class="anime-details">
+                                <span>Episode 45</span>
+                                <span>Studio: Sparkly Key</span>
+                                <span class="anime-type">Donghua</span>
+                            </div>
+                        </div>
+                        <div class="anime-time">21:00 WIB</div>
+                    </div>
+                    <div class="anime-item" data-type="anime" data-status="ongoing">
+                        <div class="anime-info">
+                            <div class="anime-title">
+                                Black Clover
+                                <span class="status-indicator">
+                                    <span class="status-dot ongoing"></span>
+                                    <span>Season 2</span>
+                                </span>
+                            </div>
+                            <div class="anime-details">
+                                <span>Episode 6</span>
+                                <span>Studio: Pierrot</span>
+                                <span class="anime-type">Anime</span>
+                            </div>
+                        </div>
+                        <div class="anime-time">18:00 WIB</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kamis -->
+            <div class="day-card day-thursday">
+                <div class="day-header">
+                    <div class="day-name">
+                        <i class="fas fa-calendar-day"></i> Kamis
+                    </div>
+                    <div class="day-date">6 Maret 2025</div>
+                </div>
+                <div class="anime-list">
+                    <div class="anime-item" data-type="anime" data-status="ongoing">
+                        <div class="anime-info">
+                            <div class="anime-title">
+                                Attack on Titan: Final Season Part 4
+                                <span class="status-indicator">
+                                    <span class="status-dot ongoing"></span>
+                                    <span>Final</span>
+                                </span>
+                            </div>
+                            <div class="anime-details">
+                                <span>Episode 89</span>
+                                <span>Studio: MAPPA</span>
+                                <span class="anime-type">Anime</span>
+                            </div>
+                        </div>
+                        <div class="anime-time">23:45 WIB</div>
+                    </div>
+                    <div class="anime-item" data-type="donghua" data-status="ongoing">
+                        <div class="anime-info">
+                            <div class="anime-title">
+                                The Legend of Swordman
+                                <span class="status-indicator">
+                                    <span class="status-dot ongoing"></span>
+                                    <span>Ongoing</span>
+                                </span>
+                            </div>
+                            <div class="anime-details">
+                                <span>Episode 32</span>
+                                <span>Studio: iQIYI</span>
+                                <span class="anime-type">Donghua</span>
+                            </div>
+                        </div>
+                        <div class="anime-time">19:30 WIB</div>
+                    </div>
+                    <div class="anime-item" data-type="anime" data-status="ongoing">
+                        <div class="anime-info">
+                            <div class="anime-title">
+                                Chainsaw Man Season 2
+                                <span class="status-indicator">
+                                    <span class="status-dot ongoing"></span>
+                                    <span>Ongoing</span>
+                                </span>
+                            </div>
+                            <div class="anime-details">
+                                <span>Episode 11</span>
+                                <span>Studio: MAPPA</span>
+                                <span class="anime-type">Anime</span>
+                            </div>
+                        </div>
+                        <div class="anime-time">20:00 WIB</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jumat -->
+            <div class="day-card day-friday">
+                <div class="day-header">
+                    <div class="day-name">
+                        <i class="fas fa-calendar-day"></i> Jumat
+                    </div>
+                    <div class="day-date">7 Maret 2025</div>
+                </div>
+                <div class="anime-list">
+                    <div class="anime-item" data-type="anime" data-status="ongoing">
+                        <div class="anime-info">
+                            <div class="anime-title">
+                                Spy x Family Season 3
+                                <span class="status-indicator">
+                                    <span class="status-dot ongoing"></span>
+                                    <span>Ongoing</span>
+                                </span>
+                            </div>
+                            <div class="anime-details">
+                                <span>Episode 8</span>
+                                <span>Studio: Wit Studio & CloverWorks</span>
+                                <span class="anime-type">Anime</span>
+                            </div>
+                        </div>
+                        <div class="anime-time">22:30 WIB</div>
+                    </div>
+                    <div class="anime-item" data-type="donghua" data-status="ongoing">
+                        <div class="anime-info">
+                            <div class="anime-title">
+                                A Record of Mortal's Journey to Immortality
+                                <span class="status-indicator">
+                                    <span class="status-dot ongoing"></span>
+                                    <span>Ongoing</span>
+                                </span>
+                            </div>
+                            <div class="anime-details">
+                                <span>Episode 78</span>
+                                <span>Studio: B.C May Pictures</span>
+                                <span class="anime-type">Donghua</span>
+                            </div>
+                        </div>
+                        <div class="anime-time">20:00 WIB</div>
+                    </div>
+                    <div class="anime-item" data-type="anime" data-status="ongoing">
+                        <div class="anime-info">
+                            <div class="anime-title">
+                                Bleach: Thousand-Year Blood War Part 3
+                                <span class="status-indicator">
+                                    <span class="status-dot ongoing"></span>
+                                    <span>Ongoing</span>
+                                </span>
+                            </div>
+                            <div class="anime-details">
+                                <span>Episode 5</span>
+                                <span>Studio: Pierrot</span>
+                                <span class="anime-type">Anime</span>
+                            </div>
+                        </div>
+                        <div class="anime-time">19:00 WIB</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sabtu -->
+            <div class="day-card day-saturday">
+                <div class="day-header">
+                    <div class="day-name">
+                        <i class="fas fa-calendar-day"></i> Sabtu
+                    </div>
+                    <div class="day-date">8 Maret 2025</div>
+                </div>
+                <div class="anime-list">
+                    <div class="anime-item" data-type="anime" data-status="ongoing">
+                        <div class="anime-info">
+                            <div class="anime-title">
+                                One Punch Man Season 3
+                                <span class="status-indicator">
+                                    <span class="status-dot ongoing"></span>
+                                    <span>Ongoing</span>
+                                </span>
+                            </div>
+                            <div class="anime-details">
+                                <span>Episode 10</span>
+                                <span>Studio: J.C.Staff</span>
+                                <span class="anime-type">Anime</span>
+                            </div>
+                        </div>
+                        <div class="anime-time">23:00 WIB</div>
+                    </div>
+                    <div class="anime-item" data-type="donghua" data-status="ongoing">
+                        <div class="anime-info">
+                            <div class="anime-title">
+                                Martial Master
+                                <span class="status-indicator">
+                                    <span class="status-dot ongoing"></span>
+                                    <span>Ongoing</span>
+                                </span>
+                            </div>
+                            <div class="anime-details">
+                                <span>Episode 89</span>
+                                <span>Studio: Youku</span>
+                                <span class="anime-type">Donghua</span>
+                            </div>
+                        </div>
+                        <div class="anime-time">18:00 WIB</div>
+                    </div>
+                    <div class="anime-item" data-type="anime" data-status="ongoing">
+                        <div class="anime-info">
+                            <div class="anime-title">
+                                Dragon Ball Daima
+                                <span class="status-indicator">
+                                    <span class="status-dot ongoing"></span>
+                                    <span>Ongoing</span>
+                                </span>
+                            </div>
+                            <div class="anime-details">
+                                <span>Episode 14</span>
+                                <span>Studio: Toei Animation</span>
+                                <span class="anime-type">Anime</span>
+                            </div>
+                        </div>
+                        <div class="anime-time">17:00 WIB</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Minggu -->
+            <div class="day-card day-sunday">
+                <div class="day-header">
+                    <div class="day-name">
+                        <i class="fas fa-calendar-day"></i> Minggu
+                    </div>
+                    <div class="day-date">9 Maret 2025</div>
+                </div>
+                <div class="anime-list">
+                    <div class="anime-item" data-type="anime" data-status="ongoing">
+                        <div class="anime-info">
+                            <div class="anime-title">
+                                Boruto: Two Blue Vortex
+                                <span class="status-indicator">
+                                    <span class="status-dot ongoing"></span>
+                                    <span>Ongoing</span>
+                                </span>
+                            </div>
+                            <div class="anime-details">
+                                <span>Episode 8</span>
+                                <span>Studio: Pierrot</span>
+                                <span class="anime-type">Anime</span>
+                            </div>
+                        </div>
+                        <div class="anime-time">16:30 WIB</div>
+                    </div>
+                    <div class="anime-item" data-type="donghua" data-status="ongoing">
+                        <div class="anime-info">
+                            <div class="anime-title">
+                                Stellar Transformation Season 6
+                                <span class="status-indicator">
+                                    <span class="status-dot ongoing"></span>
+                                    <span>Ongoing</span>
+                                </span>
+                            </div>
+                            <div class="anime-details">
+                                <span>Episode 12</span>
+                                <span>Studio: Shanghai Foch</span>
+                                <span class="anime-type">Donghua</span>
+                            </div>
+                        </div>
+                        <div class="anime-time">21:00 WIB</div>
+                    </div>
+                    <div class="anime-item" data-type="anime" data-status="ongoing">
+                        <div class="anime-info">
+                            <div class="anime-title">
+                                Sword Art Online: Last Recollection
+                                <span class="status-indicator">
+                                    <span class="status-dot ongoing"></span>
+                                    <span>Ongoing</span>
+                                </span>
+                            </div>
+                            <div class="anime-details">
+                                <span>Episode 6</span>
+                                <span>Studio: A-1 Pictures</span>
+                                <span class="anime-type">Anime</span>
+                            </div>
+                        </div>
+                        <div class="anime-time">23:30 WIB</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <h3><i class="fas fa-info-circle"></i> Keterangan</h3>
+            <div class="legend-grid">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: var(--monday);"></div>
+                    <span>Senin - Anime Action/Adventure</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: var(--tuesday);"></div>
+                    <span>Selasa - Shonen/Comedy</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: var(--wednesday);"></div>
+                    <span>Rabu - Fantasy/Isekai</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: var(--thursday);"></div>
+                    <span>Kamis - Romance/Drama</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: var(--friday);"></div>
+                    <span>Jumat - Supernatural/Horror</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: var(--saturday);"></div>
+                    <span>Sabtu - Mecha/Sci-fi</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: var(--sunday);"></div>
+                    <span>Minggu - Slice of Life/Healing</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem;">
+            <button class="btn-calendar" onclick="window.open('/p/kalender-lengkap.html', '_blank')">
+                <i class="fas fa-calendar-plus"></i> Lihat Kalender Lengkap
+            </button>
+            <button class="btn-calendar" onclick="window.open('/p/pengingat.html', '_blank')" style="margin-left: 1rem; background: var(--success-color);">
+                <i class="fas fa-bell"></i> Atur Pengingat
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Filter functionality
+        function filterSchedule(type) {
+            const items = document.querySelectorAll('.anime-item');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            // Update active button
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter items
+            items.forEach(item => {
+                if (type === 'all') {
+                    item.style.display = 'flex';
+                } else if (type === 'ongoing') {
+                    item.style.display = item.dataset.status === 'ongoing' ? 'flex' : 'none';
+                } else {
+                    item.style.display = item.dataset.type === type ? 'flex' : 'none';
+                }
+            });
+        }
+
+        // Search functionality
+        function searchSchedule(query) {
+            const items = document.querySelectorAll('.anime-item');
+            const lowerQuery = query.toLowerCase();
+            
+            items.forEach(item => {
+                const title = item.querySelector('.anime-title').textContent.toLowerCase();
+                if (title.includes(lowerQuery)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Auto refresh every 30 minutes
+        setTimeout(function() {
+            location.reload();
+        }, 1800000);
+
+        // Add animation on scroll
+        const cards = document.querySelectorAll('.day-card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Current time indicator
+        function updateCurrentTime() {
+            const now = new Date();
+            const currentTime = now.getHours() * 60 + now.getMinutes();
+            
+            document.querySelectorAll('.anime-item').forEach(item => {
+                const timeText = item.querySelector('.anime-time').textContent;
+                const [hours, minutes] = timeText.split(':');
+                const itemTime = parseInt(hours) * 60 + parseInt(minutes.split(' ')[0]);
+                
+                if (itemTime > currentTime) {
+                    item.style.borderLeft = '4px solid var(--success-color)';
+                } else if (Math.abs(itemTime - currentTime) < 60) {
+                    item.style.borderLeft = '4px solid var(--warning-color)';
+                    item.style.background = 'rgba(255, 152, 0, 0.1)';
+                }
+            });
+        }
+
+        updateCurrentTime();
+        setInterval(updateCurrentTime, 60000); // Update every minute
+    </script>
+</body>
+</html>

@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intro - Web Streaming Anime & Donghua</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #252525;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent-color: #ff6b6b;
+            --accent-hover: #ff5252;
+            --border-color: #333;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --danger-color: #f44336;
+            --font-primary: 'Inter', sans-serif;
+            --font-heading: 'Poppins', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .loading-logo {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent-color), #ff8e8e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            animation: logoGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes logoGlow {
+            from { filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.5)); }
+            to { filter: drop-shadow(0 0 20px rgba(255, 107, 107, 0.8)); }
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--border-color);
+            border-top: 4px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .loading-subtext {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+
+        /* Main Intro Container */
+        .intro-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-tertiary) 100%);
+        }
+
+        .intro-content {
+            max-width: 1000px;
+            width: 100%;
+            text-align: center;
+            z-index: 2;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .floating-icon {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 2rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        /* Hero Section */
+        .hero-section {
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--accent-color), #ff8e8e, #ffa726);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.8s; }
+        .feature-card:nth-child(2) { animation-delay: 1.0s; }
+        .feature-card:nth-child(3) { animation-delay: 1.2s; }
+        .feature-card:nth-child(4) { animation-delay: 1.4s; }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.1);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--accent-color), #ff8e8e);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .feature-title {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Warning Section */
+        .warning-section {
+            background: rgba(244, 67, 54, 0.1);
+            border: 1px solid var(--danger-color);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 3rem 0;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1.6s forwards;
+        }
+
+        .warning-title {
+            color: var(--danger-color);
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .warning-text {
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+
+        /* Age Verification */
+        .age-verification {
+            background: rgba(255, 152, 0, 0.1);
+            border: 1px solid var(--warning-color);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 3rem 0;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1.8s forwards;
+        }
+
+        .age-title {
+            color: var(--warning-color);
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .age-text {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .age-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            margin-top: 4rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 2.0s forwards;
+        }
+
+        .cta-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--accent-color), #ff8e8e);
+            color: white;
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        .intro-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 2.2s forwards;
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--accent-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .intro-container {
+                padding: 1rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .feature-card {
+                padding: 1.5rem;
+            }
+
+            .age-buttons, .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+
+            .floating-icon {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .loading-logo {
+                font-size: 2.5rem;
+            }
+
+            .feature-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .feature-title {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+        .text-right { text-align: right; }
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+        .mb-3 { margin-bottom: 1.5rem; }
+        .mt-1 { margin-top: 0.5rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mt-3 { margin-top: 1.5rem; }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <i class="fas fa-play-circle"></i> StreamingHub
+            </div>
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Memuat pengalaman streaming...</div>
+            <div class="loading-subtext">Mohon tunggu sebentar</div>
+        </div>
+    </div>
+
+    <!-- Main Intro Container -->
+    <div class="intro-container">
+        <div class="animated-bg" id="animated-bg"></div>
+        
+        <div class="intro-content">
+            <!-- Hero Section -->
+            <div class="hero-section">
+                <h1 class="hero-title">
+                    Selamat Datang di Dunia Anime & Donghua
+                </h1>
+                <p class="hero-subtitle">
+                    Nikmati pengalaman streaming terbaik dengan koleksi lengkap anime dan donghua berkualitas tinggi, semua dalam satu tempat
+                </p>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <h3 class="feature-title">Koleksi Lengkap</h3>
+                    <p class="feature-description">
+                        Ribuan judul anime dan donghua dari berbagai genre, dari yang klasik hingga terbaru
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-closed-captioning"></i>
+                    </div>
+                    <h3 class="feature-title">Subtitle Indonesia</h3>
+                    <p class="feature-description">
+                        Semua konten dilengkapi dengan subtitle berkualitas untuk pengalaman menonton yang optimal
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Multi-Platform</h3>
+                    <p class="feature-description">
+                        Nikmati streaming di perangkat apa pun - desktop, tablet, atau smartphone Anda
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3 class="feature-title">Kualitas HD</h3>
+                    <p class="feature-description">
+                        Tersedia dalam berbagai resolusi - dari 360p hingga 1080p untuk koneksi internet apa pun
+                    </p>
+                </div>
+            </div>
+
+            <!-- Warning Section -->
+            <div class="warning-section">
+                <h3 class="warning-title">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Peringatan Penting
+                </h3>
+                <p class="warning-text">
+                    Website ini menyediakan konten untuk tujuan hiburan dan edukatif. Kami tidak menyimpan file video di server kami. Semua konten merupakan hasil embed dari pihak ketiga. Pastikan Anda mematuhi hukum yang berlaku di negara Anda.
+                </p>
+            </div>
+
+            <!-- Age Verification -->
+            <div class="age-verification" id="age-verification">
+                <h3 class="age-title">
+                    <i class="fas fa-user-check"></i>
+                    Verifikasi Usia
+                </h3>
+                <p class="age-text">
+                    Beberapa konten mungkin mengandung materi yang tidak cocok untuk anak di bawah umur. Apakah Anda berusia 18 tahun atau lebih?
+                </p>
+                <div class="age-buttons">
+                    <button class="btn btn-primary" onclick="confirmAge(true)">
+                        <i class="fas fa-check"></i>
+                        Ya, saya berusia 18+ tahun
+                    </button>
+                    <button class="btn btn-secondary" onclick="confirmAge(false)">
+                        <i class="fas fa-times"></i>
+                        Tidak, saya belum 18 tahun
+                    </button>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="cta-section" id="cta-section" style="display: none;">
+                <h2 class="cta-title">
+                    Siap untuk memulai petualangan streaming?
+                </h2>
+                <div class="cta-buttons">
+                    <a href="/" class="btn btn-primary" onclick="hideIntro()">
+                        <i class="fas fa-play"></i>
+                        Masuk ke Website
+                    </a>
+                    <a href="/p/disclaimer.html" class="btn btn-secondary">
+                        <i class="fas fa-info-circle"></i>
+                        Baca Disclaimer
+                    </a>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="intro-footer">
+                <p class="footer-text">
+                    Dengan melanjutkan, Anda menyetujui ketentuan penggunaan dan kebijakan privasi kami.
+                </p>
+                <div class="footer-links">
+                    <a href="/p/terms-of-service.html" class="footer-link">Terms of Service</a>
+                    <a href="/p/privacy-policy.html" class="footer-link">Privacy Policy</a>
+                    <a href="/p/dmca-policy.html" class="footer-link">DMCA Policy</a>
+                    <a href="/p/contact.html" class="footer-link">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating background icons
+        function createFloatingIcons() {
+            const icons = ['fa-play-circle', 'fa-tv', 'fa-film', 'fa-star', 'fa-heart', 'fa-music', 'fa-gamepad', 'fa-book'];
+            const container = document.getElementById('animated-bg');
+            
+            for (let i = 0; i < 15; i++) {
+                const icon = document.createElement('i');
+                icon.className = `fas ${icons[Math.floor(Math.random() * icons.length)]} floating-icon`;
+                icon.style.left = Math.random() * 100 + '%';
+                icon.style.top = Math.random() * 100 + '%';
+                icon.style.animationDelay = Math.random() * 6 + 's';
+                icon.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                container.appendChild(icon);
+            }
+        }
+
+        // Age confirmation
+        function confirmAge(isAdult) {
+            if (isAdult) {
+                // Hide age verification
+                document.getElementById('age-verification').style.display = 'none';
+                // Show CTA section
+                document.getElementById('cta-section').style.display = 'block';
+                // Save to localStorage
+                localStorage.setItem('ageVerified', 'true');
+                localStorage.setItem('ageVerifiedDate', new Date().toISOString());
+            } else {
+                // Redirect to safe content or show message
+                alert('Maaf, konten ini hanya untuk pengguna berusia 18 tahun ke atas. Anda akan dialihkan ke halaman yang lebih sesuai.');
+                window.location.href = 'https://google.com';
+            }
+        }
+
+        // Hide intro and go to main site
+        function hideIntro() {
+            localStorage.setItem('introShown', 'true');
+            localStorage.setItem('introShownDate', new Date().toISOString());
+        }
+
+        // Check if intro should be shown
+        function shouldShowIntro() {
+            const introShown = localStorage.getItem('introShown');
+            const ageVerified = localStorage.getItem('ageVerified');
+            
+            // Check if intro was shown in the last 7 days
+            if (introShown && ageVerified) {
+                const introDate = new Date(localStorage.getItem('introShownDate'));
+                const now = new Date();
+                const daysDiff = (now - introDate) / (1000 * 60 * 60 * 24);
+                
+                if (daysDiff < 7) {
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create floating icons
+            createFloatingIcons();
+            
+            // Check if should show intro
+            if (!shouldShowIntro()) {
+                // Skip intro and go to main site
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 100);
+                return;
+            }
+            
+            // Hide loading screen after 2 seconds
+            setTimeout(() => {
+                const loadingScreen = document.getElementById('loading-screen');
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }, 2000);
+            
+            // Check if age was previously verified
+            if (localStorage.getItem('ageVerified') === 'true') {
+                document.getElementById('age-verification').style.display = 'none';
+                document.getElementById('cta-section').style.display = 'block';
+            }
+        });
+
+        // Auto redirect to main site after 30 seconds if no action
+        setTimeout(() => {
+            if (document.getElementById('age-verification').style.display !== 'none') {
+                // No action taken, redirect to main site
+                window.location.href = '/';
+            }
+        }, 30000);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                if (document.getElementById('age-verification').style.display !== 'none') {
+                    confirmAge(true);
+                } else if (document.getElementById('cta-section').style.display !== 'none') {
+                    window.location.href = '/';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

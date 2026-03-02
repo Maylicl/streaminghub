@@ -1,0 +1,1671 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html version='XHTML+RDFa 1.0' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+    <meta charset='utf-8'/>
+    <meta content='width=device-width, initial-scale=1.0' name='viewport'/>
+    <meta content='IE=edge' http-equiv='X-UA-Compatible'/>
+    <b:include data='blog' name='all-head-content'/>
+    
+    <title>Generator Series Anime & Donghua - <data:blog.title/></title>
+    <meta content='Generator otomatis untuk membuat halaman series anime dan donghua baru dengan mudah dan cepat.' name='description'/>
+    <meta content='generator series, anime generator, donghua generator, buat series anime' name='keywords'/>
+    
+    <style type='text/css'>
+    /* Import CSS dari template utama */
+    :root {
+        --primary-color: #e74c3c;
+        --secondary-color: #3498db;
+        --accent-color: #f39c12;
+        --dark-bg: #0a0a0a;
+        --dark-card: #1a1a1a;
+        --dark-border: #333;
+        --text-light: #ffffff;
+        --text-muted: #b3b3b3;
+        --text-secondary: #888;
+        --success-color: #27ae60;
+        --warning-color: #e67e22;
+        --error-color: #e74c3c;
+        --gradient-primary: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        --gradient-secondary: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+        --border-radius: 8px;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: var(--dark-bg);
+        color: var(--text-light);
+        line-height: 1.6;
+    }
+    
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    
+    /* Generator Styles */
+    .generator-section {
+        padding: 4rem 0;
+        min-height: 80vh;
+    }
+    
+    .generator-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .generator-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .generator-subtitle {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+        margin-bottom: 2rem;
+    }
+    
+    /* Form Container */
+    .form-container {
+        background: var(--dark-card);
+        border: 1px solid var(--dark-border);
+        border-radius: var(--border-radius);
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow-light);
+    }
+    
+    .form-section {
+        margin-bottom: 2rem;
+    }
+    
+    .form-section:last-child {
+        margin-bottom: 0;
+    }
+    
+    .section-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .form-group {
+        position: relative;
+    }
+    
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--text-light);
+        font-size: 0.9rem;
+    }
+    
+    .form-label.required::after {
+        content: " *";
+        color: var(--error-color);
+    }
+    
+    .form-input, .form-select, .form-textarea {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        background: var(--dark-bg);
+        border: 2px solid var(--dark-border);
+        border-radius: var(--border-radius);
+        color: var(--text-light);
+        transition: var(--transition);
+        font-size: 0.95rem;
+    }
+    
+    .form-textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+    
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+    }
+    
+    .form-input.error, .form-select.error, .form-textarea.error {
+        border-color: var(--error-color);
+        box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+    }
+    
+    .form-help {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin-top: 0.3rem;
+        line-height: 1.4;
+    }
+    
+    .form-error {
+        color: var(--error-color);
+        font-size: 0.8rem;
+        margin-top: 0.3rem;
+        display: none;
+    }
+    
+    .form-error.show {
+        display: block;
+    }
+    
+    /* Input Groups */
+    .input-group {
+        display: flex;
+        align-items: center;
+        background: var(--dark-bg);
+        border: 2px solid var(--dark-border);
+        border-radius: var(--border-radius);
+        overflow: hidden;
+    }
+    
+    .input-group .input-group-text {
+        background: var(--dark-border);
+        color: var(--text-muted);
+        padding: 0.8rem 1rem;
+        border-right: 1px solid var(--dark-border);
+        min-width: 40px;
+        text-align: center;
+    }
+    
+    .input-group .form-input {
+        border: none;
+        background: transparent;
+        flex: 1;
+    }
+    
+    .input-group:focus-within {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+    }
+    
+    /* Tag Input */
+    .tag-input-container {
+        background: var(--dark-bg);
+        border: 2px solid var(--dark-border);
+        border-radius: var(--border-radius);
+        padding: 0.5rem;
+        min-height: 45px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        align-items: center;
+        transition: var(--transition);
+    }
+    
+    .tag-input-container:focus-within {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+    }
+    
+    .tag {
+        background: var(--primary-color);
+        color: white;
+        padding: 0.3rem 0.7rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+    
+    .tag-remove {
+        cursor: pointer;
+        font-weight: bold;
+        opacity: 0.8;
+    }
+    
+    .tag-remove:hover {
+        opacity: 1;
+    }
+    
+    .tag-input {
+        border: none;
+        background: transparent;
+        color: var(--text-light);
+        outline: none;
+        flex: 1;
+        min-width: 100px;
+    }
+    
+    /* Image Upload */
+    .image-upload-container {
+        position: relative;
+        border: 2px dashed var(--dark-border);
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        text-align: center;
+        transition: var(--transition);
+        cursor: pointer;
+        background: var(--dark-bg);
+    }
+    
+    .image-upload-container:hover {
+        border-color: var(--primary-color);
+        background: rgba(231, 76, 60, 0.05);
+    }
+    
+    .image-upload-container.dragover {
+        border-color: var(--primary-color);
+        background: rgba(231, 76, 60, 0.1);
+    }
+    
+    .upload-icon {
+        font-size: 3rem;
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+    }
+    
+    .upload-text {
+        font-size: 1.1rem;
+        color: var(--text-light);
+        margin-bottom: 0.5rem;
+    }
+    
+    .upload-hint {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+    
+    .preview-image {
+        max-width: 100%;
+        max-height: 200px;
+        border-radius: var(--border-radius);
+        margin-top: 1rem;
+    }
+    
+    .file-input {
+        display: none;
+    }
+    
+    /* NSFW Warning */
+    .nsfw-warning {
+        background: rgba(231, 76, 60, 0.1);
+        border: 1px solid var(--error-color);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .nsfw-title {
+        color: var(--error-color);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+                        gap: 0.5rem;
+    }
+    
+    .nsfw-description {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+    
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .checkbox-group input[type="checkbox"] {
+        width: auto;
+        margin: 0;
+    }
+    
+    /* Action Buttons */
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+    }
+    
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: var(--border-radius);
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        transition: var(--transition);
+        gap: 0.5rem;
+        font-size: 0.95rem;
+    }
+    
+    .btn-primary {
+        background: var(--gradient-primary);
+        color: white;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+    }
+    
+    .btn-secondary {
+        background: var(--gradient-secondary);
+        color: white;
+    }
+    
+    .btn-secondary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+    }
+    
+    .btn-outline {
+        background: transparent;
+        border: 2px solid var(--primary-color);
+        color: var(--primary-color);
+    }
+    
+    .btn-outline:hover {
+        background: var(--primary-color);
+        color: white;
+    }
+    
+    .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none !important;
+    }
+    
+    /* Progress Bar */
+    .progress-container {
+        display: none;
+        margin-top: 2rem;
+    }
+    
+    .progress-bar {
+        background: var(--dark-border);
+        border-radius: 10px;
+        height: 8px;
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+    }
+    
+    .progress-fill {
+        background: var(--gradient-primary);
+        height: 100%;
+        width: 0%;
+        transition: width 0.3s ease;
+    }
+    
+    .progress-text {
+        text-align: center;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+    }
+    
+    /* Result Container */
+    .result-container {
+        display: none;
+        background: var(--dark-card);
+        border: 1px solid var(--dark-border);
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        margin-top: 2rem;
+    }
+    
+    .result-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--success-color);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .result-content {
+        background: var(--dark-bg);
+        border: 1px solid var(--dark-border);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        font-family: 'Courier New', monospace;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        max-height: 400px;
+        overflow-y: auto;
+        white-space: pre-wrap;
+        word-break: break-all;
+    }
+    
+    .result-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 1.5rem;
+    }
+    
+    /* Preview Container */
+    .preview-container {
+        display: none;
+        background: var(--dark-card);
+        border: 1px solid var(--dark-border);
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        margin-top: 2rem;
+    }
+    
+    .preview-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--accent-color);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .preview-content {
+        background: var(--dark-bg);
+        border: 1px solid var(--dark-border);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .generator-title {
+            font-size: 2rem;
+        }
+        
+        .form-container {
+            padding: 1.5rem;
+        }
+        
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .action-buttons {
+            flex-direction: column;
+        }
+        
+        .btn {
+            width: 100%;
+        }
+    }
+    
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .animate-fadeInUp {
+        animation: fadeInUp 0.6s ease-out;
+    }
+    
+    /* Custom Scrollbar */
+    .result-content::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .result-content::-webkit-scrollbar-track {
+        background: var(--dark-bg);
+    }
+    
+    .result-content::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 3px;
+    }
+    </style>
+    
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap' rel='stylesheet'/>
+    
+    <!-- Font Awesome -->
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css' rel='stylesheet'/>
+</head>
+
+<body>
+    <div class='container'>
+        <div class='generator-section'>
+            <div class='generator-header animate-fadeInUp'>
+                <h1 class='generator-title'>
+                    <i class='fas fa-magic'></i> Generator Series Otomatis
+                </h1>
+                <p class='generator-subtitle'>
+                    Buat halaman series anime dan donghua baru dengan mudah dan cepat menggunakan generator otomatis ini.
+                </p>
+            </div>
+
+            <!-- Form Container -->
+            <div class='form-container animate-fadeInUp' style='animation-delay: 0.1s;'>
+                <form id='seriesForm'>
+                    <!-- Informasi Dasar -->
+                    <div class='form-section'>
+                        <h3 class='section-title'>
+                            <i class='fas fa-info-circle'></i> Informasi Dasar
+                        </h3>
+                        
+                        <div class='form-grid'>
+                            <div class='form-group'>
+                                <label class='form-label required' for='judul'>Judul Series</label>
+                                <input class='form-input' id='judul' name='judul' placeholder='Contoh: Solo Leveling Season 2' required='required' type='text'/>
+                                <div class='form-help'>Masukkan judul lengkap series anime/donghua</div>
+                                <div class='form-error'>Judul wajib diisi</div>
+                            </div>
+                            
+                            <div class='form-group'>
+                                <label class='form-label' for='judulAlternatif'>Judul Alternatif</label>
+                                <input class='form-input' id='judulAlternatif' name='judulAlternatif' placeholder='Contoh: I Alone Level Up, Na Honjaman Level Up' type='text'/>
+                                <div class='form-help'>Judul dalam bahasa lain (pisahkan dengan koma)</div>
+                            </div>
+                            
+                            <div class='form-group'>
+                                <label class='form-label required' for='tipe'>Tipe Konten</label>
+                                <select class='form-select' id='tipe' name='tipe' required='required'>
+                                    <option value=''>Pilih Tipe</option>
+                                    <option value='anime'>Anime</option>
+                                    <option value='donghua'>Donghua</option>
+                                    <option value='ova'>OVA</option>
+                                    <option value='ona'>ONA</option>
+                                    <option value='movie'>Movie</option>
+                                    <option value='special'>Special</option>
+                                </select>
+                                <div class='form-error'>Tipe wajib dipilih</div>
+                            </div>
+                            
+                            <div class='form-group'>
+                                <label class='form-label required' for='status'>Status</label>
+                                <select class='form-select' id='status' name='status' required='required'>
+                                    <option value=''>Pilih Status</option>
+                                    <option value='ongoing'>Ongoing</option>
+                                    <option value='completed'>Completed</option>
+                                    <option value='upcoming'>Upcoming</option>
+                                    <option value='hiatus'>Hiatus</option>
+                                </select>
+                                <div class='form-error'>Status wajib dipilih</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gambar & Media -->
+                    <div class='form-section'>
+                        <h3 class='section-title'>
+                            <i class='fas fa-image'></i> Gambar & Media
+                        </h3>
+                        
+                        <div class='form-grid'>
+                            <div class='form-group'>
+                                <label class='form-label' for='thumbnail'>Thumbnail/Cover</label>
+                                <div class='image-upload-container' id='thumbnailUpload'>
+                                    <div class='upload-icon'>
+                                        <i class='fas fa-cloud-upload-alt'></i>
+                                    </div>
+                                    <div class='upload-text'>Klik untuk upload atau drag & drop</div>
+                                    <div class='upload-hint'>Format: JPG, PNG, WebP (Max 2MB)</div>
+                                    <img class='preview-image' id='thumbnailPreview' style='display:none;' src=''/>
+                                    <input accept='image/*' class='file-input' id='thumbnail' name='thumbnail' type='file'/>
+                                </div>
+                                <input class='form-input' id='thumbnailUrl' name='thumbnailUrl' placeholder='Atau masukkan URL gambar' type='url'/>
+                            </div>
+                            
+                            <div class='form-group'>
+                                <label class='form-label' for='poster'>Poster/Banner</label>
+                                <div class='image-upload-container' id='posterUpload'>
+                                    <div class='upload-icon'>
+                                        <i class='fas fa-image'></i>
+                                    </div>
+                                    <div class='upload-text'>Klik untuk upload poster</div>
+                                    <div class='upload-hint'>Format: JPG, PNG, WebP (Max 5MB)</div>
+                                    <img class='preview-image' id='posterPreview' style='display:none;' src=''/>
+                                    <input accept='image/*' class='file-input' id='poster' name='poster' type='file'/>
+                                </div>
+                                <input class='form-input' id='posterUrl' name='posterUrl' placeholder='Atau masukkan URL poster' type='url'/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detail Informasi -->
+                    <div class='form-section'>
+                        <h3 class='section-title'>
+                            <i class='fas fa-list-alt'></i> Detail Informasi
+                        </h3>
+                        
+                        <div class='form-grid'>
+                            <div class='form-group'>
+                                <label class='form-label' for='studio'>Studio</label>
+                                <input class='form-input' id='studio' name='studio' placeholder='Contoh: A-1 Pictures, Madhouse' type='text'/>
+                                <div class='form-help'>Studio yang memproduksi anime/donghua</div>
+                            </div>
+                            
+                            <div class='form-group'>
+                                <label class='form-label' for='musim'>Musim Rilis</label>
+                                <select class='form-select' id='musim' name='musim'>
+                                    <option value=''>Pilih Musim</option>
+                                    <option value='winter'>Winter</option>
+                                    <option value='spring'>Spring</option>
+                                    <option value='summer'>Summer</option>
+                                    <option value='fall'>Fall</option>
+                                </select>
+                                <div class='form-help'>Musim rilis di Jepang/Cina</div>
+                            </div>
+                            
+                            <div class='form-group'>
+                                <label class='form-label' for='tahun'>Tahun Rilis</label>
+                                <input class='form-input' id='tahun' max='2030' min='2000' name='tahun' placeholder='2024' type='number'/>
+                                <div class='form-help'>Tahun rilis pertama kali</div>
+                            </div>
+                            
+                            <div class='form-group'>
+                                <label class='form-label' for='jumlahEpisode'>Jumlah Episode</label>
+                                <input class='form-input' id='jumlahEpisode' min='1' name='jumlahEpisode' placeholder='12' type='number'/>
+                                <div class='form-help'>Total episode (kosongkan jika belum diketahui)</div>
+                            </div>
+                            
+                            <div class='form-group'>
+                                <label class='form-label' for='durasi'>Durasi per Episode</label>
+                                <input class='form-input' id='durasi' min='1' name='durasi' placeholder='24' type='number'/>
+                                <div class='form-help'>Durasi dalam menit</div>
+                            </div>
+                            
+                            <div class='form-group'>
+                                <label class='form-label' for='rating'>Rating Usia</label>
+                                <select class='form-select' id='rating' name='rating'>
+                                    <option value=''>Pilih Rating</option>
+                                    <option value='g'>G - All Ages</option>
+                                    <option value='pg'>PG - Children</option>
+                                    <option value='pg13'>PG-13 - Teens 13+</option>
+                                    <option value='r17'>R - 17+ (violence & profanity)</option>
+                                    <option value='r'>R+ - Mild Nudity</option>
+                                    <option value='rx'>Rx - Hentai</option>
+                                </select>
+                                <div class='form-help'>Klasifikasi usia penonton</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Genre & Tags -->
+                    <div class='form-section'>
+                        <h3 class='section-title'>
+                            <i class='fas fa-tags'></i> Genre & Tags
+                        </h3>
+                        
+                        <div class='form-group'>
+                            <label class='form-label required' for='genre'>Genre</label>
+                            <div class='tag-input-container' id='genreContainer'>
+                                <input class='tag-input' id='genreInput' placeholder='Ketik genre dan tekan Enter' type='text'/>
+                            </div>
+                            <div class='form-help'>Tambahkan minimal 1 genre (contoh: Action, Romance, Isekai)</div>
+                            <div class='form-error'>Genre wajib diisi minimal 1</div>
+                        </div>
+                        
+                        <div class='form-group'>
+                            <label class='form-label' for='tags'>Tags/Label</label>
+                            <div class='tag-input-container' id='tagsContainer'>
+                                <input class='tag-input' id='tagsInput' placeholder='Ketik tag dan tekan Enter' type='text'/>
+                            </div>
+                            <div class='form-help'>Label tambahan untuk kategori (pisahkan dengan koma)</div>
+                        </div>
+                    </div>
+
+                    <!-- Sinopsis -->
+                    <div class='form-section'>
+                        <h3 class='section-title'>
+                            <i class='fas fa-align-left'></i> Sinopsis
+                        </h3>
+                        
+                        <div class='form-group'>
+                            <label class='form-label required' for='sinopsis'>Sinopsis</label>
+                            <textarea class='form-textarea' id='sinopsis' name='sinopsis' placeholder='Tulis sinopsis lengkap series ini...' required='required' rows='6'></textarea>
+                            <div class='form-help'>Deskripsi lengkap alur cerita (minimal 100 karakter)</div>
+                            <div class='form-error'>Sinopsis wajib diisi minimal 100 karakter</div>
+                            <div class='form-help' id='sinopsisCount'>0 karakter</div>
+                        </div>
+                        
+                        <div class='form-group'>
+                            <label class='form-label' for='sinopsisSingkat'>Sinopsis Singkat</label>
+                            <textarea class='form-textarea' id='sinopsisSingkat' maxlength='200' name='sinopsisSingkat' placeholder='Tulis sinopsis singkat untuk preview...' rows='3'></textarea>
+                            <div class='form-help'>Ringkasan singkat (maksimal 200 karakter)</div>
+                            <div class='form-help' id='sinopsisSingkatCount'>0/200 karakter</div>
+                        </div>
+                    </div>
+
+                    <!-- NSFW Warning -->
+                    <div class='form-section' id='nsfwSection' style='display:none;'>
+                        <div class='nsfw-warning'>
+                            <div class='nsfw-title'>
+                                <i class='fas fa-exclamation-triangle'></i> Peringatan Konten Dewasa
+                            </div>
+                            <div class='nsfw-description'>
+                                Series ini mengandung konten yang tidak cocok untuk semua umur. 
+                                Pastikan untuk memberikan peringatan yang jelas.
+                            </div>
+                            <div class='checkbox-group'>
+                                <input id='nsfwConfirm' name='nsfwConfirm' type='checkbox'/>
+                                <label for='nsfwConfirm'>Saya mengerti dan akan memberikan peringatan NSFW</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Informasi Tambahan -->
+                    <div class='form-section'>
+                        <h3 class='section-title'>
+                            <i class='fas fa-plus-circle'></i> Informasi Tambahan
+                        </h3>
+                        
+                        <div class='form-grid'>
+                            <div class='form-group'>
+                                <label class='form-label' for='website'>Website Resmi</label>
+                                <div class='input-group'>
+                                    <span class='input-group-text'><i class='fas fa-globe'></i></span>
+                                    <input class='form-input' id='website' name='website' placeholder='https://example.com' type='url'/>
+                                </div>
+                                <div class='form-help'>Website resmi series ini</div>
+                            </div>
+                            
+                            <div class='form-group'>
+                                <label class='form-label' for='twitter'>Twitter</label>
+                                <div class='input-group'>
+                                    <span class='input-group-text'><i class='fab fa-twitter'></i></span>
+                                    <input class='form-input' id='twitter' name='twitter' placeholder='@username' type='text'/>
+                                </div>
+                                <div class='form-help'>Akun Twitter resmi</div>
+                            </div>
+                            
+                            <div class='form-group'>
+                                <label class='form-label' for='mal'>MyAnimeList</label>
+                                <div class='input-group'>
+                                    <span class='input-group-text'><i class='fas fa-list'></i></span>
+                                    <input class='form-input' id='mal' name='mal' placeholder='https://myanimelist.net/anime/12345' type='url'/>
+                                </div>
+                                <div class='form-help'>Link MyAnimeList</div>
+                            </div>
+                            
+                            <div class='form-group'>
+                                <label class='form-label' for='anidb'>AniDB</label>
+                                <div class='input-group'>
+                                    <span class='input-group-text'><i class='fas fa-database'></i></span>
+                                    <input class='form-input' id='anidb' name='anidb' placeholder='https://anidb.net/anime/12345' type='url'/>
+                                </div>
+                                <div class='form-help'>Link AniDB</div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Action Buttons -->
+                <div class='action-buttons'>
+                    <button class='btn btn-primary' id='generateBtn' onclick='generateSeries()'>
+                        <i class='fas fa-magic'></i> Generate Series
+                    </button>
+                    <button class='btn btn-secondary' id='previewBtn' onclick='previewSeries()'>
+                        <i class='fas fa-eye'></i> Preview
+                    </button>
+                    <button class='btn btn-outline' id='resetBtn' onclick='resetForm()'>
+                        <i class='fas fa-undo'></i> Reset Form
+                    </button>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class='progress-container' id='progressContainer'>
+                    <div class='progress-bar'>
+                        <div class='progress-fill' id='progressFill'></div>
+                    </div>
+                    <div class='progress-text' id='progressText'>Memproses...</div>
+                </div>
+
+                <!-- Result Container -->
+                <div class='result-container' id='resultContainer'>
+                    <div class='result-title'>
+                        <i class='fas fa-check-circle'></i> Hasil Generasi
+                    </div>
+                    <div class='result-content' id='resultContent'></div>
+                    <div class='result-actions'>
+                        <button class='btn btn-primary' onclick='copyResult()'>
+                            <i class='fas fa-copy'></i> Copy HTML
+                        </button>
+                        <button class='btn btn-secondary' onclick='downloadResult()'>
+                            <i class='fas fa-download'></i> Download File
+                        </button>
+                        <button class='btn btn-outline' onclick='publishToBlogger()'>
+                            <i class='fab fa-blogger'></i> Publish ke Blogger
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Preview Container -->
+                <div class='preview-container' id='previewContainer'>
+                    <div class='preview-title'>
+                        <i class='fas fa-eye'></i> Preview Series
+                    </div>
+                    <div class='preview-content' id='previewContent'></div>
+                </div>
+            </div>
+
+            <!-- Instructions -->
+            <div class='legend animate-fadeInUp' style='animation-delay: 0.2s;'>
+                <div class='legend-title'>
+                    <i class='fas fa-lightbulb'></i> Petunjuk Penggunaan
+                </div>
+                <div style='display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;'>
+                    <div style='background: var(--dark-bg); padding: 1.5rem; border-radius: var(--border-radius); border: 1px solid var(--dark-border);'>
+                        <div style='color: var(--primary-color); font-weight: 600; margin-bottom: 0.5rem;'>📝 Informasi Wajib</div>
+                        <div style='font-size: 0.9rem; color: var(--text-muted);'>Isi semua field yang ditandai dengan tanda * (wajib diisi)</div>
+                    </div>
+                    <div style='background: var(--dark-bg); padding: 1.5rem; border-radius: var(--border-radius); border: 1px solid var(--dark-border);'>
+                        <div style='color: var(--secondary-color); font-weight: 600; margin-bottom: 0.5rem;'>🏷️ Genre & Tags</div>
+                        <div style='font-size: 0.9rem; color: var(--text-muted);'>Ketik genre dan tekan Enter untuk menambahkan</div>
+                    </div>
+                    <div style='background: var(--dark-bg); padding: 1.5rem; border-radius: var(--border-radius); border: 1px solid var(--dark-border);'>
+                        <div style='color: var(--accent-color); font-weight: 600; margin-bottom: 0.5rem;'>⚠️ NSFW Content</div>
+                        <div style='font-size: 0.9rem; color: var(--text-muted);'>Pilih rating yang sesuai untuk konten dewasa</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script type='text/javascript'>
+    // Global variables
+    let genres = [];
+    let tags = [];
+    let currentRating = '';
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeTagInputs();
+        initializeImageUpload();
+        initializeCharacterCount();
+        initializeRatingCheck();
+    });
+
+    // Initialize tag inputs
+    function initializeTagInputs() {
+        setupTagInput('genreInput', 'genreContainer', genres);
+        setupTagInput('tagsInput', 'tagsContainer', tags);
+    }
+
+    // Setup tag input functionality
+    function setupTagInput(inputId, containerId, array) {
+        const input = document.getElementById(inputId);
+        const container = document.getElementById(containerId);
+
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const value = this.value.trim();
+                if (value && !array.includes(value)) {
+                    array.push(value);
+                    renderTags(containerId, array);
+                    this.value = '';
+                }
+            }
+        });
+
+        input.addEventListener('blur', function() {
+            const value = this.value.trim();
+            if (value && !array.includes(value)) {
+                array.push(value);
+                renderTags(containerId, array);
+                this.value = '';
+            }
+        });
+    }
+
+    // Render tags
+    function renderTags(containerId, array) {
+        const container = document.getElementById(containerId);
+        const input = container.querySelector('.tag-input');
+        
+        // Clear existing tags except input
+        container.querySelectorAll('.tag').forEach(tag => tag.remove());
+        
+        // Add tags before input
+        array.forEach((tag, index) => {
+            const tagElement = document.createElement('div');
+            tagElement.className = 'tag';
+            tagElement.innerHTML = `
+                ${tag}
+                <span class='tag-remove' onclick='removeTag("${containerId}", ${index})'>×</span>
+            `;
+            container.insertBefore(tagElement, input);
+        });
+    }
+
+    // Remove tag
+    function removeTag(containerId, index) {
+        if (containerId === 'genreContainer') {
+            genres.splice(index, 1);
+            renderTags('genreContainer', genres);
+        } else if (containerId === 'tagsContainer') {
+            tags.splice(index, 1);
+            renderTags('tagsContainer', tags);
+        }
+    }
+
+    // Initialize image upload
+    function initializeImageUpload() {
+        setupImageUpload('thumbnailUpload', 'thumbnail', 'thumbnailPreview');
+        setupImageUpload('posterUpload', 'poster', 'posterPreview');
+    }
+
+    // Setup image upload
+    function setupImageUpload(uploadId, inputId, previewId) {
+        const uploadContainer = document.getElementById(uploadId);
+        const fileInput = document.getElementById(inputId);
+        const preview = document.getElementById(previewId);
+
+        // Click to upload
+        uploadContainer.addEventListener('click', function() {
+            fileInput.click();
+        });
+
+        // Drag and drop
+        uploadContainer.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.classList.add('dragover');
+        });
+
+        uploadContainer.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+        });
+
+        uploadContainer.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect(files[0], preview);
+            }
+        });
+
+        // File input change
+        fileInput.addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                handleFileSelect(e.target.files[0], preview);
+            }
+        });
+    }
+
+    // Handle file select
+    function handleFileSelect(file, preview) {
+        if (file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // Initialize character count
+    function initializeCharacterCount() {
+        setupCharacterCount('sinopsis', 'sinopsisCount');
+        setupCharacterCount('sinopsisSingkat', 'sinopsisSingkatCount', 200);
+    }
+
+    // Setup character count
+    function setupCharacterCount(textareaId, counterId, maxLength = null) {
+        const textarea = document.getElementById(textareaId);
+        const counter = document.getElementById(counterId);
+
+        textarea.addEventListener('input', function() {
+            const length = this.value.length;
+            if (maxLength) {
+                counter.textContent = `${length}/${maxLength} karakter`;
+                if (length > maxLength) {
+                    counter.style.color = 'var(--error-color)';
+                } else {
+                    counter.style.color = 'var(--text-secondary)';
+                }
+            } else {
+                counter.textContent = `${length} karakter`;
+            }
+        });
+    }
+
+    // Initialize rating check
+    function initializeRatingCheck() {
+        document.getElementById('rating').addEventListener('change', function() {
+            currentRating = this.value;
+            if (['r', 'rx'].includes(currentRating)) {
+                document.getElementById('nsfwSection').style.display = 'block';
+            } else {
+                document.getElementById('nsfwSection').style.display = 'none';
+                document.getElementById('nsfwConfirm').checked = false;
+            }
+        });
+    }
+
+    // Validate form
+    function validateForm() {
+        let isValid = true;
+        
+        // Reset error states
+        document.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(el => {
+            el.classList.remove('error');
+        });
+        document.querySelectorAll('.form-error').forEach(el => {
+            el.classList.remove('show');
+        });
+
+        // Check required fields
+        const requiredFields = document.querySelectorAll('[required]');
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                field.classList.add('error');
+                const errorElement = field.closest('.form-group').querySelector('.form-error');
+                if (errorElement) {
+                    errorElement.classList.add('show');
+                }
+                isValid = false;
+            }
+        });
+
+        // Check genres
+        if (genres.length === 0) {
+            document.getElementById('genreInput').classList.add('error');
+            document.querySelector('#genreContainer + .form-error').classList.add('show');
+            isValid = false;
+        }
+
+        // Check sinopsis length
+        const sinopsis = document.getElementById('sinopsis').value;
+        if (sinopsis.length < 100) {
+            document.getElementById('sinopsis').classList.add('error');
+            document.getElementById('sinopsis').closest('.form-group').querySelector('.form-error').classList.add('show');
+            isValid = false;
+        }
+
+        // Check NSFW confirmation
+        if (['r', 'rx'].includes(currentRating) && !document.getElementById('nsfwConfirm').checked) {
+            alert('Anda harus mencentang peringatan NSFW untuk konten dewasa');
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    // Generate series
+    function generateSeries() {
+        if (!validateForm()) {
+            return;
+        }
+
+        // Show progress
+        document.getElementById('progressContainer').style.display = 'block';
+        document.getElementById('generateBtn').disabled = true;
+        
+        // Simulate progress
+        let progress = 0;
+        const progressInterval = setInterval(() => {
+            progress += 10;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `Memproses... ${progress}%`;
+            
+            if (progress >= 100) {
+                clearInterval(progressInterval);
+                completeGeneration();
+            }
+        }, 200);
+
+        // Collect form data
+        const formData = collectFormData();
+        window.generatedData = formData;
+    }
+
+    // Complete generation
+    function completeGeneration() {
+        document.getElementById('progressContainer').style.display = 'none';
+        document.getElementById('generateBtn').disabled = false;
+        
+        // Generate HTML content
+        const htmlContent = generateHTML(window.generatedData);
+        
+        // Show result
+        document.getElementById('resultContent').textContent = htmlContent;
+        document.getElementById('resultContainer').style.display = 'block';
+        
+        // Hide progress
+        document.getElementById('progressContainer').style.display = 'none';
+    }
+
+    // Collect form data
+    function collectFormData() {
+        const form = document.getElementById('seriesForm');
+        const formData = new FormData(form);
+        
+        return {
+            judul: formData.get('judul'),
+            judulAlternatif: formData.get('judulAlternatif'),
+            tipe: formData.get('tipe'),
+            status: formData.get('status'),
+            thumbnail: document.getElementById('thumbnailUrl').value || document.getElementById('thumbnailPreview').src,
+            poster: document.getElementById('posterUrl').value || document.getElementById('posterPreview').src,
+            studio: formData.get('studio'),
+            musim: formData.get('musim'),
+            tahun: formData.get('tahun'),
+            jumlahEpisode: formData.get('jumlahEpisode'),
+            durasi: formData.get('durasi'),
+            rating: formData.get('rating'),
+            genre: genres,
+            tags: tags,
+            sinopsis: formData.get('sinopsis'),
+            sinopsisSingkat: formData.get('sinopsisSingkat'),
+            website: formData.get('website'),
+            twitter: formData.get('twitter'),
+            mal: formData.get('mal'),
+            anidb: formData.get('anidb'),
+            nsfw: ['r', 'rx'].includes(currentRating)
+        };
+    }
+
+    // Generate HTML
+    function generateHTML(data) {
+        const slug = generateSlug(data.judul);
+        const labels = [
+            data.tipe,
+            data.status,
+            ...data.genre,
+            ...data.tags,
+            slug
+        ].filter(Boolean).join(',');
+
+        return `&lt;!--
+${data.judul}
+Generated by: Anime Streaming Generator
+Date: ${new Date().toISOString()}
+--&gt;
+
+&lt;div class="series-container" data-type="${data.tipe}" data-status="${data.status}"&gt;
+  &lt;div class="series-header"&gt;
+    &lt;div class="series-thumbnail"&gt;
+      &lt;img src="${data.thumbnail}" alt="${data.judul}" loading="lazy" /&gt;
+    &lt;/div&gt;
+    &lt;div class="series-info"&gt;
+      &lt;h1 class="series-title"&gt;${data.judul}&lt;/h1&gt;
+      ${data.judulAlternatif ? `<div class="series-alternative">${data.judulAlternatif}</div>` : ''}
+      &lt;div class="series-meta"&gt;
+        <span class="series-type ${data.type}">${data.tipe.toUpperCase()}</span>
+        <span class="series-status ${data.status}">${data.status.toUpperCase()}</span>
+        ${data.nsfw ? '<span class="series-nsfw">18+</span>' : ''}
+      &lt;/div&gt;
+      ${data.synopsisSingkat ? `<div class="series-synopsis-short">${data.synopsisSingkat}</div>` : ''}
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class="series-details"&gt;
+    &lt;div class="detail-grid"&gt;
+      ${data.studio ? `<div class="detail-item"><strong>Studio:</strong> ${data.studio}</div>` : ''}
+      ${data.musim ? `<div class="detail-item"><strong>Musim:</strong> ${data.musim} ${data.tahun}</div>` : ''}
+      ${data.tahun ? `<div class="detail-item"><strong>Tahun:</strong> ${data.tahun}</div>` : ''}
+      ${data.jumlahEpisode ? `<div class="detail-item"><strong>Episode:</strong> ${data.jumlahEpisode}</div>` : ''}
+      ${data.durasi ? `<div class="detail-item"><strong>Durasi:</strong> ${data.durasi} menit</div>` : ''}
+      ${data.rating ? `<div class="detail-item"><strong>Rating:</strong> ${data.rating}</div>` : ''}
+    &lt;/div&gt;
+
+    &lt;div class="series-genres"&gt;
+      &lt;h3&gt;Genre&lt;/h3&gt;
+      &lt;div class="genre-tags"&gt;
+        ${data.genre.map(g => `<span class="genre-tag">${g}</span>`).join('')}
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    ${data.tags.length > 0 ? `
+    &lt;div class="series-tags"&gt;
+      &lt;h3&gt;Tags&lt;/h3&gt;
+      &lt;div class="tag-list"&gt;
+        ${data.tags.map(t => `<span class="tag-item">${t}</span>`).join('')}
+      &lt;/div&gt;
+    &lt;/div&gt;
+    ` : ''}
+
+    &lt;div class="series-synopsis"&gt;
+      &lt;h3&gt;Sinopsis&lt;/h3&gt;
+      &lt;div class="synopsis-content"&gt;
+        ${data.synopsis}
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    ${data.nsfw ? `
+    &lt;div class="nsfw-warning"&gt;
+      &lt;div class="nsfw-icon"&gt;⚠️&lt;/div&gt;
+      &lt;div class="nsfw-text"&gt;
+        &lt;strong&gt;Peringatan:&lt;/strong&gt; Series ini mengandung konten dewasa.
+      &lt;/div&gt;
+    &lt;/div&gt;
+    ` : ''}
+
+    ${data.website || data.twitter || data.mal || data.anidb ? `
+    &lt;div class="series-links"&gt;
+      &lt;h3&gt;Tautan Resmi&lt;/h3&gt;
+      &lt;div class="link-grid"&gt;
+        ${data.website ? `<a href="${data.website}" target="_blank" class="link-item"><i class="fas fa-globe"></i> Website</a>` : ''}
+        ${data.twitter ? `<a href="https://twitter.com/${data.twitter}" target="_blank" class="link-item"><i class="fab fa-twitter"></i> Twitter</a>` : ''}
+        ${data.mal ? `<a href="${data.mal}" target="_blank" class="link-item"><i class="fas fa-list"></i> MyAnimeList</a>` : ''}
+        ${data.anidb ? `<a href="${data.anidb}" target="_blank" class="link-item"><i class="fas fa-database"></i> AniDB</a>` : ''}
+      &lt;/div&gt;
+    &lt;/div&gt;
+    ` : ''}
+
+    &lt;div class="series-actions"&gt;
+      &lt;a href="#" class="btn btn-primary"&gt;
+        &lt;i class="fas fa-play"&gt;&lt;/i&gt; Tonton Episode
+      &lt;/a&gt;
+      &lt;button class="btn btn-secondary" onclick="toggleBookmark('${slug}', '${data.judul}')"&gt;
+        &lt;i class="fas fa-bookmark"&gt;&lt;/i&gt; Bookmark
+      &lt;/button&gt;
+      &lt;button class="btn btn-outline" onclick="shareSeries('${slug}', '${data.judul}')"&gt;
+        &lt;i class="fas fa-share"&gt;&lt;/i&gt; Bagikan
+      &lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+.series-container {
+  background: var(--dark-card);
+  border: 1px solid var(--dark-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  margin: 2rem 0;
+}
+
+.series-header {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+  border-bottom: 1px solid var(--dark-border);
+}
+
+.series-thumbnail {
+  flex-shrink: 0;
+}
+
+.series-thumbnail img {
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: var(--border-radius);
+}
+
+.series-info {
+  flex: 1;
+}
+
+.series-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text-light);
+}
+
+.series-alternative {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.series-meta {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.series-type, .series-status, .series-nsfw {
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.series-type.anime { background: var(--primary-color); color: white; }
+.series-type.donghua { background: var(--accent-color); color: white; }
+.series-type.ova { background: var(--secondary-color); color: white; }
+.series-type.movie { background: var(--warning-color); color: white; }
+
+.series-status.ongoing { background: var(--success-color); color: white; }
+.series-status.completed { background: var(--text-secondary); color: white; }
+.series-status.upcoming { background: var(--warning-color); color: white; }
+.series-status.hiatus { background: var(--error-color); color: white; }
+
+.series-nsfw { background: var(--error-color); color: white; }
+
+.series-synopsis-short {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.series-details {
+  padding: 2rem;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.detail-item {
+  padding: 1rem;
+  background: var(--dark-bg);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--dark-border);
+}
+
+.detail-item strong {
+  color: var(--primary-color);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.series-genres, .series-tags, .series-synopsis {
+  margin-bottom: 2rem;
+}
+
+.series-genres h3, .series-tags h3, .series-synopsis h3 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.genre-tags, .tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.genre-tag, .tag-item {
+  background: var(--dark-bg);
+  border: 1px solid var(--dark-border);
+  color: var(--text-light);
+  padding: 0.4rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.85rem;
+  transition: var(--transition);
+}
+
+.genre-tag:hover, .tag-item:hover {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.synopsis-content {
+  color: var(--text-muted);
+  line-height: 1.8;
+  text-align: justify;
+}
+
+.nsfw-warning {
+  background: rgba(231, 76, 60, 0.1);
+  border: 1px solid var(--error-color);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.nsfw-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.nsfw-text {
+  color: var(--error-color);
+  font-weight: 500;
+}
+
+.series-links {
+  margin-bottom: 2rem;
+}
+
+.link-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.link-item {
+  background: var(--dark-bg);
+  border: 1px solid var(--dark-border);
+  color: var(--text-light);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  text-align: center;
+  text-decoration: none;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.link-item:hover {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.link-item i {
+  font-size: 1.5rem;
+}
+
+.series-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--transition);
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  background: var(--gradient-primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+}
+
+.btn-secondary {
+  background: var(--gradient-secondary);
+  color: white;
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.btn-outline:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .series-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .series-thumbnail img {
+    width: 150px;
+    height: 225px;
+  }
+  
+  .series-actions {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+}
+&lt;/style&gt;
+
+Labels: ${labels}
+
+&lt;script&gt;
+// Functions for series interaction
+function toggleBookmark(id, title) {
+    let bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+    const index = bookmarks.findIndex(item => item.id === id);
+    
+    if (index > -1) {
+        bookmarks.splice(index, 1);
+        alert('Dihapus dari bookmark');
+    } else {
+        bookmarks.push({ id: id, title: title, date: new Date().toISOString() });
+        alert('Ditambahkan ke bookmark');
+    }
+    
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+}
+
+function shareSeries(id, title) {
+    const url = window.location.origin + window.location.pathname + '#' + id;
+    if (navigator.share) {
+        navigator.share({
+            title: title,
+            url: url
+        });
+    } else {
+        navigator.clipboard.writeText(url);
+        alert('Link telah disalin ke clipboard');
+    }
+}
+&lt;/script&gt;`;
+
+        return htmlContent;
+    }
+
+    // Generate slug
+    function generateSlug(text) {
+        return text.toLowerCase()
+            .replace(/[^\w\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-')
+            .trim();
+    }
+
+    // Preview series
+    function previewSeries() {
+        if (!validateForm()) {
+            return;
+        }
+
+        const data = collectFormData();
+        const previewHTML = generateHTML(data);
+        
+        document.getElementById('previewContent').innerHTML = previewHTML;
+        document.getElementById('previewContainer').style.display = 'block';
+        
+        // Scroll to preview
+        document.getElementById('previewContainer').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Copy result
+    function copyResult() {
+        const resultContent = document.getElementById('resultContent').textContent;
+        navigator.clipboard.writeText(resultContent).then(() => {
+            alert('HTML telah disalin ke clipboard!');
+        });
+    }
+
+    // Download result
+    function downloadResult() {
+        const resultContent = document.getElementById('resultContent').textContent;
+        const blob = new Blob([resultContent], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${generateSlug(window.generatedData.judul)}.html`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    // Publish to Blogger (placeholder)
+    function publishToBlogger() {
+        alert('Fitur publish ke Blogger akan tersedia setelah konfigurasi API. Silakan salin HTML dan buat postingan manual di Blogger.');
+        copyResult();
+    }
+
+    // Reset form
+    function resetForm() {
+        if (confirm('Apakah Anda yakin ingin mereset semua data?')) {
+            document.getElementById('seriesForm').reset();
+            genres = [];
+            tags = [];
+            renderTags('genreContainer', genres);
+            renderTags('tagsContainer', tags);
+            document.getElementById('thumbnailPreview').style.display = 'none';
+            document.getElementById('posterPreview').style.display = 'none';
+            document.getElementById('nsfwSection').style.display = 'none';
+            document.getElementById('resultContainer').style.display = 'none';
+            document.getElementById('previewContainer').style.display = 'none';
+        }
+    }
+    </script>
+</body>
+</html>

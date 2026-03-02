@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengumuman - Web Streaming Anime & Donghua</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #252525;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent-color: #ff6b6b;
+            --accent-hover: #ff5252;
+            --border-color: #333;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --danger-color: #f44336;
+            --font-primary: 'Inter', sans-serif;
+            --font-heading: 'Poppins', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .announcement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .announcement-card {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .announcement-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), var(--warning-color));
+        }
+
+        .announcement-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .card-icon.important {
+            background: linear-gradient(45deg, var(--danger-color), #ff6b6b);
+            color: white;
+        }
+
+        .card-icon.update {
+            background: linear-gradient(45deg, var(--success-color), #4caf50);
+            color: white;
+        }
+
+        .card-icon.maintenance {
+            background: linear-gradient(45deg, var(--warning-color), #ff9800);
+            color: white;
+        }
+
+        .card-icon.info {
+            background: linear-gradient(45deg, #2196f3, #42a5f5);
+            color: white;
+        }
+
+        .card-title {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-date {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        .card-content {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-content ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .card-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .priority-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .priority-high {
+            background: rgba(244, 67, 54, 0.2);
+            color: var(--danger-color);
+            border: 1px solid var(--danger-color);
+        }
+
+        .priority-medium {
+            background: rgba(255, 152, 0, 0.2);
+            color: var(--warning-color);
+            border: 1px solid var(--warning-color);
+        }
+
+        .priority-low {
+            background: rgba(76, 175, 80, 0.2);
+            color: var(--success-color);
+            border: 1px solid var(--success-color);
+        }
+
+        .btn-back {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-back:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.active {
+            background: var(--success-color);
+        }
+
+        .status-dot.warning {
+            background: var(--warning-color);
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .notification-banner {
+            background: linear-gradient(45deg, var(--accent-color), var(--warning-color));
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .announcement-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .announcement-card {
+                padding: 1.5rem;
+            }
+
+            .card-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .card-icon {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-bullhorn"></i> Pengumuman</h1>
+            <p>Informasi terbaru seputar website streaming anime & donghua</p>
+        </div>
+
+        <div class="notification-banner">
+            <i class="fas fa-info-circle"></i>
+            Selalu cek halaman ini untuk update terbaru mengenai perubahan, maintenance, dan fitur baru!
+        </div>
+
+        <div class="announcement-grid">
+            <!-- Pengumuman Penting -->
+            <div class="announcement-card">
+                <div class="card-header">
+                    <div class="card-icon important">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div>
+                        <h3 class="card-title">Penting! Perubahan Server</h3>
+                        <div class="card-date">2 Maret 2026 - 15:30 WIB</div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <p>Kami akan melakukan migrasi server ke infrastruktur yang lebih baik untuk meningkatkan kecepatan streaming. Proses ini akan dilakukan pada:</p>
+                    <ul>
+                        <li><strong>Tanggal:</strong> 5-7 Maret 2026</li>
+                        <li><strong>Waktu:</strong> 23:00 - 05:00 WIB</li>
+                        <li><strong>Dampak:</strong> Beberapa episode mungkin tidak dapat diakses sementara</li>
+                    </ul>
+                    <p>Mohon pengertiannya. Kami akan berusaha meminimalkan gangguan.</p>
+                </div>
+                <div class="card-footer">
+                    <span class="priority-badge priority-high">Prioritas Tinggi</span>
+                </div>
+            </div>
+
+            <!-- Update Fitur -->
+            <div class="announcement-card">
+                <div class="card-header">
+                    <div class="card-icon update">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div>
+                        <h3 class="card-title">Update Fitur Baru!</h3>
+                        <div class="card-date">1 Maret 2026 - 20:15 WIB</div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="status-indicator">
+                        <span class="status-dot active"></span>
+                        <span>Fitur baru telah aktif!</span>
+                    </div>
+                    <p>Kami baru saja menambahkan beberapa fitur menarik untuk meningkatkan pengalaman streaming:</p>
+                    <ul>
+                        <li><strong>Dark Mode Otomatis:</strong> Tema gelap yang nyaman untuk mata</li>
+                        <li><strong>Bookmark:</strong> Simpan anime favoritmu</li>
+                        <li><strong>History:</strong> Lihat riwayat tontonanmu</li>
+                        <li><strong>Server Pilihan:</strong> Pilih server streaming favoritmu</li>
+                        <li><strong>Download Cepat:</strong> Tombol download yang lebih responsif</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <span class="priority-badge priority-medium">Fitur Baru</span>
+                </div>
+            </div>
+
+            <!-- Maintenance -->
+            <div class="announcement-card">
+                <div class="card-header">
+                    <div class="card-icon maintenance">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div>
+                        <h3 class="card-title">Pemeliharaan Berkala</h3>
+                        <div class="card-date">28 Februari 2026 - 10:00 WIB</div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="status-indicator">
+                        <span class="status-dot warning"></span>
+                        <span>Maintenance sedang berlangsung</span>
+                    </div>
+                    <p>Kami sedang melakukan pemeliharaan rutin untuk menjaga performa website:</p>
+                    <ul>
+                        <li>Optimasi database dan kecepatan loading</li>
+                        <li>Pembersihan file cache yang tidak terpakai</li>
+                        <li>Pembaruan sistem keamanan</li>
+                        <li>Pengecekan kualitas video yang bermasalah</li>
+                    </ul>
+                    <p><strong>Status:</strong> Sebagian besar fitur masih dapat diakses dengan normal.</p>
+                </div>
+                <div class="card-footer">
+                    <span class="priority-badge priority-low">Maintenance</span>
+                </div>
+            </div>
+
+            <!-- Info Umum -->
+            <div class="announcement-card">
+                <div class="card-header">
+                    <div class="card-icon info">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div>
+                        <h3 class="card-title">Pedoman Konten</h3>
+                        <div class="card-date">27 Februari 2026 - 14:20 WIB</div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <p>Mohon untuk tidak mengunggah atau membagikan konten yang melanggar hak cipta. Kami berkomitmen untuk:</p>
+                    <ul>
+                        <li>Menghormati hak cipta pembuat konten asli</li>
+                        <li>Menyediakan konten yang legal dan aman</li>
+                        <li>Menghapus konten yang melanggar atas permintaan pemegang hak</li>
+                        <li>Menjaga kenyamanan semua pengunjung</li>
+                    </ul>
+                    <p>Untuk permintaan penghapusan konten, silakan hubungi kami melalui halaman <strong>DMCA</strong>.</p>
+                </div>
+                <div class="card-footer">
+                    <span class="priority-badge priority-low">Informasi</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="javascript:history.back()" class="btn-back">
+                <i class="fas fa-arrow-left"></i> Kembali
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Auto refresh every 5 minutes
+        setTimeout(function() {
+            location.reload();
+        }, 300000);
+
+        // Add animation on scroll
+        const cards = document.querySelectorAll('.announcement-card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Priority filter functionality
+        function filterByPriority(priority) {
+            const cards = document.querySelectorAll('.announcement-card');
+            cards.forEach(card => {
+                const badge = card.querySelector('.priority-badge');
+                if (badge.classList.contains(priority) || priority === 'all') {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

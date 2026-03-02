@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Series Otomatis - Web Streaming Anime & Donghua</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #252525;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent-color: #ff6b6b;
+            --accent-hover: #ff5252;
+            --border-color: #333;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --danger-color: #f44336;
+            --font-primary: 'Inter', sans-serif;
+            --font-heading: 'Poppins', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .generator-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .form-section, .preview-section {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .form-label .required {
+            color: var(--danger-color);
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            color: var(--text-primary);
+            font-family: var(--font-primary);
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .checkbox-group, .radio-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .checkbox-item, .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-tertiary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-item:hover, .radio-item:hover {
+            border-color: var(--accent-color);
+        }
+
+        .checkbox-item input, .radio-item input {
+            margin: 0;
+        }
+
+        .nsfw-warning {
+            background: rgba(244, 67, 54, 0.1);
+            border: 1px solid var(--danger-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            color: var(--danger-color);
+        }
+
+        .nsfw-warning i {
+            margin-right: 0.5rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .preview-content {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .preview-item {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .preview-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .preview-label {
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 0.3rem;
+        }
+
+        .preview-value {
+            color: var(--text-secondary);
+            word-break: break-word;
+        }
+
+        .progress-bar {
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            height: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--accent-color), var(--warning-color));
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-success {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid var(--success-color);
+            color: var(--success-color);
+        }
+
+        .alert-error {
+            background: rgba(244, 67, 54, 0.1);
+            border: 1px solid var(--danger-color);
+            color: var(--danger-color);
+        }
+
+        .alert-warning {
+            background: rgba(255, 152, 0, 0.1);
+            border: 1px solid var(--warning-color);
+            color: var(--warning-color);
+        }
+
+        .template-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .template-option {
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .template-option:hover {
+            border-color: var(--accent-color);
+        }
+
+        .template-option.active {
+            border-color: var(--accent-color);
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        .template-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        .template-name {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .template-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .generator-container {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .template-selector {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-magic"></i> Generator Series Otomatis</h1>
+            <p>Buat postingan series anime/donghua secara otomatis dengan template profesional</p>
+        </div>
+
+        <div class="generator-container">
+            <!-- Form Section -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fas fa-cog"></i> Form Input
+                </h2>
+
+                <!-- Template Selector -->
+                <div class="form-group">
+                    <label class="form-label">Pilih Template</label>
+                    <div class="template-selector">
+                        <div class="template-option active" data-template="standard">
+                            <div class="template-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="template-name">Standard</div>
+                            <div class="template-desc">Template dasar untuk series baru</div>
+                        </div>
+                        <div class="template-option" data-template="premium">
+                            <div class="template-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="template-name">Premium</div>
+                            <div class="template-desc">Template lengkap dengan informasi detail</div>
+                        </div>
+                        <div class="template-option" data-template="minimal">
+                            <div class="template-icon">
+                                <i class="fas fa-minimize"></i>
+                            </div>
+                            <div class="template-name">Minimal</div>
+                            <div class="template-desc">Template ringkas dan cepat</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NSFW Warning -->
+                <div class="nsfw-warning" id="nsfw-warning" style="display: none;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>Perhatian:</strong> Konten ini mengandung materi dewasa (NSFW). Pastikan untuk memberikan peringatan yang sesuai.
+                </div>
+
+                <!-- Basic Information -->
+                <div class="form-group">
+                    <label class="form-label">Judul Series <span class="required">*</span></label>
+                    <input type="text" class="form-input" id="title" placeholder="Contoh: Solo Leveling Season 2" onkeyup="updatePreview()">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Tipe <span class="required">*</span></label>
+                        <select class="form-select" id="type" onchange="updatePreview(); checkNSFW();">
+                            <option value="">Pilih Tipe</option>
+                            <option value="anime">Anime</option>
+                            <option value="donghua">Donghua</option>
+                            <option value="ova">OVA</option>
+                            <option value="movie">Movie</option>
+                            <option value="special">Special</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <select class="form-select" id="status" onchange="updatePreview()">
+                            <option value="ongoing">Ongoing</option>
+                            <option value="completed">Completed</option>
+                            <option value="upcoming">Upcoming</option>
+                            <option value="hiatus">Hiatus</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Studio</label>
+                        <input type="text" class="form-input" id="studio" placeholder="Contoh: A-1 Pictures" onkeyup="updatePreview()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Tahun Rilis</label>
+                        <input type="number" class="form-input" id="year" placeholder="2026" onkeyup="updatePreview()">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Total Episode</label>
+                        <input type="number" class="form-input" id="episodes" placeholder="12" onkeyup="updatePreview()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Durasi per Episode</label>
+                        <input type="text" class="form-input" id="duration" placeholder="24 menit" onkeyup="updatePreview()">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Skor MyAnimeList</label>
+                        <input type="number" class="form-input" id="score" placeholder="8.5" step="0.01" onkeyup="updatePreview()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Musim Rilis</label>
+                        <select class="form-select" id="season" onchange="updatePreview()">
+                            <option value="">Pilih Musim</option>
+                            <option value="winter">Winter</option>
+                            <option value="spring">Spring</option>
+                            <option value="summer">Summer</option>
+                            <option value="fall">Fall</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Genre -->
+                <div class="form-group">
+                    <label class="form-label">Genre</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="action" value="Action" onchange="updatePreview()">
+                            <label for="action">Action</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="adventure" value="Adventure" onchange="updatePreview()">
+                            <label for="adventure">Adventure</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="comedy" value="Comedy" onchange="updatePreview()">
+                            <label for="comedy">Comedy</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="drama" value="Drama" onchange="updatePreview()">
+                            <label for="drama">Drama</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="fantasy" value="Fantasy" onchange="updatePreview()">
+                            <label for="fantasy">Fantasy</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="romance" value="Romance" onchange="updatePreview()">
+                            <label for="romance">Romance</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="scifi" value="Sci-Fi" onchange="updatePreview()">
+                            <label for="scifi">Sci-Fi</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="thriller" value="Thriller" onchange="updatePreview()">
+                            <label for="thriller">Thriller</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="yaoi" value="Yaoi" onchange="updatePreview(); checkNSFW();">
+                            <label for="yaoi">Yaoi/BL</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="yuri" value="Yuri" onchange="updatePreview(); checkNSFW();">
+                            <label for="yuri">Yuri/GL</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="ecchi" value="Ecchi" onchange="updatePreview(); checkNSFW();">
+                            <label for="ecchi">Ecchi</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="hentai" value="Hentai" onchange="updatePreview(); checkNSFW();">
+                            <label for="hentai">Hentai</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Synopsis -->
+                <div class="form-group">
+                    <label class="form-label">Sinopsis</label>
+                    <textarea class="form-textarea" id="synopsis" placeholder="Tulis sinopsis series ini..." onkeyup="updatePreview()"></textarea>
+                </div>
+
+                <!-- Cover Image -->
+                <div class="form-group">
+                    <label class="form-label">URL Cover Image</label>
+                    <input type="url" class="form-input" id="cover" placeholder="https://example.com/cover.jpg" onkeyup="updatePreview()">
+                </div>
+
+                <!-- Trailer -->
+                <div class="form-group">
+                    <label class="form-label">URL Trailer (YouTube)</label>
+                    <input type="url" class="form-input" id="trailer" placeholder="https://youtube.com/watch?v=..." onkeyup="updatePreview()">
+                </div>
+
+                <!-- Buttons -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary" onclick="generatePost()">
+                        <i class="fas fa-magic"></i> Generate Postingan
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                        <i class="fas fa-redo"></i> Reset Form
+                    </button>
+                    <button type="button" class="btn btn-success" onclick="saveTemplate()">
+                        <i class="fas fa-save"></i> Simpan Template
+                    </button>
+                </div>
+            </div>
+
+            <!-- Preview Section -->
+            <div class="preview-section">
+                <h2 class="section-title">
+                    <i class="fas fa-eye"></i> Preview
+                </h2>
+
+                <!-- Progress Bar -->
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+
+                <!-- Alerts -->
+                <div class="alert alert-success" id="success-alert">
+                    <i class="fas fa-check-circle"></i>
+                    <span id="success-message">Postingan berhasil dibuat!</span>
+                </div>
+
+                <div class="alert alert-error" id="error-alert">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span id="error-message">Terjadi kesalahan!</span>
+                </div>
+
+                <div class="alert alert-warning" id="warning-alert">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span id="warning-message">Peringatan: Semua bidang wajib diisi!</span>
+                </div>
+
+                <!-- Preview Content -->
+                <div class="preview-content" id="preview-content">
+                    <div style="text-align: center; color: var(--text-secondary); padding: 2rem;">
+                        <i class="fas fa-edit" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <p>Isi form di sebelah kiri untuk melihat preview postingan di sini...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentTemplate = 'standard';
+        let isNSFW = false;
+
+        // Template selection
+        document.querySelectorAll('.template-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.template-option').forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                currentTemplate = this.dataset.template;
+                updatePreview();
+            });
+        });
+
+        // Check NSFW content
+        function checkNSFW() {
+            const nsfwGenres = ['yaoi', 'yuri', 'ecchi', 'hentai'];
+            const warning = document.getElementById('nsfw-warning');
+            isNSFW = false;
+
+            nsfwGenres.forEach(genre => {
+                if (document.getElementById(genre).checked) {
+                    isNSFW = true;
+                }
+            });
+
+            if (isNSFW) {
+                warning.style.display = 'block';
+            } else {
+                warning.style.display = 'none';
+            }
+        }
+
+        // Update preview
+        function updatePreview() {
+            const title = document.getElementById('title').value;
+            const type = document.getElementById('type').value;
+            const status = document.getElementById('status').value;
+            const studio = document.getElementById('studio').value;
+            const year = document.getElementById('year').value;
+            const episodes = document.getElementById('episodes').value;
+            const duration = document.getElementById('duration').value;
+            const score = document.getElementById('score').value;
+            const season = document.getElementById('season').value;
+            const synopsis = document.getElementById('synopsis').value;
+            const cover = document.getElementById('cover').value;
+            const trailer = document.getElementById('trailer').value;
+
+            // Get selected genres
+            const genres = [];
+            document.querySelectorAll('.checkbox-item input:checked').forEach(checkbox => {
+                genres.push(checkbox.value);
+            });
+
+            // Update progress
+            updateProgress();
+
+            // Generate preview based on template
+            let previewHTML = '';
+
+            if (currentTemplate === 'standard') {
+                previewHTML = generateStandardPreview(title, type, status, studio, year, episodes, duration, score, season, genres, synopsis, cover, trailer);
+            } else if (currentTemplate === 'premium') {
+                previewHTML = generatePremiumPreview(title, type, status, studio, year, episodes, duration, score, season, genres, synopsis, cover, trailer);
+            } else if (currentTemplate === 'minimal') {
+                previewHTML = generateMinimalPreview(title, type, status, studio, year, episodes, genres, synopsis, cover);
+            }
+
+            document.getElementById('preview-content').innerHTML = previewHTML;
+        }
+
+        function generateStandardPreview(title, type, status, studio, year, episodes, duration, score, season, genres, synopsis, cover, trailer) {
+            let html = `
+                <div class="preview-item">
+                    <div class="preview-label">Judul:</div>
+                    <div class="preview-value">${title || '[Judul Belum Diisi]'}</div>
+                </div>
+            `;
+
+            if (isNSFW) {
+                html += `
+                    <div class="preview-item">
+                        <div class="preview-label">Peringatan:</div>
+                        <div class="preview-value" style="color: var(--danger-color);">
+                            <i class="fas fa-exclamation-triangle"></i> Konten ini mengandung materi dewasa
+                        </div>
+                    </div>
+                `;
+            }
+
+            html += `
+                <div class="preview-item">
+                    <div class="preview-label">Tipe:</div>
+                    <div class="preview-value">${type ? type.toUpperCase() : '[Belum Dipilih]'}</div>
+                </div>
+                <div class="preview-item">
+                    <div class="preview-label">Status:</div>
+                    <div class="preview-value">${status ? status.charAt(0).toUpperCase() + status.slice(1) : '[Belum Dipilih]'}</div>
+                </div>
+            `;
+
+            if (studio) {
+                html += `
+                    <div class="preview-item">
+                        <div class="preview-label">Studio:</div>
+                        <div class="preview-value">${studio}</div>
+                    </div>
+                `;
+            }
+
+            if (year) {
+                html += `
+                    <div class="preview-item">
+                        <div class="preview-label">Tahun Rilis:</div>
+                        <div class="preview-value">${year}</div>
+                    </div>
+                `;
+            }
+
+            if (episodes) {
+                html += `
+                    <div class="preview-item">
+                        <div class="preview-label">Total Episode:</div>
+                        <div class="preview-value">${episodes} Episode${episodes > 1 ? 's' : ''}</div>
+                    </div>
+                `;
+            }
+
+            if (duration) {
+                html += `
+                    <div class="preview-item">
+                        <div class="preview-label">Durasi:</div>
+                        <div class="preview-value">${duration}</div>
+                    </div>
+                `;
+            }
+
+            if (score) {
+                html += `
+                    <div class="preview-item">
+                        <div class="preview-label">Skor:</div>
+                        <div class="preview-value">⭐ ${score}/10</div>
+                    </div>
+                `;
+            }
+
+            if (season) {
+                html += `
+                    <div class="preview-item">
+                        <div class="preview-label">Musim:</div>
+                        <div class="preview-value">${season.charAt(0).toUpperCase() + season.slice(1)} ${year || ''}</div>
+                    </div>
+                `;
+            }
+
+            if (genres.length > 0) {
+                html += `
+                    <div class="preview-item">
+                        <div class="preview-label">Genre:</div>
+                        <div class="preview-value">${genres.join(', ')}</div>
+                    </div>
+                `;
+            }
+
+            if (synopsis) {
+                html += `
+                    <div class="preview-item">
+                        <div class="preview-label">Sinopsis:</div>
+                        <div class="preview-value">${synopsis}</div>
+                    </div>
+                `;
+            }
+
+            if (cover) {
+                html += `
+                    <div class="preview-item">
+                        <div class="preview-label">Cover Image:</div>
+                        <div class="preview-value">
+                            <img src="${cover}" alt="Cover" style="max-width: 200px; border-radius: 8px;">
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (trailer) {
+                html += `
+                    <div class="preview-item">
+                        <div class="preview-label">Trailer:</div>
+                        <div class="preview-value">
+                            <a href="${trailer}" target="_blank" style="color: var(--accent-color);">
+                                <i class="fab fa-youtube"></i> Tonton Trailer
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }
+
+            return html;
+        }
+
+        function generatePremiumPreview(title, type, status, studio, year, episodes, duration, score, season, genres, synopsis, cover, trailer) {
+            // Premium template with more detailed information
+            let html = `<div style="background: linear-gradient(45deg, var(--bg-tertiary), var(--bg-secondary)); padding: 1.5rem; border-radius: 12px; margin-bottom: 1rem;">`;
+            
+            if (cover) {
+                html += `<img src="${cover}" alt="Cover" style="width: 100%; max-width: 300px; border-radius: 12px; margin-bottom: 1rem;"><br>`;
+            }
+            
+            html += `
+                <h3 style="color: var(--accent-color); margin-bottom: 1rem;">${title || '[Judul Belum Diisi]'}</h3>
+            `;
+
+            if (isNSFW) {
+                html += `<div style="background: var(--danger-color); color: white; padding: 0.5rem; border-radius: 8px; margin-bottom: 1rem; text-align: center;">
+                    <i class="fas fa-exclamation-triangle"></i> KONTEN DEWASA - 18+
+                </div>`;
+            }
+
+            html += `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                    <div><strong>Tipe:</strong> ${type ? type.toUpperCase() : '[Belum Dipilih]'}</div>
+                    <div><strong>Status:</strong> ${status ? status.charAt(0).toUpperCase() + status.slice(1) : '[Belum Dipilih]'}</div>
+                    <div><strong>Studio:</strong> ${studio || '[Belum Diisi]'}</div>
+                    <div><strong>Tahun:</strong> ${year || '[Belum Diisi]'}</div>
+                    <div><strong>Episode:</strong> ${episodes || '[Belum Diisi]'}</div>
+                    <div><strong>Durasi:</strong> ${duration || '[Belum Diisi]'}</div>
+                    <div><strong>Skor:</strong> ${score ? '⭐ ' + score + '/10' : '[Belum Diisi]'}</div>
+                    <div><strong>Musim:</strong> ${season ? season.charAt(0).toUpperCase() + season.slice(1) : '[Belum Dipilih]'}</div>
+                </div>
+            `;
+
+            if (genres.length > 0) {
+                html += `<div style="margin-bottom: 1rem;"><strong>Genre:</strong> ${genres.join(', ')}</div>`;
+            }
+
+            if (synopsis) {
+                html += `<div style="margin-bottom: 1rem;"><strong>Sinopsis:</strong><br>${synopsis}</div>`;
+            }
+
+            if (trailer) {
+                html += `<div style="text-align: center;">
+                    <a href="${trailer}" target="_blank" style="background: #ff0000; color: white; padding: 0.8rem 1.5rem; border-radius: 25px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;">
+                        <i class="fab fa-youtube"></i> Tonton Trailer
+                    </a>
+                </div>`;
+            }
+
+            html += `</div>`;
+            return html;
+        }
+
+        function generateMinimalPreview(title, type, status, studio, year, episodes, genres, synopsis, cover) {
+            // Minimal template for quick generation
+            return `
+                <div style="text-align: center; padding: 1rem;">
+                    <h3 style="color: var(--accent-color); margin-bottom: 1rem;">${title || '[Judul Belum Diisi]'}</h3>
+                    ${cover ? `<img src="${cover}" alt="Cover" style="max-width: 150px; border-radius: 8px; margin-bottom: 1rem;"><br>` : ''}
+                    <div style="font-size: 0.9rem; color: var(--text-secondary);">
+                        ${type ? type.toUpperCase() : ''} | ${status ? status.charAt(0).toUpperCase() + status.slice(1) : ''} | ${studio || ''} | ${year || ''}
+                    </div>
+                    ${genres.length > 0 ? `<div style="margin: 0.5rem 0;">${genres.join(', ')}</div>` : ''}
+                    ${synopsis ? `<div style="font-size: 0.85rem; margin-top: 1rem;">${synopsis.substring(0, 200)}${synopsis.length > 200 ? '...' : ''}</div>` : ''}
+                </div>
+            `;
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const fields = ['title', 'type', 'studio', 'year', 'episodes', 'synopsis'];
+            let filled = 0;
+            
+            fields.forEach(field => {
+                if (document.getElementById(field).value.trim() !== '') {
+                    filled++;
+                }
+            });
+            
+            const progress = (filled / fields.length) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        // Generate post
+        function generatePost() {
+            const title = document.getElementById('title').value.trim();
+            const type = document.getElementById('type').value;
+            
+            if (!title || !type) {
+                showAlert('warning', 'Judul dan Tipe wajib diisi!');
+                return;
+            }
+
+            // Generate the post content
+            const postContent = generatePostContent();
+            
+            // Show success message
+            showAlert('success', 'Postingan berhasil dibuat! Silakan salin kontennya.');
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(postContent).then(() => {
+                console.log('Post content copied to clipboard');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+
+        function generatePostContent() {
+            const title = document.getElementById('title').value;
+            const type = document.getElementById('type').value;
+            const status = document.getElementById('status').value;
+            const studio = document.getElementById('studio').value;
+            const year = document.getElementById('year').value;
+            const episodes = document.getElementById('episodes').value;
+            const duration = document.getElementById('duration').value;
+            const score = document.getElementById('score').value;
+            const season = document.getElementById('season').value;
+            const synopsis = document.getElementById('synopsis').value;
+            const cover = document.getElementById('cover').value;
+            const trailer = document.getElementById('trailer').value;
+
+            // Get selected genres
+            const genres = [];
+            document.querySelectorAll('.checkbox-item input:checked').forEach(checkbox => {
+                genres.push(checkbox.value);
+            });
+
+            // Generate labels for Blogger
+            let labels = [type];
+            if (status) labels.push(status);
+            if (season) labels.push(season);
+            labels.push(...genres);
+
+            let postHTML = `<div class="anime-post">`;
+            
+            // NSFW Warning
+            if (isNSFW) {
+                postHTML += `
+                    <div style="background: #dc3545; color: white; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; text-align: center;">
+                        <strong><i class="fas fa-exclamation-triangle"></i> PERINGATAN: KONTEN DEWASA (18+)</strong><br>
+                        Postingan ini mengandung konten yang tidak cocok untuk anak di bawah umur.
+                    </div>
+                `;
+            }
+
+            // Cover Image
+            if (cover) {
+                postHTML += `<div style="text-align: center; margin-bottom: 1rem;"><img src="${cover}" alt="${title}" style="max-width: 100%; border-radius: 8px;"></div>`;
+            }
+
+            // Title
+            postHTML += `<h2 style="color: #ff6b6b; text-align: center; margin-bottom: 1rem;">${title}</h2>`;
+
+            // Information Table
+            postHTML += `<table style="width: 100%; background: #1a1a1a; border-radius: 8px; margin-bottom: 1rem;"><tbody>`;
+            
+            if (type) postHTML += `<tr><td style="padding: 0.5rem; border-bottom: 1px solid #333;"><strong>Tipe</strong></td><td style="padding: 0.5rem; border-bottom: 1px solid #333;">${type.toUpperCase()}</td></tr>`;
+            if (status) postHTML += `<tr><td style="padding: 0.5rem; border-bottom: 1px solid #333;"><strong>Status</strong></td><td style="padding: 0.5rem; border-bottom: 1px solid #333;">${status.charAt(0).toUpperCase() + status.slice(1)}</td></tr>`;
+            if (studio) postHTML += `<tr><td style="padding: 0.5rem; border-bottom: 1px solid #333;"><strong>Studio</strong></td><td style="padding: 0.5rem; border-bottom: 1px solid #333;">${studio}</td></tr>`;
+            if (year) postHTML += `<tr><td style="padding: 0.5rem; border-bottom: 1px solid #333;"><strong>Tahun Rilis</strong></td><td style="padding: 0.5rem; border-bottom: 1px solid #333;">${year}</td></tr>`;
+            if (episodes) postHTML += `<tr><td style="padding: 0.5rem; border-bottom: 1px solid #333;"><strong>Total Episode</strong></td><td style="padding: 0.5rem; border-bottom: 1px solid #333;">${episodes} Episode${episodes > 1 ? 's' : ''}</td></tr>`;
+            if (duration) postHTML += `<tr><td style="padding: 0.5rem; border-bottom: 1px solid #333;"><strong>Durasi</strong></td><td style="padding: 0.5rem; border-bottom: 1px solid #333;">${duration}</td></tr>`;
+            if (score) postHTML += `<tr><td style="padding: 0.5rem; border-bottom: 1px solid #333;"><strong>Skor</strong></td><td style="padding: 0.5rem; border-bottom: 1px solid #333;">⭐ ${score}/10</td></tr>`;
+            if (season) postHTML += `<tr><td style="padding: 0.5rem; border-bottom: 1px solid #333;"><strong>Musim</strong></td><td style="padding: 0.5rem; border-bottom: 1px solid #333;">${season.charAt(0).toUpperCase() + season.slice(1)} ${year || ''}</td></tr>`;
+            if (genres.length > 0) postHTML += `<tr><td style="padding: 0.5rem;"><strong>Genre</strong></td><td style="padding: 0.5rem;">${genres.join(', ')}</td></tr>`;
+            
+            postHTML += `</tbody></table>`;
+
+            // Synopsis
+            if (synopsis) {
+                postHTML += `<div style="margin-bottom: 1rem;"><h4 style="color: #ff6b6b; margin-bottom: 0.5rem;">Sinopsis:</h4><p style="line-height: 1.6;">${synopsis}</p></div>`;
+            }
+
+            // Trailer
+            if (trailer) {
+                postHTML += `<div style="text-align: center; margin-bottom: 1rem;"><a href="${trailer}" target="_blank" style="background: #ff0000; color: white; padding: 0.8rem 1.5rem; border-radius: 25px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;"><i class="fab fa-youtube"></i> Tonton Trailer</a></div>`;
+            }
+
+            postHTML += `</div>`;
+
+            // Labels for Blogger
+            postHTML += `<!-- Labels: ${labels.join(', ')} -->`;
+
+            return postHTML;
+        }
+
+        // Show alert
+        function showAlert(type, message) {
+            const alerts = {
+                success: document.getElementById('success-alert'),
+                error: document.getElementById('error-alert'),
+                warning: document.getElementById('warning-alert')
+            };
+
+            // Hide all alerts first
+            Object.values(alerts).forEach(alert => alert.classList.remove('show'));
+
+            // Show the appropriate alert
+            if (alerts[type]) {
+                alerts[type].querySelector('span').textContent = message;
+                alerts[type].classList.add('show');
+                
+                // Auto hide after 5 seconds
+                setTimeout(() => {
+                    alerts[type].classList.remove('show');
+                }, 5000);
+            }
+        }
+
+        // Reset form
+        function resetForm() {
+            document.querySelectorAll('input, select, textarea').forEach(element => {
+                if (element.type === 'checkbox') {
+                    element.checked = false;
+                } else {
+                    element.value = '';
+                }
+            });
+            
+            document.getElementById('status').value = 'ongoing';
+            updatePreview();
+            checkNSFW();
+            showAlert('success', 'Form berhasil direset!');
+        }
+
+        // Save template
+        function saveTemplate() {
+            const formData = {};
+            document.querySelectorAll('input, select, textarea').forEach(element => {
+                if (element.type === 'checkbox') {
+                    formData[element.id] = element.checked;
+                } else {
+                    formData[element.id] = element.value;
+                }
+            });
+            
+            localStorage.setItem('animeTemplate', JSON.stringify(formData));
+            showAlert('success', 'Template berhasil disimpan!');
+        }
+
+        // Load saved template
+        function loadTemplate() {
+            const saved = localStorage.getItem('animeTemplate');
+            if (saved) {
+                const formData = JSON.parse(saved);
+                Object.keys(formData).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        if (element.type === 'checkbox') {
+                            element.checked = formData[key];
+                        } else {
+                            element.value = formData[key];
+                        }
+                    }
+                });
+                updatePreview();
+                checkNSFW();
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTemplate();
+            updatePreview();
+        });
+    </script>
+</body>
+</html>
